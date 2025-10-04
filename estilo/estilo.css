@@ -1,2 +1,29 @@
 /*Adriana Herrero Gonzalez UO287543*/
 /* Estilos generales del proyecto MotoGP-Desktop*/
+
+/* Especificidad 001 */
+body { 
+    font-family:Arial,Helvetica,sans-serif;
+    background-color: #F1CED4;
+    color:#391306;
+}
+
+/* Especificidad 001 */
+header {
+    background-color:#391306;
+    color:#F8ECEF;
+}
+
+/* Especificidad 002 */
+/* Los enlaces no heredan el color de letra del header, hay que definirlo explícitamente*/
+/* Hereda el color de fondo del elemento header: #391306 */
+nav a {
+    color: #F8ECEF;
+}
+
+/* Especificidad 012 */
+/* Los enlaces no heredan el color de letra del header, hay que definirlo explícitamente*/
+/* Hereda el color de fondo del elemento header: #391306 */
+nav a:hover {
+    color:#DCA3B5;
+}
