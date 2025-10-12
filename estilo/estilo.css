@@ -4,26 +4,186 @@
 /* Especificidad 001 */
 body { 
     font-family:Arial,Helvetica,sans-serif;
-    background-color: #F1CED4;
-    color:#391306;
+    background-color: #B3DAFF;
+    color:#642207;
+    font-size: 1.1rem;
 }
 
 /* Especificidad 001 */
 header {
-    background-color:#391306;
-    color:#F8ECEF;
+    background-color:#00297F; /* Advertencia: El color de letra se especifica  en el selector header a : #DFCBB2 */               
 }
 
 /* Especificidad 002 */
-/* Los enlaces no heredan el color de letra del header, hay que definirlo explícitamente*/
-/* Hereda el color de fondo del elemento header: #391306 */
-nav a {
-    color: #F8ECEF;
+header a {
+    color: #DFCBB2; /* Advertencia: Hereda el color de fondo del elemento header: #00297F */ 
+                      /* Los enlaces no heredan el color de letra del header, hay que definirlo explícitamente*/
+    text-decoration-line: none;
+}
+
+nav {
+  padding: 1rem;
+}
+
+/* Especificidad 010 */
+.active {
+    color:#3D3400;
+    background-color: #B3DAFF;
+}
+
+/* Especificidad 002 */
+header + p {
+  font-size: 0.8rem;
 }
 
 /* Especificidad 012 */
-/* Los enlaces no heredan el color de letra del header, hay que definirlo explícitamente*/
-/* Hereda el color de fondo del elemento header: #391306 */
-nav a:hover {
-    color:#DCA3B5;
+/* Cambia brevemente el color al hacer clic */
+header a:active {
+    color: #716107; /* Advertencia: Hereda el color de fondo del elemento header: #00297F */ 
 }
+
+/* Opcional: modificamos el grosor y el tamaño de letra para distinguir los títulos
+del texto normal y que queden más claro como están divididas las secciones */
+/* Especificidad 001 */
+h1 {
+    font-size:2.75em;
+    font-weight: 700;
+}
+
+/* Especificidad 001 */
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Especificidad 001 */
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Especificidad 001 */
+h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+
+/* Estilos de enlaces externos */
+/* Especificidad 011 */
+a[href^="http"] {
+  color: #651062; /* Advertencia: Hereda el color de fondo del elemento body: #B3DAFF */ 
+}
+
+
+/* Cuando el enlace ya ha sido visitado */
+/* Especificidad 011 */
+a[href^="http"]:visited {
+  color: #3D3E14; /* Advertencia: Hereda el color de fondo del elemento body: #B3DAFF */ 
+}
+
+/* Estilos para listas */
+/* LISTAS NO ORDENADAS */
+/* Especificidad 001 */
+ul {
+  list-style-type: square;         /* Viñetas cuadradas */
+  border-radius: 0.5em;
+  padding: 1em 2.5em;
+  font-size: 1.05em;  
+  background-color: #eef3ff; /* Advertencia: Hereda el color de letra del elemento body : #642207 */
+  border-left-width: 0.5em; 
+  border-left-style: solid;   
+  border-left-color: #00297F;      /* Barra decorativa a la izquierda */
+  width:45%;
+          
+}
+
+/* LISTAS ORDENADAS  */
+/* Especificidad 001 */
+ol {
+  font-size: 1.05em;
+  border-radius: 0.5em;
+  background-color: #eef3ff; /* Advertencia: Hereda el color de letra del elemento body : #642207 */
+  border-left-width: 0.5em; 
+  border-left-style: solid;   
+  border-left-color: #00297F; 
+  padding: 1em 2.5em;
+  width:45%;
+ 
+}
+
+
+/* Estilos para lista de definiciones */
+/* Estilo general para la lista de definición */
+dl {
+  border-radius: 0.5em;
+  background-color: #eef3ff; /* Advertencia: Hereda el color de letra del elemento body : #642207 */
+  border-left-width: 0.5em; 
+  border-left-style: solid;   
+  border-left-color: #00297F; 
+  padding: 1em 1.5em;
+}
+
+/* Destacar los términos a definir */
+dl dt {
+  color: #00297F;   /* Advertencia: Hereda el color de fondo del elemento dl :  #eef3ff */              
+  font-weight: bold;              
+  font-size: 1.2em;               
+}
+
+/* Estilo para la definición */
+dl dd {
+  font-size: 1em;
+  padding: 0.2em 0;                         
+}
+
+
+
+/*Estilos tabla resultados Marc Márquez*/
+
+/* Especificidad 001 */
+caption {
+  caption-side: top;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Especificidad 001 */
+table {
+  font-size: 0.9em;
+  border-collapse: collapse;
+}
+
+
+/* Especificidad 001 */
+th {
+  background-color: #00297F;
+  color: #DFCBB2;
+  border-width: 0.1em;   
+  border-style: solid;
+  border-color: #000000;
+  padding : 1.2em;
+  font-weight: bold;
+}
+
+/* Especificidad 001 */
+td {
+  background-color: #ffffff;
+  color: #000000;
+  border-width: 0.1em;   
+  border-style: solid;
+  border-color: #000000;
+  text-align: center;
+  padding : 0.5em;
+ 
+}
+
+/* Especificidad 002 */
+td::before {
+    font-weight: bold;
+}
+
+
+
+

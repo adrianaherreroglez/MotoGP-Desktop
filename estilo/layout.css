@@ -1,0 +1,97 @@
+/*Adriana Herrero Gonzalez UO287543*/
+/* Esquemas de posicionamiento del proyecto MotoGP-Desktop*/
+
+
+/* Especificidad 001 */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+/* Especificidad 001 */
+nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+    gap: 1rem;
+}
+
+
+@media (min-width: 320px) and (max-width: 799px) {
+
+    /* Especificidad 001 */
+    header {
+        flex-direction: column;
+        /* Advertencia: redefinición ya que la dirección de los elementos 
+                                cambia en el móvil: pasa de row a column*/
+    }
+
+    /* Especificidad 002 */
+    header h1 {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Especificidad 001 */
+    nav {
+        flex-direction: column;
+        /* Advertencia: redefinición ya que la dirección de los elementos 
+                                cambia en el móvil: pasa de row a column*/
+    }
+
+    /* Especificidad 011 */
+    header + p {
+        display: none;
+    }
+
+
+    /* Especificidad 001 */
+    video {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Especificidad 001 */
+    audio {
+        width: 100%;
+    }
+
+}
+
+/* Tabla para pantallas pequeñas */
+@media (max-width: 600px) {
+
+    /* Especificidad 001 */
+    caption {
+      display:flex;
+    }
+
+    /* Especificidad 001 */
+    th {
+        display: none; /* Oculta la fila de encabezados */
+    }
+
+    /* Especificidad 001 */
+    td {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Especificidad 012 */
+    td:nth-child(1)::before { content: "Puntos obtenidos";  }
+    /* Especificidad 012 */
+    td:nth-child(2)::before { content: "Posición final";  }
+    /* Especificidad 012 */
+    td:nth-child(3)::before { content: "Poles";  }
+    /* Especificidad 012 */
+    td:nth-child(4)::before { content: "Victorias";  }
+    /* Especificidad 012 */
+    td:nth-child(5)::before { content: "Podios";  }
+}
