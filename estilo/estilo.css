@@ -38,9 +38,7 @@ header + p {
 
 /* Especificidad 012 */
 /* Cambia brevemente el color al hacer clic */
-header a:active {
-    color: #716107; /* Advertencia: Hereda el color de fondo del elemento header: #00297F */ 
-}
+
 
 /* Opcional: modificamos el grosor y el tamaño de letra para distinguir los títulos
 del texto normal y que queden más claro como están divididas las secciones */
