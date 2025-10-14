@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<circuito>
+    <nombre>Losail International Circuit</nombre>
+    <longitud unidad="m">5380</longitud>
+    <anchuraMedia unidad="m">12</anchuraMedia>
+    <fecha>2025-04-13</fecha>
+    <horaInicio>19:00</horaInicio>
+    <vueltas>22</vueltas>
+    <localidad>Losail</localidad>
+    <pais>Qatar</pais>
+    <patrocinador>Qatar Airways</patrocinador>
+    <referencias>
+        <referencia>
+            https://www.motogp.com/en/calendar/2025/event/qatar/7a40caf3-8e8f-4405-b6e7-702453149285?tab=overview</referencia>
+        <referencia>https://es.wikipedia.org/wiki/Circuito_Internacional_de_Losail</referencia>
+        <referencia>https://www.qatarmotogp.com/</referencia>
+        <referencia>https://www.lcsc.qa/en/24/Event/2025-MOTOGP-QATAR-AIRWAYS-GRAND-PRIX-OF-QATAR</referencia>
+    </referencias>
+    <galeriaFotografias>
+        <foto>multimedia/gradas.jpg</foto>
+        <foto>multimedia/nombreCircuito.jpg</foto>
+        <foto>multimedia/salidaCircuito.jpg</foto>
+        <foto>multimedia/vistaAereaNocturna.jpg</foto>
+    </galeriaFotografias>
+    <galeriaVideos>
+        <video>multimedia/promoQatar.mp4</video>
+        <video>multimedia/videoQatar.mp4</video>
+    </galeriaVideos>
+    
+    <puntoOrigen>
+        <longitudOrigen>25.4897</longitudOrigen>
+        <latitud>51.4550</latitud>
+        <altitud>12</altitud>
+    </puntoOrigen>
+
+    <puntosAnonimos>
+        <puntoAnonimo>
+            <distancia></distancia>
+            <coordenadas>
+                <longitudPunto>25.4897</longitudPunto>
+                <latitudPunto>51.4550</latitudPunto>
+                <altitudPunto>12</altitudPunto>
+            </coordenadas>
+            <numeroSector></numeroSector>
+        </puntoAnonimo>
+
+        <puntoAnonimo>
+            <distancia></distancia>
+            <coordenadas>
+                <longitudPunto>25.4897</longitudPunto>
+                <latitudPunto>51.4550</latitudPunto>
+                <altitudPunto>11.57</altitudPunto>
+            </coordenadas>
+            <numeroSector></numeroSector>
+        </puntoAnonimo>
+
+        <puntoAnonimo>
+            <distancia></distancia>
+            <coordenadas>
+                <longitudPunto>25.4908</longitudPunto>
+                <latitudPunto>51.4533</latitudPunto>
+                <altitudPunto>12</altitudPunto>
+            </coordenadas>
+            <numeroSector></numeroSector>
+        </puntoAnonimo>
+
+        <puntoAnonimo>
+            <distancia></distancia>
+            <coordenadas>
+                <longitudPunto>25.4919</longitudPunto>
+                <latitudPunto>51.4556</latitudPunto>
+                <altitudPunto>11.26</altitudPunto>
+            </coordenadas>   
+            <numeroSector></numeroSector>
+        </puntoAnonimo>
+
+    </puntosAnonimos>
+</circuito>
