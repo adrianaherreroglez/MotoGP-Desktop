@@ -4,7 +4,7 @@
 /* Especificidad 001 */
 body { 
     font-family:Arial,Helvetica,sans-serif;
-    background-color: #B3DAFF;
+    background-color: #c0d4e7;
     color:#642207;
     font-size: 1.1rem;
 }
@@ -12,6 +12,7 @@ body {
 /* Especificidad 001 */
 header {
     background-color:#00297F; /* Advertencia: El color de letra se especifica  en el selector header a : #DFCBB2 */               
+    padding: 1rem 1rem;
 }
 
 /* Especificidad 002 */
@@ -21,9 +22,7 @@ header a {
     text-decoration-line: none;
 }
 
-nav {
-  padding: 1rem;
-}
+
 
 /* Especificidad 010 */
 .active {
