@@ -12,7 +12,10 @@
     referencias,
     galeriaFotografias,
     galeriaVideos,
-    puntoOrigen
+    puntoOrigen,
+    tramos,
+    vencedor,
+    clasificados
 )>
 
 <!ELEMENT nombre (#PCDATA)>
@@ -29,13 +32,36 @@
 <!ELEMENT localidad (#PCDATA)>
 <!ELEMENT pais (#PCDATA)>
 <!ELEMENT patrocinador (#PCDATA)>
-<!ELEMENT referencias (referencia+)>
+
+<!-- referencias: al menos 3 referencias -->
+<!ELEMENT referencias (referencia, referencia, referencia, referencia*)>
 <!ELEMENT referencia (#PCDATA)>
-<!ELEMENT galeriaFotografias (foto+)>
+
+<!-- galeriaFotografias: 1..5 fotos -->
+<!ELEMENT galeriaFotografias (foto, foto?, foto?, foto?, foto?)>
 <!ELEMENT foto (#PCDATA)>
-<!ELEMENT galeriaVideos (video+)>
+
+<!-- galeriaVideos: 1..3 videos -->
+<!ELEMENT galeriaVideos (video, video?, video?)>
 <!ELEMENT video (#PCDATA)>
+
 <!ELEMENT puntoOrigen (longitudOrigen, latitud, altitud)>
 <!ELEMENT longitudOrigen (#PCDATA)>
 <!ELEMENT latitud (#PCDATA)>
 <!ELEMENT altitud (#PCDATA)>
+<!ELEMENT tramos (tramo+)>
+<!ELEMENT tramo (distancia, coordenadas, numeroSector)>
+<!ELEMENT distancia (#PCDATA)>
+<!ATTLIST distancia unidad CDATA #REQUIRED>
+<!ELEMENT coordenadas (longitudPunto, latitudPunto, altitudPunto)>
+<!ELEMENT longitudPunto (#PCDATA)>
+<!ELEMENT latitudPunto (#PCDATA)>
+<!ELEMENT altitudPunto (#PCDATA)>
+<!ELEMENT numeroSector (#PCDATA)>
+<!ELEMENT vencedor (nombrePiloto, tiempo)>
+<!ELEMENT nombrePiloto (#PCDATA)>
+<!ELEMENT tiempo (#PCDATA)>
+<!ELEMENT clasificados (primero, segundo, tercero)>
+<!ELEMENT primero (#PCDATA)>
+<!ELEMENT segundo (#PCDATA)>
+<!ELEMENT tercero (#PCDATA)>

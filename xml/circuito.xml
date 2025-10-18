@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!DOCTYPE circuito SYSTEM "circuito.dtd">
 <circuito>
     <nombre>Losail International Circuit</nombre>
     <longitud unidad="m">5380</longitud>
@@ -29,51 +29,130 @@
     </galeriaVideos>
     
     <puntoOrigen>
-        <longitudOrigen>25.4897</longitudOrigen>
-        <latitud>51.4550</latitud>
-        <altitud>12</altitud>
+        <longitudOrigen>25.4892</longitudOrigen>
+        <latitud>51.4494</latitud>
+        <altitud>11.76</altitud>
     </puntoOrigen>
 
-    <puntosAnonimos>
-        <puntoAnonimo>
-            <distancia></distancia>
+    <tramos>
+        <tramo>
+            <distancia unidad="m">0</distancia>
             <coordenadas>
-                <longitudPunto>25.4897</longitudPunto>
-                <latitudPunto>51.4550</latitudPunto>
-                <altitudPunto>12</altitudPunto>
+                <longitudPunto>25.4892</longitudPunto>
+                <latitudPunto>51.4494</latitudPunto>
+                <altitudPunto>11.76</altitudPunto>
             </coordenadas>
-            <numeroSector></numeroSector>
-        </puntoAnonimo>
+            <numeroSector>1</numeroSector>
+        </tramo>
 
-        <puntoAnonimo>
-            <distancia></distancia>
+        <tramo>
+            <distancia unidad="m"></distancia>
             <coordenadas>
-                <longitudPunto>25.4897</longitudPunto>
-                <latitudPunto>51.4550</latitudPunto>
-                <altitudPunto>11.57</altitudPunto>
+                <longitudPunto>25.4839</longitudPunto>
+                <latitudPunto>51.4525</latitudPunto>
+                <altitudPunto>13.62</altitudPunto>
             </coordenadas>
-            <numeroSector></numeroSector>
-        </puntoAnonimo>
+            <numeroSector>1</numeroSector>
+        </tramo>
 
-        <puntoAnonimo>
-            <distancia></distancia>
+        <tramo>
+            <distancia unidad="m"></distancia>
             <coordenadas>
-                <longitudPunto>25.4908</longitudPunto>
-                <latitudPunto>51.4533</latitudPunto>
-                <altitudPunto>12</altitudPunto>
+                <longitudPunto>25.4836</longitudPunto>
+                <latitudPunto>51.4531</latitudPunto>
+                <altitudPunto>13.18</altitudPunto>
             </coordenadas>
-            <numeroSector></numeroSector>
-        </puntoAnonimo>
+            <numeroSector>1</numeroSector>
+        </tramo>
 
-        <puntoAnonimo>
-            <distancia></distancia>
+        <tramo>
+            <distancia unidad="m"></distancia>
             <coordenadas>
                 <longitudPunto>25.4919</longitudPunto>
                 <latitudPunto>51.4556</latitudPunto>
-                <altitudPunto>11.26</altitudPunto>
+                <altitudPunto>12.95</altitudPunto>
             </coordenadas>   
-            <numeroSector></numeroSector>
-        </puntoAnonimo>
+            <numeroSector>1</numeroSector>
+        </tramo>
 
-    </puntosAnonimos>
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4870</longitudPunto>
+                <latitudPunto>51.4553</latitudPunto>
+                <altitudPunto>12.46</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4867</longitudPunto>
+                <latitudPunto>51.4586</latitudPunto>
+                <altitudPunto>13.27</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4870</longitudPunto>
+                <latitudPunto>51.4589</latitudPunto>
+                <altitudPunto>12.95</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4883</longitudPunto>
+                <latitudPunto>51.4597</latitudPunto>
+                <altitudPunto>11.81</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4886</longitudPunto>
+                <latitudPunto>51.4597</latitudPunto>
+                <altitudPunto>11.74</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4897</longitudPunto>
+                <latitudPunto>51.4592</latitudPunto>
+                <altitudPunto>11.75</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4900</longitudPunto>
+                <latitudPunto>51.4586</latitudPunto>
+                <altitudPunto>12.14</altitudPunto>
+            </coordenadas>   
+            <numeroSector>1</numeroSector>
+        </tramo>
+
+    </tramos>
+    <vencedor>
+        <nombrePiloto>Marc Márquez</nombrePiloto>
+        <tiempo>00:41:29.186</tiempo>
+    </vencedor>
+    <clasificados>
+        <primero>Marc Márquez</primero>
+        <segundo>Francesco Bagnaia</segundo>
+        <tercero>Franco Morbidelli</tercero>
+    </clasificados>
 </circuito>
