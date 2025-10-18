@@ -145,6 +145,146 @@
             <numeroSector>1</numeroSector>
         </tramo>
 
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4897</longitudPunto>
+                <latitudPunto>51.4558</latitudPunto>
+                <altitudPunto>12.25</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4897</longitudPunto>
+                <latitudPunto>51.4550</latitudPunto>
+                <altitudPunto>11.85</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4908</longitudPunto>
+                <latitudPunto>51.4533</latitudPunto>
+                <altitudPunto>11.42</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4911</longitudPunto>
+                <latitudPunto>51.4533</latitudPunto>
+                <altitudPunto>11.28</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4914</longitudPunto>
+                <latitudPunto>51.4536</latitudPunto>
+                <altitudPunto>11.01</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4916</longitudPunto>
+                <latitudPunto>51.4553</latitudPunto>
+                <altitudPunto>11.26</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4930</longitudPunto>
+                <latitudPunto>51.4558</latitudPunto>
+                <altitudPunto>11.25</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4939</longitudPunto>
+                <latitudPunto>51.4567</latitudPunto>
+                <altitudPunto>11.83</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4941</longitudPunto>
+                <latitudPunto>51.4569</latitudPunto>
+                <altitudPunto>11.88</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4944</longitudPunto>
+                <latitudPunto>51.4567</latitudPunto>
+                <altitudPunto>11.81</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4947</longitudPunto>
+                <latitudPunto>51.4561</latitudPunto>
+                <altitudPunto>12.08</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+        <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4939</longitudPunto>
+                <latitudPunto>51.4533</latitudPunto>
+                <altitudPunto>11.59</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+         <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4939</longitudPunto>
+                <latitudPunto>51.4531</latitudPunto>
+                <altitudPunto>11.62</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+         <tramo>
+            <distancia unidad="m"></distancia>
+            <coordenadas>
+                <longitudPunto>25.4941</longitudPunto>
+                <latitudPunto>51.4531</latitudPunto>
+                <altitudPunto>11.6</altitudPunto>
+            </coordenadas>   
+            <numeroSector>2</numeroSector>
+        </tramo>
+
     </tramos>
     <vencedor>
         <nombrePiloto>Marc Márquez</nombrePiloto>
