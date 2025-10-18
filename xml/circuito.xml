@@ -48,7 +48,7 @@
         </tramo>
         <!--a1-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">659.17</distancia>
             <coordenadas>
                 <longitudPunto>51.45211154693168</longitudPunto>
                 <latitudPunto>25.48483165445843</latitudPunto>
@@ -58,7 +58,7 @@
         </tramo>
         <!--a2-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">65.21</distancia>
             <coordenadas>
                 <longitudPunto>51.45301068947162</longitudPunto>
                 <latitudPunto>25.48419935683365</latitudPunto>
@@ -68,7 +68,7 @@
         </tramo>
         <!--a3-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">56.04</distancia>
             <coordenadas>
                 <longitudPunto>51.45272305685405</longitudPunto>
                 <latitudPunto>25.48438423182126</latitudPunto>
@@ -78,7 +78,7 @@
         </tramo>
         <!--a4-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">382.97</distancia>
             <coordenadas>
                 <longitudPunto>51.45581169455631</longitudPunto>
                 <latitudPunto>25.48732047615447</latitudPunto>
@@ -88,7 +88,7 @@
         </tramo>
          <!--a5-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">53.98</distancia>
             <coordenadas>
                 <longitudPunto>51.45597159352693</longitudPunto>
                 <latitudPunto>25.48737882559786</latitudPunto>
@@ -98,7 +98,7 @@
         </tramo>
          <!--a6-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">267.36</distancia>
             <coordenadas>
                 <longitudPunto>51.45873940421528</longitudPunto>
                 <latitudPunto>25.48716051363366</latitudPunto>
@@ -108,7 +108,7 @@
         </tramo>
          <!--a7-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">50.69</distancia>
             <coordenadas>
                 <longitudPunto>51.45870743757185</longitudPunto>
                 <latitudPunto>25.48716326186229</latitudPunto>
@@ -118,7 +118,7 @@
         </tramo>
         <!--a8-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">171.74</distancia>
             <coordenadas>
                 <longitudPunto>51.4598665541052</longitudPunto>
                 <latitudPunto>25.4885349910928</latitudPunto>
@@ -128,7 +128,7 @@
         </tramo>
         <!--a9-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">37.4</distancia>
             <coordenadas>
                 <longitudPunto>51.46005266382088</longitudPunto>
                 <latitudPunto>25.48884131427337</latitudPunto>
@@ -138,7 +138,7 @@
         </tramo>
         <!--a10-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">142.73</distancia>
             <coordenadas>
                 <longitudPunto>51.45920578267339</longitudPunto>
                 <latitudPunto>25.4894095196156</latitudPunto>
@@ -148,7 +148,7 @@
         </tramo>
         <!--a11-->
         <tramo>
-            <distancia unidad="m">0</distancia>
+            <distancia unidad="m">60.04</distancia>
             <coordenadas>
                 <longitudPunto>51.45920578267339</longitudPunto>
                 <latitudPunto>25.4894095196156</latitudPunto>
