@@ -207,6 +207,64 @@
             </coordenadas>
             <numeroSector>2</numeroSector>
         </tramo>
+        <!--b6-->
+        <tramo>
+            <distancia unidad="m">157.83</distancia>
+            <coordenadas>
+                <longitudPunto>51.45497276112457</longitudPunto>
+                <latitudPunto>25.4918365586616</latitudPunto>
+                <altitudPunto>10.9657933095599</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b7-->
+        <tramo>
+            <distancia unidad="m">57.14</distancia>
+            <coordenadas>
+                <longitudPunto>51.45623976907952</longitudPunto>
+                <latitudPunto>25.4921930005552</latitudPunto>
+                <altitudPunto>12.24527735561616</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b8-->
+        <tramo>
+            <distancia unidad="m">99.33</distancia>
+            <coordenadas>
+                <longitudPunto>51.45608444351573</longitudPunto>
+                <latitudPunto>25.49294460734285</latitudPunto>
+                <altitudPunto>10.93805322155174</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b9-->
+        <tramo>
+            <distancia unidad="m">127.95</distancia>
+            <coordenadas>
+                <longitudPunto>51.45633754173671</longitudPunto>
+                <latitudPunto>25.49391536165053</latitudPunto>
+                <altitudPunto>11.23218662796367</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b10-->
+        <tramo>
+            <distancia unidad="m">47.29</distancia>
+            <coordenadas>
+                <longitudPunto>51.45650844970345</longitudPunto>
+                <latitudPunto>25.49457374913877</latitudPunto>
+                <altitudPunto>11.38238759503891</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+
+
+
+
+
+
+
+
     </tramos>
     <vencedor>
         <nombrePiloto>Marc Márquez</nombrePiloto>
