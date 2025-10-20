@@ -257,6 +257,56 @@
             </coordenadas>
             <numeroSector>2</numeroSector>
         </tramo>
+        <!--b11-->
+        <tramo>
+            <distancia unidad="m">28.72</distancia>
+            <coordenadas>
+                <longitudPunto>51.45682858311757</longitudPunto>
+                <latitudPunto>25.49476826708308</latitudPunto>
+                <altitudPunto>11.96331556138989</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b12-->
+        <tramo>
+            <distancia unidad="m">58.26</distancia>
+            <coordenadas>
+                <longitudPunto>51.45678902224974</longitudPunto>
+                <latitudPunto>25.49477833247</latitudPunto>
+                <altitudPunto>11.89050237333499</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b13-->
+        <tramo>
+            <distancia unidad="m">307.36</distancia>
+            <coordenadas>
+                <longitudPunto>51.4538540405614</longitudPunto>
+                <latitudPunto>25.49405966378558</latitudPunto>
+                <altitudPunto>11.84622610229162</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b14-->
+        <tramo>
+            <distancia unidad="m">36.81</distancia>
+            <coordenadas>
+                <longitudPunto>51.45349942682698</longitudPunto>
+                <latitudPunto>25.49409193288914</latitudPunto>
+                <altitudPunto>11.07951187372199</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
+        <!--b15-->
+        <tramo>
+            <distancia unidad="m">35.08</distancia>
+            <coordenadas>
+                <longitudPunto>51.45358843750927</longitudPunto>
+                <latitudPunto>25.49405435293088</latitudPunto>
+                <altitudPunto>11.19872488275086</altitudPunto>
+            </coordenadas>
+            <numeroSector>2</numeroSector>
+        </tramo>
 
 
 
