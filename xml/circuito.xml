@@ -413,6 +413,83 @@
             <numeroSector>3</numeroSector>
         </tramo>
 
+        <!--c8-->
+        <tramo>
+            <distancia unidad="m">29.99</distancia>
+            <coordenadas>
+                <longitudPunto>25.49450737695719</longitudPunto>
+                <latitudPunto>51.45079667243421</latitudPunto>
+                <altitudPunto>11.008738088067</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c9-->
+        <tramo>
+            <distancia unidad="m">30.67</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c10-->
+        <tramo>
+            <distancia unidad="m">140.15</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c11-->
+        <tramo>
+            <distancia unidad="m">29.48</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c12-->
+        <tramo>
+            <distancia unidad="m">37.91</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c13-->
+        <tramo>
+            <distancia unidad="m">39.64</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
+        <!--c14-->
+        <tramo>
+            <distancia unidad="m">189.23</distancia>
+            <coordenadas>
+                <longitudPunto>25.49531834437876</longitudPunto>
+                <latitudPunto>51.45142988719867</latitudPunto>
+                <altitudPunto>10.73478371304923</altitudPunto>
+            </coordenadas>
+            <numeroSector>3</numeroSector>
+        </tramo>
+
 
     </tramos>
     <vencedor>
