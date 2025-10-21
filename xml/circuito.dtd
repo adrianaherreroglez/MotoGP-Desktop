@@ -34,7 +34,7 @@
 <!ELEMENT patrocinador (#PCDATA)>
 
 <!-- referencias: al menos 3 referencias -->
-<!ELEMENT referencias (referencia, referencia, referencia, referencia*)>
+<!ELEMENT referencias (referencia+)>
 <!ELEMENT referencia (#PCDATA)>
 
 <!-- galeriaFotografias: 1..5 fotos -->
@@ -42,7 +42,7 @@
 <!ELEMENT foto (#PCDATA)>
 
 <!-- galeriaVideos: 1..3 videos -->
-<!ELEMENT galeriaVideos (video, video?, video?)>
+<!ELEMENT galeriaVideos (video+)>
 <!ELEMENT video (#PCDATA)>
 
 <!ELEMENT puntoOrigen (longitudOrigen, latitud, altitud)>
