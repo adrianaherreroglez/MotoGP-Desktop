@@ -33,7 +33,7 @@
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="longitudType">
-        <xs:restriction base="xs:positiveInteger">
+        <xs:restriction base="xs:float">
             <xs:minInclusive value="1"/>
             <xs:maxInclusive value="10000"/>
         </xs:restriction>
@@ -49,7 +49,7 @@
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="anchuraMediaType">
-        <xs:restriction base="xs:positiveInteger">
+        <xs:restriction base="xs:float">
             <xs:minInclusive value="1"/>
             <xs:maxInclusive value="200"/>
         </xs:restriction>
@@ -154,7 +154,7 @@
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="distanciaType">
-        <xs:restriction base="xs:positiveInteger">
+        <xs:restriction base="xs:float">
             <xs:minInclusive value="1"/>
             <xs:maxInclusive value="1000"/>
         </xs:restriction>
