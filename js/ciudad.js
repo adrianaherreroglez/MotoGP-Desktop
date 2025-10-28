@@ -4,14 +4,35 @@
 // Cursd 2025-2026   
 "use strict";        
 class Ciudad {            
-    constructor (nombre,pais,gentilicio,poblacion,coordenadas){                
-        this.nombre=nombre;            
-        this.pais=pais;
+    constructor (nombre,pais,gentilicio){                
+        this.nombre = nombre;            
+        this.pais = pais;
         this.gentilicio = gentilicio;
-        this.poblacion = poblacion;
-        this.coordenadas = coordenadas; // { latitud: ..., longitud: ... }
-    }            
+    }       
+    
+    infoSecundaria(){
+        this.poblacion = 200000;
+        this.coordenadas = this.coordenadas;
+
+    }
+
+    getNombre() {
+        return this.nombre;
+    }
+
+    getPais() {
+        return this.pais;
+    }
+
+    getInfoSecundaria() {
+        return `
+            <ul>
+                <li>Gentilicio: ${this.gentilicio}</li>
+                <li>Población: ${this.poblacion}</li>
+            </ul>
+        `;
+    }
              
 }        
 
-let ciudad = new Ciudad("Lusail","Qatar","Lusailense",200.000, { latitud: 25.418852825791216, longitud: 51.500839854808376 });             
+let ciudad = new Ciudad("Lusail","Qatar","Lusailense");             
