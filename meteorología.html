@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 
 <html lang="es">
+
 <head>
     <!-- Datos que describen el documento -->
     <meta charset="UTF-8" />
@@ -13,6 +14,7 @@ de las palabras clave del mismo separadas por comas" />
     <link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
     <link rel="stylesheet" type="text/css" href="estilo/layout.css" />
     <link rel="icon" href="multimedia/favicon.ico" />
+    <script src="js/ciudad.js"></script>
 </head>
 
 <body>
@@ -32,8 +34,22 @@ de las palabras clave del mismo separadas por comas" />
     <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <strong>Meteorología</strong></p>
 
     <main>
-        <h2>Meteorología de MotoGP-Desktop</h2>
-        <p>en desarrollo </p>
+        <section>
+            <h2>Meteorología de MotoGP-Desktop</h2>
+            <h3>Ciudad y País del circuito</h3>
+            <script>
+                document.write(`<p>${ciudad.getNombre()} (${ciudad.getPais()})</h3>`);
+            </script>
+            <h3>Información secundaria</h3>
+            <script>
+                document.write(`<p>${ciudad.getNombre()} (${ciudad.getPais()})</h3>`);
+            </script>
+            <h3>Coordenadas de la ciudad</h3>
+            <script>
+                ciudad.getCoordenadas();
+            </script>
+        </section>
     </main>
 </body>
+
 </html>

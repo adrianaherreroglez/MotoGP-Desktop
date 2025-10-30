@@ -38,16 +38,15 @@ class Ciudad {
     }
 
     getCoordenadas(){
-        // ¿Hay que usar deprecated?
+        // ¿Hay que usar write aunque esté deprecated?
         document.write(
-        `<p>Coordenadas de ${this.nombre}: 
-        Latitud ${this.coordenadas.latitud}, 
-        Longitud ${this.coordenadas.longitud}</p>`
+            ` <p>Latitud: ${this.coordenadas.latitud}</p> 
+        <p>Longitud: ${this.coordenadas.longitud}</p>`
         ); 
     }
              
 }        
 
 let ciudad = new Ciudad("Lusail","Qatar","Lusailense");             
-ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862); // Población, latitud, longitud
+ciudad.infoSecundaria(200000, 25.41854617669826, 51.50062601649862); 
 
