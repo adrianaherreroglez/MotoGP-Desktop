@@ -1,3 +1,4 @@
+
 // versión 1.0 
 // Adriana Herrero González
 // Universidad de Oviedo
@@ -10,9 +11,12 @@ class Ciudad {
         this.gentilicio = gentilicio;
     }       
     
-    infoSecundaria(){
-        this.poblacion = 200000;
-        this.coordenadas = this.coordenadas;
+    infoSecundaria(poblacion,latitud,longitud){
+        this.poblacion = poblacion;
+         this.coordenadas = {
+            latitud: latitud, 
+            longitud: longitud
+        };
 
     }
 
@@ -32,7 +36,18 @@ class Ciudad {
             </ul>
         `;
     }
+
+    getCoordenadas(){
+        // ¿Hay que usar deprecated?
+        document.write(
+        `<p>Coordenadas de ${this.nombre}: 
+        Latitud ${this.coordenadas.latitud}, 
+        Longitud ${this.coordenadas.longitud}</p>`
+        ); 
+    }
              
 }        
 
 let ciudad = new Ciudad("Lusail","Qatar","Lusailense");             
+ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862); // Población, latitud, longitud
+
