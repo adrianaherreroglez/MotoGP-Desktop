@@ -11,7 +11,7 @@ class Ciudad {
         this.gentilicio = gentilicio;
     }       
     
-    infoSecundaria(poblacion,latitud,longitud){
+    rellenarDatos(poblacion,latitud,longitud){
         this.poblacion = poblacion;
          this.coordenadas = {
             latitud: latitud, 
@@ -46,7 +46,4 @@ class Ciudad {
     }
              
 }        
-
-let ciudad = new Ciudad("Lusail","Qatar","Lusailense");             
-ciudad.infoSecundaria(200000, 25.41854617669826, 51.50062601649862); 
 
