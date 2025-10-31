@@ -1,0 +1,30 @@
+/*Adriana Herrero Gonzalez UO287543*/
+/* Estilos grid para el juego de cartas del MotoGP-Desktop*/
+
+/* Contenedor principal del juego: main actúa como grid */
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales que ocupan todo el ancho */
+    gap: 1rem; /* separación relativa entre los elementos */
+}
+
+/* El título ocupa toda la primera fila */
+main > h2 {
+    grid-column: 1 / -1; /* desde la primera hasta la última columna */
+    text-align: center;  /* centramos el título */
+}
+
+/* Media query para pantallas pequeñas: adaptamos a 2 columnas */
+/* Media query para pantallas entre 320px y 799px */
+@media (min-width: 320px) and (max-width: 799px) {
+    main {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+        grid-auto-rows: auto; /* filas automáticas según contenido */
+        gap: 1rem; /* separación entre cartas */
+    }
+
+    /* El título sigue ocupando toda la fila */
+    main > h2 {
+        grid-column: 1 / -1;
+    }
+}
