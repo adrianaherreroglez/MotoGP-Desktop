@@ -40,24 +40,23 @@ de las palabras clave del mismo separadas por comas" />
             </script>
 
             <h2>Meteorología en
-                <script>document.write(ciudad.getNombre())</script>
+                <script>ciudad.getNombre()</script>
             </h2>
+
+
             <p>
-                La ciudad de
-                <script>
-                    ciudad.getNombre()
-                </script>
-                se encuentra en el país de
-                <script>
-                    document.write(ciudad.getPais())
-                </script>
+                <script>ciudad.getNombre();</script>
+                es una ciudad que se encuentra en el país de
+                <script>ciudad.getPais();</script>.
             </p>
+
+
 
         </section>
 
         <section>
             <h3>Información secundaria sobre la ciudad</h3>
-            <script>document.write(ciudad.getInfoSecundaria())</script>
+            <script>ciudad.getInfoSecundaria()</script>
         </section>
         <section>
             <h3>Coordenadas de la ciudad</h3>

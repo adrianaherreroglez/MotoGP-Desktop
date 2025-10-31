@@ -21,24 +21,30 @@ class Ciudad {
     }
 
     getNombre() {
-        return this.nombre;
+        document.currentScript.insertAdjacentText("beforebegin", this.nombre);
     }
 
     getPais() {
-        return this.pais;
+        document.currentScript.insertAdjacentText("beforebegin", this.pais);
     }
 
     getInfoSecundaria() {
-        return `
+        const script = document.currentScript;
+
+        const contenedor = document.createElement("section");
+        contenedor.innerHTML = `
             <ul>
                 <li>Gentilicio: ${this.gentilicio}</li>
                 <li>Población: ${this.poblacion}</li>
             </ul>
         `;
+
+        while (contenedor.firstChild) {
+            script.parentNode.insertBefore(contenedor.firstChild, script);
+        }
     }
 
     getCoordenadas(){
-        // ¿Hay que usar write aunque esté deprecated?
         document.write(
             ` <p>Latitud: ${this.coordenadas.latitud}</p> 
         <p>Longitud: ${this.coordenadas.longitud}</p>`
