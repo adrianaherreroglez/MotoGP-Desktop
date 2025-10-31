@@ -24,26 +24,48 @@
 	</xs:element>
 	<xs:element name="nombre" type="xs:string" />
 	<xs:element name="longitud">
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="xs:string">
-					<xs:attribute name="unidad" type="xs:string" use="required" />
-				</xs:extension>
-			</xs:simpleContent>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="anchuraMedia">
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="xs:integer">
-					<xs:attribute name="unidad" type="xs:string" use="required" />
-				</xs:extension>
-			</xs:simpleContent>
-		</xs:complexType>
-	</xs:element>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="longitudType">
+                    <xs:attribute name="unidad" type="xs:string" use="required" />
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="longitudType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="10000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	 <xs:element name="anchuraMedia">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="anchuraMediaType">
+                    <xs:attribute name="unidad" type="xs:string" use="required" />
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="anchuraMediaType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="200"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 	<xs:element name="fecha" type="xs:date" />
 	<xs:element name="horaInicio" type="xs:time" />
-	<xs:element name="vueltas" type="xs:integer" />
+
+	<xs:element name="vueltas" type="vueltasType" />
+    <xs:simpleType name="vueltasType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="150"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 	<xs:element name="localidad" type="xs:string" />
 	<xs:element name="pais" type="xs:string" />
 	<xs:element name="patrocinador" type="xs:string" />
@@ -58,11 +80,7 @@
 	<xs:element name="galeriaFotografias">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="foto" />
-				<xs:element minOccurs="0" maxOccurs="1" ref="foto" />
-				<xs:element minOccurs="0" maxOccurs="1" ref="foto" />
-				<xs:element minOccurs="0" maxOccurs="1" ref="foto" />
-				<xs:element minOccurs="0" maxOccurs="1" ref="foto" />
+				<xs:element minOccurs="1" maxOccurs="5" ref="foto" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -70,11 +88,33 @@
 	<xs:element name="galeriaVideos">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element minOccurs="1" maxOccurs="unbounded" ref="video" />
+				<xs:element minOccurs="1" maxOccurs="3" ref="video" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="video" type="xs:string" />
+
+	 <xs:simpleType name="longitudGeoType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="-180"/>
+            <xs:maxInclusive value="180"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="latitudGeoType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="-90"/>
+            <xs:maxInclusive value="90"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="altitudGeoType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="-500"/>
+            <xs:maxInclusive value="9000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 	<xs:element name="puntoOrigen">
 		<xs:complexType>
 			<xs:sequence>
@@ -84,9 +124,9 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="longitudOrigen" type="xs:string" />
-	<xs:element name="latitud" type="xs:string" />
-	<xs:element name="altitud" type="xs:string" />
+	<xs:element name="longitudOrigen" type="longitudGeoType" />
+    <xs:element name="latitud" type="latitudGeoType" />
+    <xs:element name="altitud" type="altitudGeoType" />
 	<xs:element name="tramos">
 		<xs:complexType>
 			<xs:sequence>
@@ -103,15 +143,23 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+
 	<xs:element name="distancia">
-		<xs:complexType>
-			<xs:simpleContent>
-				<xs:extension base="xs:string">
-					<xs:attribute name="unidad" type="xs:string" use="required" />
-				</xs:extension>
-			</xs:simpleContent>
-		</xs:complexType>
-	</xs:element>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="distanciaType">
+                    <xs:attribute name="unidad" type="xs:string" use="required" />
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="distanciaType">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 	<xs:element name="coordenadas">
 		<xs:complexType>
 			<xs:sequence>
@@ -121,10 +169,18 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="longitudPunto" type="xs:string" />
-	<xs:element name="latitudPunto" type="xs:string" />
-	<xs:element name="altitudPunto" type="xs:string" />
-	<xs:element name="numeroSector" type="xs:string" />
+	<xs:element name="longitudPunto" type="longitudGeoType" />
+    <xs:element name="latitudPunto" type="latitudGeoType" />
+    <xs:element name="altitudPunto" type="altitudGeoType" />
+
+	<xs:element name="numeroSector" type="numeroSectorType" />
+    <xs:simpleType name="numeroSectorType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 	<xs:element name="vencedor">
 		<xs:complexType>
 			<xs:sequence>
@@ -134,7 +190,7 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="nombrePiloto" type="xs:string" />
-	<xs:element name="tiempo" type="xs:string" />
+	<xs:element name="tiempo" type="xs:time" />
 	<xs:element name="clasificados">
 		<xs:complexType>
 			<xs:sequence>
