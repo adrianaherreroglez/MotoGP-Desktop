@@ -38,21 +38,13 @@ class Ciudad {
     }
 
     getCoordenadas() {
-        const section = document.createElement("section");
-
-        const title = document.createElement("h3");
-        title.textContent = "Coordenadas de " + this.getNombre();
-        section.appendChild(title);
-
-        const pLatitud = document.createElement("p");
-        pLatitud.textContent = "Latitud: " + this.coordenadas.latitud;
-        section.appendChild(pLatitud);
-
-        const pLongitud = document.createElement("p");
-        pLongitud.textContent = "Longitud: " + this.coordenadas.longitud;
-
-        section.appendChild(pLongitud);
-        document.currentScript.parentElement.appendChild(section);
+        document.write(
+        `<section>
+            <h3>Coordenadas de ${this.getNombre()}</h3>
+            <p>Latitud: ${this.coordenadas.latitud}</p>
+            <p>Longitud: ${this.coordenadas.longitud}</p>
+        </section>`
+    );
     }
 
     showIntroduction(){
