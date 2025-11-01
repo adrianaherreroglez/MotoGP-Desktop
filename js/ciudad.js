@@ -37,26 +37,38 @@ class Ciudad {
     `;
     }
 
-    escribirCoordenadas() {
-        document.write("<section>");
-        document.write("<h3>Coordenadas de " + this.getNombre() + "</h3>");
-        document.write("<p>Latitud: " + this.coordenadas.latitud + "</p>");
-        document.write("<p>Longitud: " + this.coordenadas.longitud + "</p>");
-        document.write("</section>");
+    getCoordenadas() {
+        const section = document.createElement("section");
+
+        const title = document.createElement("h3");
+        title.textContent = "Coordenadas de " + this.getNombre();
+        section.appendChild(title);
+
+        const pLatitud = document.createElement("p");
+        pLatitud.textContent = "Latitud: " + this.coordenadas.latitud;
+        section.appendChild(pLatitud);
+
+        const pLongitud = document.createElement("p");
+        pLongitud.textContent = "Longitud: " + this.coordenadas.longitud;
+
+        section.appendChild(pLongitud);
+        document.currentScript.parentElement.appendChild(section);
     }
 
-
-    mostrarInfo() {
+    showIntroduction(){
+        const seccion = document.createElement("section");
         const titulo = document.createElement("h2");
         titulo.textContent = "Meteorología en " + this.getNombre();
-        document.body.appendChild(titulo);
+        seccion.appendChild(titulo);
 
-        const seccion = document.createElement("section");
 
         const pais = document.createElement("p");
         pais.textContent = this.getNombre() + " es una ciudad del país de " + this.getPais() + ".";
         seccion.appendChild(pais);
+         document.currentScript.parentElement.appendChild(seccion);
+    }
 
+    showInfo() {
         const seccionLista = document.createElement("section");
 
         const tituloLista = document.createElement("h3");
@@ -75,11 +87,7 @@ class Ciudad {
 
         seccionLista.appendChild(lista);
 
-        seccion.appendChild(seccionLista);
-
-        document.body.appendChild(seccion);
-
-        
+        document.currentScript.parentElement.appendChild(seccionLista);
     }
 }
 
