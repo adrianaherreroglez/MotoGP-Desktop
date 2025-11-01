@@ -34,37 +34,12 @@ de las palabras clave del mismo separadas por comas" />
     <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <strong>Meteorología</strong></p>
 
     <main>
-        <section>
-            <script>let ciudad = new Ciudad("Lusail", "Qatar", "Lusailense");
-                ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862); 
-            </script>
-
-            <h2>Meteorología en
-                <script>ciudad.getNombre()</script>
-            </h2>
-
-
-            <p>
-                <script>ciudad.getNombre();</script>
-                es una ciudad que se encuentra en el país de
-                <script>ciudad.getPais();</script>.
-            </p>
-
-
-
-        </section>
-
-        <section>
-            <h3>Información secundaria sobre la ciudad</h3>
-            <script>ciudad.getInfoSecundaria()</script>
-        </section>
-        <section>
-            <h3>Coordenadas de la ciudad</h3>
-            <script>ciudad.getCoordenadas()</script>
-        </section>
-
-
-        </section>
+        <script>let ciudad = new Ciudad("Lusail", "Qatar", "Lusailense");
+            ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862); 
+            ciudad.mostrarInfo();
+            
+        </script>
+        
     </main>
 </body>
 
