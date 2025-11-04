@@ -15,6 +15,9 @@ class Cronometro {
         } catch (err) {
             this.inicio = new Date();
         }
+
+        // Llama a actualizar() cada décima de segundo (100 ms)
+        this.corriendo = setInterval(this.actualizar.bind(this), 100);
     }
 
     actualizar() {
@@ -28,11 +31,6 @@ class Cronometro {
         this.mostrar();
     }
 
-
-    arrancar() {
-        // Llama a actualizar() cada décima de segundo (100 ms)
-        this.corriendo = setInterval(this.actualizar.bind(this), 100);
-    }
 
     mostrar() {
         // Convertimos milisegundos en minutos, segundos y décimas
