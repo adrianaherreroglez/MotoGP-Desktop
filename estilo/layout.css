@@ -46,6 +46,12 @@ nav {
                                 cambia en el móvil: pasa de row a column*/
     }
 
+     nav a {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
     /* Especificidad 011 */
     header + p {
         display: none;
