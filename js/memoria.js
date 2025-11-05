@@ -10,8 +10,6 @@ class Memoria{
         this.primera_carta = null;
         this.segunda_carta = null;
 
-        this.barajarCartas();
-
     }
 
     voltearCarta(carta){
@@ -45,4 +43,12 @@ class Memoria{
             main.appendChild(cartas[k]);
         }
     }
+
+    reiniciarAtributos(){
+        this.tablero_bloqueado = true;
+        this.primera_carta = null;
+        this.segunda_carta = null;
+    }
+
+  
 }
