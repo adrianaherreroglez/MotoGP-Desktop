@@ -11,7 +11,7 @@ main article {
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform .5s;
-    box-shadow: 0.1em 0.1em 0.1em rgba(0,0,0,.3);
+    box-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, .3);
 }
 
 /* Regla con la transformación que permite girar la carta cuando se le pone el atributo personalizado data-estado al valor volteada */
@@ -29,7 +29,7 @@ article img {
     height: 100%;
     position: absolute;
     border-radius: 0.5em;
-    background: #B8CEFF;
+    background: #B8CEFF; /* Advertencia:hereda el color de de letra del body ->#642207*/
     backface-visibility: hidden;
 }
 
@@ -47,4 +47,15 @@ article h3 {
 /* especificidad: 002 */
 article img {
     transform: rotateY(180deg);
+}
+
+
+@media (min-width: 320px) and (max-width: 799px) {
+
+    /* Especificidad (0,0,2)*/
+    main article {
+        width: 35vw; /* Advertencia: redefinición en media-query para que se vean mejor las cartas en los móviles */
+        height: 20em;  /* Advertencia: redefinición en media-query para que se vean mejor las cartas en los móviles */
+    }
+
 }
