@@ -3,16 +3,16 @@
 // Universidad de Oviedo
 // Cursd 2025-2026   
 "use strict"
-class Memoria{
+class Memoria {
 
-    constructor(){
+    constructor() {
         this.tablero_bloqueado = true;
         this.primera_carta = null;
         this.segunda_carta = null;
 
     }
 
-    voltearCarta(carta){
+    voltearCarta(carta) {
         carta.dataset.estado = "volteada";
     }
 
@@ -44,11 +44,37 @@ class Memoria{
         }
     }
 
-    reiniciarAtributos(){
+    reiniciarAtributos() {
         this.tablero_bloqueado = true;
         this.primera_carta = null;
         this.segunda_carta = null;
     }
 
-  
+    deshabilitarCartas() {
+        this.primera_carta.dataset.estado = "revelada";
+        this.segunda_carta.dataset.estado = "revelada";
+
+        this.comprobarJuego();
+        this.reiniciarAtributos();
+    }
+
+    comprobarJuego(){
+        const cartas = document.querySelectorAll('main article');
+        
+        let todasReveladas = true;
+        for(let i = 0; i < cartas.length; i++){
+            if(cartas[i].dataset.estado != 'revelada'){
+                todasReveladas = false;
+                break;
+            }
+
+        }
+
+        if(todasReveladas){
+            // Finalizar juego
+        }
+
+    }
+
+
 }
