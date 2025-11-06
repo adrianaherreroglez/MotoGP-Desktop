@@ -10,17 +10,83 @@ class Memoria {
         this.primera_carta = null;
         this.segunda_carta = null;
 
+        this.barajarCartas();
+
+        this.tablero_bloqueado = false;
     }
 
     voltearCarta(carta) {
+        if (this.tablero_bloqueado) return; // Si el tablero está bloqueado, no hacer nada
+        if (carta.dataset.estado === "volteada") return; // Si la carta ya está volteada, no hacer nada
+        if (carta.dataset.estado === "revelada") return; // Si la carta ya está emparejada, no hacer nada
+
         carta.dataset.estado = "volteada";
+
+        // Si no hay primera carta, esta es la primera
+        if (!this.primera_carta) {
+            this.primera_carta = carta;
+            return; // Salimos porque falta la segunda carta
+        }
+
+        // Si ya hay una primera, esta será la segunda
+        this.segunda_carta = carta;
+
+        this.tablero_bloqueado = true;
+
+  
+        this.comprobarPareja();
+    }
+
+    comprobarPareja() {
+        const img1 = this.primera_carta.children[1].getAttribute('src');
+        const img2 = this.segunda_carta.children[1].getAttribute('src');
+
+        (img1 === img2) ? this.deshabilitarCartas() : this.cubrirCartas();
+    }
+
+    deshabilitarCartas() {
+        this.primera_carta.dataset.estado = "revelada";
+        this.segunda_carta.dataset.estado = "revelada";
+        this.comprobarJuego();
+        this.reiniciarAtributos();
+    }
+
+    cubrirCartas() {
+        this.tablero_bloqueado = true;
+
+        setTimeout(function () {
+            if (this.primera_carta) {
+                this.primera_carta.removeAttribute('data-estado');
+            }
+            if (this.segunda_carta) {
+                this.segunda_carta.removeAttribute('data-estado');
+            }
+            this.reiniciarAtributos();
+        }.bind(this), 1500);
+    }
+
+    comprobarJuego() {
+        const cartas = document.querySelectorAll('main article');
+        let todasReveladas = true;
+        for (let i = 0; i < cartas.length; i++) {
+            if (cartas[i].dataset.estado != 'revelada') {
+                todasReveladas = false;
+                break;
+            }
+        }
+        if (todasReveladas) {
+            // Finalizar
+        }
+    }
+
+    reiniciarAtributos() {
+        this.tablero_bloqueado = false;
+        this.primera_carta = null;
+        this.segunda_carta = null;
     }
 
     barajarCartas() {
-        // Obtener el contenedor principal
         var main = document.querySelector("main");
-
-        // Obtener todos los hijos del main y quedarnos solo con los <article>
         var hijos = main.children;
         var cartas = [];
 
@@ -30,7 +96,6 @@ class Memoria {
             }
         }
 
-        // Barajar las cartas
         for (var i = cartas.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             var temp = cartas[i];
@@ -38,43 +103,8 @@ class Memoria {
             cartas[j] = temp;
         }
 
-        // Volver a añadir las cartas al <main> en el nuevo orden
         for (var k = 0; k < cartas.length; k++) {
             main.appendChild(cartas[k]);
         }
     }
-
-    reiniciarAtributos() {
-        this.tablero_bloqueado = true;
-        this.primera_carta = null;
-        this.segunda_carta = null;
-    }
-
-    deshabilitarCartas() {
-        this.primera_carta.dataset.estado = "revelada";
-        this.segunda_carta.dataset.estado = "revelada";
-
-        this.comprobarJuego();
-        this.reiniciarAtributos();
-    }
-
-    comprobarJuego(){
-        const cartas = document.querySelectorAll('main article');
-        
-        let todasReveladas = true;
-        for(let i = 0; i < cartas.length; i++){
-            if(cartas[i].dataset.estado != 'revelada'){
-                todasReveladas = false;
-                break;
-            }
-
-        }
-
-        if(todasReveladas){
-            // Finalizar juego
-        }
-
-    }
-
-
 }
