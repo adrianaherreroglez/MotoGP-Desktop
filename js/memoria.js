@@ -13,6 +13,9 @@ class Memoria {
         this.barajarCartas();
 
         this.tablero_bloqueado = false;
+
+        this.crono = new Cronometro();
+        this.crono.arrancar();
     }
 
     voltearCarta(carta) {
@@ -76,6 +79,7 @@ class Memoria {
         }
         if (todasReveladas) {
             // Finalizar
+            this.crono.parar();
         }
     }
 
@@ -90,6 +94,7 @@ class Memoria {
         var hijos = main.children;
         var cartas = [];
 
+        // Solo se tienen en cuenta los article
         for (var i = 0; i < hijos.length; i++) {
             if (hijos[i].tagName.toLowerCase() === "article") {
                 cartas.push(hijos[i]);

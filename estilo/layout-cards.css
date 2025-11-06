@@ -11,10 +11,13 @@ main {
 }
 
 /* Especificidad (0,0,2)*/
-main h2 {
+section {
   grid-column: 1 / -1;  /* Título ocupa toda la primera fila */
-
+  justify-items: center;
 }
+
+/* Especificidad (0,0,2)*/
+
 
 @media (min-width: 320px) and (max-width: 799px) {
 
