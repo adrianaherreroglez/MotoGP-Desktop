@@ -37,14 +37,18 @@ class Ciudad {
     `;
     }
 
-    getCoordenadas() {
-        document.write(
-        `<section>
-            <h3>Coordenadas de ${this.getNombre()}</h3>
-            <p>Latitud: ${this.coordenadas.latitud}</p>
-            <p>Longitud: ${this.coordenadas.longitud}</p>
-        </section>`
-    );
+    getCoordenadas(){
+        const seccion = document.createElement("section");
+        const titulo = document.createElement("h3");
+        titulo.textContent = "Coordenadas de " + this.getNombre();
+        seccion.appendChild(titulo);
+        const latitud = document.createElement("p");
+        latitud.textContent = "Latitud: " + this.coordenadas.latitud;
+        seccion.appendChild(latitud);
+        const longitud = document.createElement("p");
+        longitud.textContent = "Longitud: " + this.coordenadas.longitud;
+        seccion.appendChild(longitud);
+        document.currentScript.parentElement.appendChild(seccion);
     }
 
     showIntroduction(){
@@ -57,7 +61,7 @@ class Ciudad {
         const pais = document.createElement("p");
         pais.textContent = this.getNombre() + " es una ciudad del país de " + this.getPais() + ".";
         seccion.appendChild(pais);
-         document.currentScript.parentElement.appendChild(seccion);
+        document.currentScript.parentElement.appendChild(seccion);
     }
 
     showInfo() {

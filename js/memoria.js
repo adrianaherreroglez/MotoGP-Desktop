@@ -11,6 +11,7 @@ class Memoria {
         this.segunda_carta = null;
 
         this.barajarCartas();
+        this.manageEvents();
 
         this.tablero_bloqueado = false;
 
@@ -89,6 +90,15 @@ class Memoria {
         this.segunda_carta = null;
     }
 
+    manageEvents() {
+        const cartas = document.querySelectorAll("main article");
+        for(let i = 0; i < cartas.length; i++){
+            cartas[i].addEventListener("click", this.voltearCarta(this));
+        }
+    }
+
+   
+
     barajarCartas() {
         var main = document.querySelector("main");
         var hijos = main.children;
@@ -111,5 +121,5 @@ class Memoria {
         for (var k = 0; k < cartas.length; k++) {
             main.appendChild(cartas[k]);
         }
-    }
+    } 
 }

@@ -8,6 +8,30 @@ class Cronometro {
         this.tiempo = 0;         // tiempo acumulado en milisegundos
         this.tiempoTotal = 0;    // tiempo mostrado actualmente
         this.corriendo = null;
+        this.manageEvents();
+    }
+
+    manageEvents() {
+        const buttons = document.querySelectorAll("button");
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].addEventListener("click", this.manageButton.bind(this));
+        }
+    }
+
+    manageButton(evento) {
+        const texto = evento.target.textContent;
+
+        switch (texto) {
+          case "Arrancar":
+            this.arrancar();
+            break;
+          case "Parar":
+            this.parar();
+            break;
+          case "Reiniciar":
+            this.reiniciar();
+            break;
+        }
     }
 
     arrancar() {
@@ -75,3 +99,5 @@ class Cronometro {
         this.mostrar();
     }
 }
+
+ 
