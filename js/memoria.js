@@ -89,6 +89,7 @@ class Memoria {
         }
     }
 
+
     #reiniciarAtributos() {
         this.#tablero_bloqueado = false;
         this.#primera_carta = null;
@@ -98,7 +99,7 @@ class Memoria {
     #manageEvents() {
         const cartas = document.querySelectorAll("main article");
         for(let i = 0; i < cartas.length; i++){
-            cartas[i].addEventListener("click", this.voltearCarta(this));
+            cartas[i].addEventListener("click", this.voltearCarta.bind(this, cartas[i]));
         }
     }
 
