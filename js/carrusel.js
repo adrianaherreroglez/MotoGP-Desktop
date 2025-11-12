@@ -5,70 +5,57 @@
 "use strict";
 
 class Carrusel {
-
     #busqueda;
-    #fotosJSON;
     #actual;
     #maximo;
+    #fotosJSON;
 
     constructor() {
-        this.#busqueda = "Lusail International Circuit";
-        this.#fotosJSON = [];
-        this.#actual = 0;   // índice de la foto actualmente mostrada
-        this.#maximo = 4;   // número máximo de fotos a mostrar
+        this.#busqueda = "Lusail International Circuit"; // término de búsqueda
+        this.#actual = 0; // índice de la foto actual
+        this.#maximo = 4; // número máximo de fotos a mostrar
+        this.#fotosJSON = null;
     }
 
-
     getFotografias() {
-        var flickrAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+        var url = "https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
 
         $.ajax({
             dataType: "json",
-            url: flickrAPI,
+            url: url,
             method: "GET",
             data: {
                 tags: this.#busqueda,
                 tagmode: "any",
                 format: "json"
             },
-            success: (function (datos) {
-                // Forzar tamaño 640px (_z)
-                var fotos = [];
-                for (var i = 0; i < 5 && i < datos.items.length; i++) {
-                    var item = datos.items[i];
-                    fotos.push(item.media.m.replace("_m.", "_z."));
-                }
-                this.#fotosJSON = fotos;
-
+            success: function(datos) {
+                this.#fotosJSON = datos; 
                 this.procesarJSONFotografias();
                 this.mostrarFotografias();
-
-            }).bind(this),
-            error: (function () {
-                var error = document.createElement("p");
-                error.textContent = "¡Tenemos problemas! No se pudieron obtener las imágenes del feed público de Flickr.";
-                document.body.appendChild(error);
-            }).bind(this)
+            }.bind(this), 
+            error: function() {
+                var h3 = document.createElement("h3");
+                h3.innerHTML = "¡Tenemos problemas! No puedo obtener JSON de <a href='https://www.flickr.com/'>Flickr</a>";
+                document.body.appendChild(h3);
+            }
         });
     }
 
     procesarJSONFotografias() {
-        const fotosProcesadas = {
-            fotos: this.#fotosJSON.slice(0, 5) // extraemos hasta 5 fotos
-        };
+        if (!this.#fotosJSON || !this.#fotosJSON.items) return;
 
-        fotosProcesadas.ver = fotosProcesadas.fotos.slice.bind(fotosProcesadas.fotos);
+        // Extraemos hasta 5 fotos y tenemos tamaño a _z (640px)
+        const fotos = [];
+        for (var i = 0; i < this.#fotosJSON.items.length && i < 5; i++) {
+            fotos.push(this.#fotosJSON.items[i].media.m.replace("_m.", "_z."));
+        }
 
-        this.#fotosJSON = fotosProcesadas;
-
-        return this.#fotosJSON;
+        this.#fotosJSON = { fotos: fotos };
     }
 
-
-
     mostrarFotografias() {
-        // Comprobar que existen fotos
-        if (!this.#fotosJSON || this.#fotosJSON.length === 0) return;
+        if (!this.#fotosJSON || this.#fotosJSON.fotos.length === 0) return;
 
         var articulo = document.createElement("article");
 
@@ -76,16 +63,11 @@ class Carrusel {
         encabezado.textContent = "Imágenes del circuito de " + this.#busqueda;
         articulo.appendChild(encabezado);
 
-        // Obtener la primera foto (índice #actual)
-        var fotoURL = this.#fotosJSON.ver()[this.#actual];
-
-        // Crear la imagen
         var imagen = document.createElement("img");
-        imagen.src = fotoURL;
+        imagen.src = this.#fotosJSON.fotos[this.#actual];
         imagen.alt = "Fotografía del circuito";
-
         articulo.appendChild(imagen);
+
         document.body.appendChild(articulo);
     }
-
 }
