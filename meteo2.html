@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clima MotoGP 2025 Lusail</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Clima del circuito Lusail International (MotoGP, 11-13 Abril 2025)</h1>
+<div id="clima"></div>
+
+<script>
+$(document).ready(function() {
+    const url = "https://archive-api.open-meteo.com/v1/archive?latitude=25.5561&longitude=51.4194&start_date=2025-04-11&end_date=2025-04-13&hourly=temperature_2m,precipitation,windspeed_10m&timezone=Asia/Qatar";
+
+    // Solo horas de sesiones de MotoGP
+    const sesionesMotoGP = {
+        "2025-04-11": [14,19],
+        "2025-04-12": [14,15,19],
+        "2025-04-13": [19]
+    };
+
+    $.getJSON(url, function(data) {
+        let html = "<h2>Pronóstico horario de sesiones MotoGP:</h2><ul>";
+
+        const times = data.hourly.time;
+        const temps = data.hourly.temperature_2m;
+        const winds = data.hourly.windspeed_10m;
+        const rain = data.hourly.precipitation;
+
+        for (let i = 0; i < times.length; i++) {
+            const datetime = times[i]; // Ej: "2025-04-11T14:00"
+            const [date, time] = datetime.split("T");
+            const hour = parseInt(time.split(":")[0]);
+
+            if (sesionesMotoGP[date] && sesionesMotoGP[date].includes(hour)) {
+                html += `<li><b>${datetime}</b> - Temp: ${temps[i]}°C, Viento: ${winds[i]} km/h, Lluvia: ${rain[i]} mm</li>`;
+            }
+        }
+
+        html += "</ul>";
+        $("#clima").html(html);
+    }).fail(function() {
+        $("#clima").html("<p>Error al obtener los datos del clima.</p>");
+    });
+});
+</script>
+
+</body>
+</html>
