@@ -22,7 +22,7 @@ class Ciudad {
         this.#gentilicio = gentilicio;
         this.#unidades = "&units=metric";
         this.#idioma = "&lang=es";
-        this.#apikey = "bd03caa7f315e23ca909aadf2c8ea59e"; // tu API key
+        this.#apikey = "bd03caa7f315e23ca909aadf2c8ea59e"; 
     }
 
     rellenarDatos(poblacion, latitud, longitud) {
@@ -81,58 +81,79 @@ class Ciudad {
     }
 
     getMeteorologiaCarrera() {
-        var fechas = ["2025-04-11", "2025-04-12", "2025-04-13"];
-        var lat = this.#coordenadas.latitud;
-        var lon = this.#coordenadas.longitud;
+        const fechas = ["2025-04-11", "2025-04-12", "2025-04-13"];
+        const sesionesMotoGP = {
+            "2025-04-11": [14,19],
+            "2025-04-12": [14,15,19],
+            "2025-04-13": [19]
+        };
+    
         this.#datosCarrera = {
             circuito: "Lusail International Circuit",
             ciudad: this.#nombre,
             pais: this.#pais,
             periodo: { inicio: fechas[0], fin: fechas[2] },
-            datosPorHora: []
+            datosPorHora: [],
+            amanecer: {},
+            atardecer: {}
         };
-
-        var llamadasCompletadas = 0;
-
+    
+        let completadas = 0;
+    
         fechas.forEach(function(fecha) {
-            var timestamp = Math.floor(new Date(fecha + "T00:00:00Z").getTime() / 1000);
-            var url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" +
-                      lat + "&lon=" + lon + "&dt=" + timestamp +
-                      "&units=metric&lang=es&appid=" + this.#apikey;
-
-            $.ajax({
-                dataType: "json",
-                url: url,
-                method: "GET",
-                success: function(datos) {
-                    for (var i = 0; i < datos.hourly.length; i++) {
-                        var h = datos.hourly[i];
+            const url =
+                `https://archive-api.open-meteo.com/v1/archive?latitude=` + this.#coordenadas.latitud + `&longitude=` + this.#coordenadas.longitud +
+                `&start_date=${fecha}&end_date=${fecha}` +
+                `&hourly=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,windspeed_10m,winddirection_10m` +
+                `&daily=sunrise,sunset` +
+                `&timezone=Asia/Qatar`;
+    
+            $.getJSON(url, function(data) {
+                // Guardamos amanecer y atardecer formateados a HH:MM
+                const amanecerUTC = data.daily.sunrise[0];
+                const atardecerUTC = data.daily.sunset[0];
+    
+                this.#datosCarrera.amanecer[fecha] = new Date(amanecerUTC).toLocaleTimeString("es-QA", { hour: "2-digit", minute: "2-digit" });
+                this.#datosCarrera.atardecer[fecha] = new Date(atardecerUTC).toLocaleTimeString("es-QA", { hour: "2-digit", minute: "2-digit" });
+    
+                // Guardamos datos por hora de las franjas de sesiones
+                const times = data.hourly.time;
+                const temps = data.hourly.temperature_2m;
+                const sensacion = data.hourly.apparent_temperature;
+                const lluvia = data.hourly.precipitation;
+                const humedad = data.hourly.relative_humidity_2m;
+                const vientoVel = data.hourly.windspeed_10m;
+                const vientoDir = data.hourly.winddirection_10m;
+    
+                for (let i = 0; i < times.length; i++) {
+                    const [date, time] = times[i].split("T");
+                    const hour = parseInt(time.split(":")[0]);
+    
+                    if (sesionesMotoGP[date] && sesionesMotoGP[date].includes(hour)) {
                         this.#datosCarrera.datosPorHora.push({
-                            hora: new Date(h.dt * 1000).toISOString().replace("T", " ").substr(0, 19),
-                            temperatura_2m: h.temp,
-                            sensacion_termica: h.feels_like,
-                            humedad_2m: h.humidity,
-                            lluvia: h.rain ? (h.rain["1h"] || 0) : 0,
-                            viento_velocidad_10m: h.wind_speed,
-                            viento_direccion_10m: h.wind_deg,
-                            descripcion: h.weather[0].description
+                            hora: times[i],
+                            temperatura_2m: temps[i],
+                            sensacion_termica: sensacion[i],
+                            lluvia: lluvia[i],
+                            humedad_2m: humedad[i],
+                            viento_velocidad_10m: vientoVel[i],
+                            viento_direccion_10m: vientoDir[i],
+                            descripcion: "Datos archivados"
                         });
                     }
-                    llamadasCompletadas++;
-                    if (llamadasCompletadas === fechas.length) {
-                        this.procesarJSONCarrera();
-                    }
-                }.bind(this),
-                error: function() {
-                    llamadasCompletadas++;
-                    if (llamadasCompletadas === fechas.length) {
-                        this.procesarJSONCarrera();
-                    }
-                }.bind(this)
-            });
+                }
+    
+                completadas++;
+                if (completadas === fechas.length) {
+                    this.procesarJSONCarrera();
+                }
+            }.bind(this));
         }.bind(this));
     }
+    
+    
 
+    
     procesarJSONCarrera() {
         if (!this.#datosCarrera || this.#datosCarrera.datosPorHora.length === 0) {
             const error = document.createElement("p");
@@ -142,48 +163,51 @@ class Ciudad {
             document.body.appendChild(contenedorError);
             return;
         }
-
-        var datos = this.#datosCarrera;
-
+    
+        const datos = this.#datosCarrera;
+    
         const seccion = document.createElement("section");
-
+    
+        // Título
         const titulo = document.createElement("h2");
         titulo.textContent = "Meteorología - " + datos.circuito;
         seccion.appendChild(titulo);
-
+    
+        // Información básica
         const infoBasica = document.createElement("p");
-        infoBasica.textContent = datos.ciudad + ", " + datos.pais +
-                                " (" + datos.periodo.inicio + " a " + datos.periodo.fin + ")";
+        infoBasica.textContent = `${datos.ciudad}, ${datos.pais} (${datos.periodo.inicio} a ${datos.periodo.fin})`;
         seccion.appendChild(infoBasica);
-
-        const ulGeneral = document.createElement("ul");
-        const amanecer = document.createElement("li");
-        amanecer.textContent = "Amanecer: --";
-        ulGeneral.appendChild(amanecer);
-        const atardecer = document.createElement("li");
-        atardecer.textContent = "Atardecer: --";
-        ulGeneral.appendChild(atardecer);
-        seccion.appendChild(ulGeneral);
-
+    
+        // Amanecer y atardecer por día
+        const ulSolar = document.createElement("ul");
+        for (const fecha in datos.amanecer) {
+            const li = document.createElement("li");
+            li.textContent = `${fecha}: Amanecer ${datos.amanecer[fecha]}, Atardecer ${datos.atardecer[fecha]}`;
+            ulSolar.appendChild(li);
+        }
+        seccion.appendChild(ulSolar);
+    
+        // Subtítulo de predicción por hora
         const subtitulo = document.createElement("h3");
-        subtitulo.textContent = "Predicción por hora";
+        subtitulo.textContent = "Predicción por hora de las sesiones MotoGP";
         seccion.appendChild(subtitulo);
-
+    
+        // Lista de datos horarios
         const listaHoras = document.createElement("ul");
-        for (var i = 0; i < datos.datosPorHora.length; i++) {
-            var item = datos.datosPorHora[i];
+        datos.datosPorHora.forEach(item => {
             const li = document.createElement("li");
             li.innerHTML =
-                "<strong>" + item.hora + ":</strong> " +
-                item.descripcion + ", " +
-                item.temperatura_2m + "°C (sensación " + item.sensacion_termica + "°C), " +
-                "Humedad " + item.humedad_2m + "%, " +
-                "Viento " + item.viento_velocidad_10m + " m/s (" + item.viento_direccion_10m + "°), " +
-                "Lluvia " + item.lluvia + " mm";
+                `${item.hora}: ${item.descripcion}, ` +
+                `Temp: ${item.temperatura_2m}°C (sensación ${item.sensacion_termica}°C), ` +
+                `Humedad: ${item.humedad_2m}%, ` +
+                `Viento: ${item.viento_velocidad_10m} m/s (${item.viento_direccion_10m}°), ` +
+                `Lluvia: ${item.lluvia} mm`;
             listaHoras.appendChild(li);
-        }
+        });
         seccion.appendChild(listaHoras);
-
+    
         document.body.appendChild(seccion);
     }
+    
+
 }
