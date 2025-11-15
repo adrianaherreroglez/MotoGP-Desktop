@@ -124,8 +124,8 @@ class Ciudad {
                         });
                     }
                 }
-                this.procesarJSONCarrera();
-                this.imprimirMeteorologiaCarrera();
+                this.#procesarJSONCarrera();
+                this.#imprimirMeteorologiaCarrera();
 
             }.bind(this)
         });
@@ -134,7 +134,7 @@ class Ciudad {
 
 
     // Procesar meteo de la carrera
-    procesarJSONCarrera() {
+    #procesarJSONCarrera() {
         const datos = this.#datosCarrera;
 
         // Creamos un JSON con la información extraída
@@ -171,7 +171,7 @@ class Ciudad {
 
         // Franjas horarias
         const sesionesEntrenos = {
-            "2025-04-10": [14, 15, 19],  
+            "2025-04-10": [14, 15, 19],
             "2025-04-11": [14, 19],
             "2025-04-12": [14, 15, 19]
         };
@@ -230,22 +230,23 @@ class Ciudad {
                     completadas++;
 
                     if (completadas === fechas.length) {
-                        this.procesarJSONEntrenos();
-                        this.imprimirMeteorologiaEntrenos();
+                        this.#procesarJSONEntrenos();
+                        this.#imprimirMeteorologiaEntrenos();
                     }
 
 
                 }.bind(this),
 
                 error: function () {
-                    console.error("No se pudo obtener la meteorología de los entrenos.");
+                    const error = "<h3>No se pudo obtener la meteorología de los entrenos </h3>";
+                    $("body").append(tituloPrincipal);
                 }
             });
         }
     }
 
     // Procesar meteo de los entrenos
-    procesarJSONEntrenos() {
+    #procesarJSONEntrenos() {
 
         this.#mediasEntrenos = {};
 
@@ -290,7 +291,7 @@ class Ciudad {
 
 
     // Imprimir datos de la carrera
-    imprimirMeteorologiaCarrera() {
+    #imprimirMeteorologiaCarrera() {
 
         const tituloPrincipal = "<h3>Meteorología el día de la carrera (13 de abril de 2025) </h3>";
         $("body").append(tituloPrincipal);
@@ -360,7 +361,7 @@ class Ciudad {
 
 
     // Imprimir datos del entreno
-    imprimirMeteorologiaEntrenos() {
+    #imprimirMeteorologiaEntrenos() {
 
         const tituloPrincipal = "<h3>Meteorología durante los entrenos</h3>";
         $("body").append(tituloPrincipal);
