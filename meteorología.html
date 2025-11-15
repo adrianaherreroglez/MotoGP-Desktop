@@ -16,10 +16,9 @@ de las palabras clave del mismo separadas por comas" />
     <link rel="icon" href="multimedia/favicon.ico" />
     <script src="js/ciudad.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
- 
+
 <body>
     <!-- Datos con el contenidos que aparece en el navegador -->
     <header>
@@ -38,13 +37,14 @@ de las palabras clave del mismo separadas por comas" />
 
     <main>
         <script>let ciudad = new Ciudad("Lusail", "Qatar", "Lusailense");
-            ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862); 
+            ciudad.rellenarDatos(200000, 25.41854617669826, 51.50062601649862);
             ciudad.getMeteorologiaCarrera();
+            ciudad.getMeteorologiaEntrenos();
             ciudad.showIntroduction();
             ciudad.showInfo();
             ciudad.getCoordenadas();
         </script>
-        
+
     </main>
 </body>
 
