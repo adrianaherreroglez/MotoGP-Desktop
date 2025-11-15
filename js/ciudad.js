@@ -239,7 +239,7 @@ class Ciudad {
 
                 error: function () {
                     const error = "<h3>No se pudo obtener la meteorología de los entrenos </h3>";
-                    $("body").append(tituloPrincipal);
+                    $("body").append(error);
                 }
             });
         }
