@@ -6,7 +6,11 @@
 "use strict"
 class Circuito{
 
+    #archivoHtml;
+
     constructor(){
+
+        this.#archivoHtml = "../xml/InfoCircuito.html";
 
         comprobarApiFile();
     }
@@ -25,7 +29,10 @@ class Circuito{
     }
 
     leerArchivoHTML(){
-        
+        const error = document.createElement("p");
+        error.textContent = "¡¡¡ Leyendo InfoCircuito.html !!!";
+        document.body.appendChild(error);
+
     }
 
    
