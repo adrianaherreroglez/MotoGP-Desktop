@@ -36,8 +36,8 @@ de las palabras clave del mismo separadas por comas" />
     <main>
         <script>let circuito = new Circuito();</script>
         <h2>Circuito de MotoGP-Desktop</h2>
-        <p>Seleccionar archivo html:</p>
-        <p><input type="file" onchange="leerArchivoHTML();"></p>
+        <p>Seleccionar archivo InfoCircuito.html:</p>
+        <p><input type="file" accept=".html" onchange="circuito.leerArchivoHTML(this.files[0]);"></p>
     </main>
 </body>
 
