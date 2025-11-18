@@ -17,7 +17,7 @@ class Circuito {
     comprobarApiFile() {
         if (window.File && window.FileReader && window.FileList && window.Blob) {
             //El navegador soporta el API File
-            this.leerArchivoHTML();
+            console.log("El navegador soporta el API File.");
 
         }
         else {
@@ -27,22 +27,10 @@ class Circuito {
         }
     }
 
-    leerArchivoHTML(archivo) {
-        // Solo archivos HTML
-        var tipoHTML = /text\/html/;
-        if (archivo.type.match(tipoHTML)) {
-
-            var lector = new FileReader();
-
-            lector.onload = function() {
-                this.contenidoArchivo = lector.result;
-                console.log("Archivo HTML cargado en memoria. Listo para procesar.");
-                // console.log(this.contenidoArchivo); // para ver el contenido
-            }.bind(this);
-
-            lector.readAsText(archivo);
-        } else {
-            console.error("Error: ¡¡¡ Archivo no válido, debe ser HTML !!!");
-        }
+    leerArchivoHTML(files) {
+        
+ 
+        console.log("Archivo leído");
+        
     }
 }
