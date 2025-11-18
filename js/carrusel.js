@@ -11,9 +11,9 @@ class Carrusel {
     #imagenElemento;
 
     constructor() {
-        this.#busqueda = "Lusail International Circuit";
+        this.#busqueda = "Qatar MotoGP";
         this.#actual = 0;
-        this.#maximo = 4; // siempre 5 fotos: índices 0-4
+        this.#maximo = 4; // índices 0-4
         this.#fotosJSON = { fotos: [] };
         this.#imagenElemento = null;
     }
@@ -61,7 +61,7 @@ class Carrusel {
         const articulo = document.createElement("article");
 
         const encabezado = document.createElement("h2");
-        encabezado.textContent = "Imágenes del circuito de " + this.#busqueda;
+        encabezado.textContent = "Imágenes del circuito de Lusail International Circuit";
         articulo.appendChild(encabezado);
 
         const imagen = document.createElement("img");

@@ -1,4 +1,3 @@
-
 // versión 1.0 
 // Adriana Herrero González
 // Universidad de Oviedo
@@ -169,12 +168,6 @@ class Ciudad {
         // Días de entrenamientos previos a la carrera
         const fechas = ["2025-04-10", "2025-04-11", "2025-04-12"];
 
-        // Franjas horarias
-        const sesionesEntrenos = {
-            "2025-04-10": [14, 15, 19],
-            "2025-04-11": [14, 19],
-            "2025-04-12": [14, 15, 19]
-        };
 
         // Objeto JSON resultado de la tarea
         this.#datosEntrenos = {
@@ -210,21 +203,17 @@ class Ciudad {
 
                     for (let i = 0; i < times.length; i++) {
 
-                        const [date, time] = times[i].split("T");
-                        const hour = parseInt(time.split(":")[0]);
-
-                        // Solo guardamos si coincide con la franja de entrenamientos
-                        if (sesionesEntrenos[date] && sesionesEntrenos[date].includes(hour)) {
-
-                            this.#datosEntrenos.datosPorHora.push({
-                                fecha: date,
-                                hora: times[i],
-                                temperatura_2m: temp[i],
-                                lluvia: lluvia[i],
-                                humedad_2m: humedad[i],
-                                viento_velocidad_10m: vientoVel[i]
-                            });
-                        }
+                        const date = times[i].split("T")[0];
+                        
+                        this.#datosEntrenos.datosPorHora.push({
+                            fecha: date,
+                            hora: times[i],
+                            temperatura_2m: temp[i],
+                            lluvia: lluvia[i],
+                            humedad_2m: humedad[i],
+                            viento_velocidad_10m: vientoVel[i]
+                        });
+                        
                     }
 
                     completadas++;
@@ -347,10 +336,6 @@ class Ciudad {
             const liVientoDir = document.createElement("li");
             liVientoDir.textContent = "Viento dirección: " + dato.viento_direccion_10m + " º";
             ulDatos.appendChild(liVientoDir);
-
-            const liDesc = document.createElement("li");
-            liDesc.textContent = "Descripción: " + dato.tipo;
-            ulDatos.appendChild(liDesc);
 
 
             $("body").append(ulDatos);

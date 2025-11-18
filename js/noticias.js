@@ -32,7 +32,6 @@ class Noticias {
 
     #procesarInformacion(datos) {
         const main = document.querySelector("main");
-        if (!main) return;
 
         // Sección para las noticias
         const seccionNoticias = document.createElement("section");
@@ -60,7 +59,6 @@ class Noticias {
                 const enlace = document.createElement("a");
                 enlace.href = noticia.url;
                 enlace.textContent = "Leer más";
-                enlace.target = "_blank";
                 seccionNoticias.appendChild(enlace);
 
                 // Fuente
@@ -70,7 +68,7 @@ class Noticias {
             }
         } else {
             const mensaje = document.createElement("p");
-            mensaje.textContent = "No se encontraron noticias para tu búsqueda.";
+            mensaje.textContent = "No se encontraron noticias.";
             seccionNoticias.appendChild(mensaje);
         }
 
