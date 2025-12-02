@@ -171,7 +171,7 @@ class CargadorSVG {
         this.#contenidoArchivoSVG = "";
     }
 
-    async leerArchivoSVG(files) {
+    leerArchivoSVG(files) {
         const archivo = files[0];
     
         // Solo archivos SVG
@@ -212,4 +212,57 @@ class CargadorSVG {
         // Insertar SVG en el contenedor
         contenedor.appendChild(svgElement);
     }
+}
+
+class CargadorKML{
+
+    #contenidoArchivoKML;
+    #documentoKML;
+
+    constructor() {
+
+        this.#contenidoArchivoKML = "";
+        this.#documentoKML = "";
+    }
+
+    leerArchivoKML(files) {
+        const archivo = files[0];
+    
+            // Tipo MIME estándar de KML
+            const tipoKML = "application/vnd.google-earth.kml+xml";
+    
+            if (archivo.type === tipoKML || archivo.name.endsWith(".kml")) {
+    
+                const lector = new FileReader();
+    
+                lector.onload = function() {
+    
+                    this.#contenidoArchivoKML = lector.result;
+                    console.log("Archivo KML cargado en memoria.");
+    
+                   
+                    const parser = new DOMParser();
+                    this.#documentoKML = parser.parseFromString(
+                        this.#contenidoArchivoKML,
+                        "application/xml"
+                    );
+    
+                    console.log("KML parseado correctamente:");
+                    console.log(this.#documentoKML);
+    
+                    this.insertarCapaKML();
+                }.bind(this);
+    
+                lector.readAsText(archivo);
+    
+            } else {
+                console.error("Error: ¡Archivo no válido, debe ser KML!");
+            }
+        
+    }
+
+    insertarCapaKML(){
+        
+    }
+
 }
