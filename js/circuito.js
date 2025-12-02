@@ -262,7 +262,23 @@ class CargadorKML{
     }
 
     insertarCapaKML(){
-        
+        const contenedor = document.querySelector("div");
+
+        if (!contenedor) {
+            console.error("No se encontró el contenedor para mostrar el KML.");
+            return;
+        }
+
+      
+
+        // Parsear KML como XML
+        const parser = new DOMParser();
+        const docKML = parser.parseFromString(this.#contenidoArchivoKML, "application/xml");
+        const kmlElement = docKML.documentElement;
+
+        // Insertar KML en el contenedor
+        contenedor.appendChild(kmlElement);
+    
     }
 
 }

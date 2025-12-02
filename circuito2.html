@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Circuito MotoGP</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Circuito MotoGP</h2>
+    <input type="file" accept=".kml" onchange="cargadorKML.leerArchivoKML(this.files);">
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        class CargadorKML {
+            #contenidoArchivoKML;
+            #documentoKML;
+
+            constructor() {
+                this.#contenidoArchivoKML = "";
+                this.#documentoKML = "";
+                this.map = L.map('map').setView([51.453, 25.489], 15); // centro inicial
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(this.map);
+            }
+
+            leerArchivoKML(files) {
+                const archivo = files[0];
+                if (archivo.name.endsWith(".kml")) {
+                    const lector = new FileReader();
+                    lector.onload = function() {
+                        this.#contenidoArchivoKML = lector.result;
+                        console.log("Archivo KML cargado en memoria.");
+
+                        const parser = new DOMParser();
+                        this.#documentoKML = parser.parseFromString(
+                            this.#contenidoArchivoKML,
+                            "application/xml"
+                        );
+
+                        console.log("KML parseado correctamente:", this.#documentoKML);
+
+                        this.insertarCapaKML();
+                    }.bind(this);
+                    lector.readAsText(archivo);
+                } else {
+                    console.error("Error: ¡Archivo no válido, debe ser KML!");
+                }
+            }
+
+            insertarCapaKML() {
+                const coordinatesText = this.#documentoKML.querySelector("LineString > coordinates");
+                if (!coordinatesText) {
+                    console.error("No se encontraron coordenadas en el KML.");
+                    return;
+                }
+
+                const coordsArray = coordinatesText.textContent.trim().split(/\s+/).map(coord => {
+                    const [lng, lat] = coord.split(',');
+                    return [parseFloat(lat), parseFloat(lng)]; // Leaflet usa [lat, lng]
+                });
+
+                // Dibujar la línea en el mapa
+                const circuitoLine = L.polyline(coordsArray, { color: 'red', weight: 4 }).addTo(this.map);
+
+                // Ajustar el mapa para que muestre toda la línea
+                this.map.fitBounds(circuitoLine.getBounds());
+            }
+        }
+
+        const cargadorKML = new CargadorKML();
+    </script>
+</body>
+</html>
