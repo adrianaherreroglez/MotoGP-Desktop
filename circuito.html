@@ -35,9 +35,13 @@ de las palabras clave del mismo separadas por comas" />
 
     <main>
         <script>let circuito = new Circuito();</script>
+        <script>let cargadorSVG = new CargadorSVG();</script>
         <h2>Circuito de MotoGP-Desktop</h2>
         <p>Seleccionar archivo InfoCircuito.html:</p>
-        <p><input type="file" onchange="circuito.leerArchivoHTML(this.files);"></p>
+        <p><input type="file" accept=".html" onchange="circuito.leerArchivoHTML(this.files);"></p>
+        <p>Seleccionar archivo altimetría.svg:</p>
+        <p><input type="file" accept=".svg" onchange="cargadorSVG.leerArchivoSVG(this.files);"></p>
+        <section></section>
     </main>
 </body>
 

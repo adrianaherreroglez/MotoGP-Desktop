@@ -15,15 +15,12 @@ class Circuito {
     }
 
     comprobarApiFile() {
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            //El navegador soporta el API File
-            console.log("El navegador soporta el API File.");
-
-        }
-        else {
+        if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+            //El navegador no soporta el API File
             const error = document.createElement("p");
             error.textContent = "¡¡¡ Este navegador NO soporta el API File y este programa puede no funcionar correctamente !!!";
             document.body.appendChild(error);
+
         }
     }
 
@@ -51,45 +48,168 @@ class Circuito {
     }
 
     volcarInformacion() {
-    if (!this.#contenidoArchivo) {
-        console.error("No hay contenido cargado en memoria.");
-        return;
+        if (!this.#contenidoArchivo) {
+            console.error("No hay contenido cargado en memoria.");
+            return;
+        }
+    
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(this.#contenidoArchivo, "text/html");
+    
+        const main = document.querySelector("main section");
+    
+        const contenedorHTML = document.createElement("section");
+        contenedorHTML.classList.add("contenedor-html");
+    
+        // Copiar <h1>
+        const h1 = doc.getElementsByTagName("h1")[0];
+        if (h1) {
+            const h2Titulo = document.createElement("h2");
+            h2Titulo.textContent = h1.textContent;
+            contenedorHTML.appendChild(h2Titulo);
+        }
+    
+        // Recorrer todas las secciones
+        const secciones = doc.getElementsByTagName("section");
+        for (let i = 0; i < secciones.length; i++) {
+            const seccion = secciones[i];
+            const seccionCopia = document.createElement("section");
+            seccionCopia.classList.add("seccion-copia");
+    
+            // Copiar <h2>
+            const h2 = seccion.getElementsByTagName("h2")[0];
+            if (h2) {
+                const h2Nuevo = document.createElement("h2");
+                h2Nuevo.textContent = h2.textContent;
+                seccionCopia.appendChild(h2Nuevo);
+            }
+    
+            // Copiar listas <ul> y <ol>
+            const ul = seccion.getElementsByTagName("ul")[0];
+            if (ul) {
+                const ulCopia = document.createElement("ul");
+                const items = ul.getElementsByTagName("li");
+                for (let j = 0; j < items.length; j++) {
+                    const liNuevo = document.createElement("li");
+    
+                    const a = items[j].getElementsByTagName("a")[0];
+                    if (a) {
+                        const aNuevo = document.createElement("a");
+                        aNuevo.href = a.href;
+                        aNuevo.target = "_blank";
+                        aNuevo.textContent = a.textContent;
+                        liNuevo.appendChild(aNuevo);
+                    } else {
+                        liNuevo.textContent = items[j].textContent;
+                    }
+                    ulCopia.appendChild(liNuevo);
+                }
+                seccionCopia.appendChild(ulCopia);
+            }
+    
+            const ol = seccion.getElementsByTagName("ol")[0];
+            if (ol) {
+                const olCopia = document.createElement("ol");
+                const items = ol.getElementsByTagName("li");
+                for (let j = 0; j < items.length; j++) {
+                    const liNuevo = document.createElement("li");
+                    liNuevo.textContent = items[j].textContent;
+                    olCopia.appendChild(liNuevo);
+                }
+                seccionCopia.appendChild(olCopia);
+            }
+    
+            // Copiar imágenes <img> con ruta corregida
+            const imgs = seccion.getElementsByTagName("img");
+            for (let j = 0; j < imgs.length; j++) {
+                const imgNuevo = document.createElement("img");
+                const nombreArchivo = imgs[j].src.split("/").pop(); // solo el nombre del archivo
+                imgNuevo.src = "multimedia/" + nombreArchivo;       // ruta relativa desde index.html
+                imgNuevo.alt = imgs[j].alt;
+                seccionCopia.appendChild(imgNuevo);
+            }
+    
+            // Copiar videos <video> con ruta corregida
+            const videos = seccion.getElementsByTagName("video");
+            for (let j = 0; j < videos.length; j++) {
+                const videoNuevo = document.createElement("video");
+                videoNuevo.controls = true;
+    
+                const source = videos[j].getElementsByTagName("source")[0];
+                if (source) {
+                    const sourceNuevo = document.createElement("source");
+                    const nombreArchivo = source.src.split("/").pop(); // solo el nombre del archivo
+                    sourceNuevo.src = "multimedia/" + nombreArchivo;   // ruta relativa desde index.html
+                    sourceNuevo.type = source.type;
+                    videoNuevo.appendChild(sourceNuevo);
+                }
+    
+                seccionCopia.appendChild(videoNuevo);
+            }
+    
+            // Copiar párrafos <p>
+            const ps = seccion.getElementsByTagName("p");
+            for (let j = 0; j < ps.length; j++) {
+                const pNuevo = document.createElement("p");
+                pNuevo.textContent = ps[j].textContent;
+                seccionCopia.appendChild(pNuevo);
+            }
+    
+            contenedorHTML.appendChild(seccionCopia);
+        }
+    
+        main.appendChild(contenedorHTML);
+    }
+    
+}    
+
+
+class CargadorSVG {
+    #contenidoArchivoSVG;
+
+    constructor() {
+        this.#contenidoArchivoSVG = "";
     }
 
-    // 1. Parsear el HTML cargado en memoria
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(this.#contenidoArchivo, "text/html");
-
-    // 2. Extraer el título del circuito (<h1>)
-    const h1 = doc.getElementsByTagName("h1")[0];
-    const titulo = h1 ? h1.textContent : "Circuito sin título";
-
-    // 3. Crear un <h2> en circuito.html con el título
-    const main = document.querySelector("main"); // donde volcamos la info
-    const h2Titulo = document.createElement("h2");
-    h2Titulo.textContent = titulo;
-    main.appendChild(h2Titulo);
-
-    // 4. Extraer y volcar los datos del circuito (primer <section>)
-    const secciones = doc.getElementsByTagName("section");
-    if (secciones.length > 0) {
-        const datosCircuito = secciones[0]; // primer section: "Datos del circuito"
-        const ul = datosCircuito.getElementsByTagName("ul")[0];
-        if (ul) {
-            const ulCopia = document.createElement("ul");
-            // recorrer todos los <li> y copiarlos
-            Array.from(ul.getElementsByTagName("li")).forEach(li => {
-                const liNuevo = document.createElement("li");
-                liNuevo.textContent = li.textContent;
-                ulCopia.appendChild(liNuevo);
-            });
-            main.appendChild(ulCopia);
+    async leerArchivoSVG(files) {
+        const archivo = files[0];
+    
+        // Solo archivos SVG
+        const tipoSVG = /image\/svg\+xml/;
+    
+        if (archivo.type.match(tipoSVG)) {
+            const lector = new FileReader();
+    
+            lector.onload = function () {
+                // Guardamos el contenido en memoria
+                this.#contenidoArchivoSVG = lector.result;
+                console.log("Archivo SVG cargado en memoria.");
+                this.insertarSVG();
+            }.bind(this);
+    
+            lector.readAsText(archivo);
+        } else {
+            console.error("Error: ¡Archivo no válido, debe ser SVG!");
         }
     }
+    
 
-    // 5. Podrías hacer lo mismo para otras secciones: referencias, galería, videos, etc.
-    console.log("Información del circuito volcada al DOM.");
-}
+    insertarSVG() {
+        const contenedor = document.querySelector("main section");
 
+        if (!contenedor) {
+            console.error("No se encontró el contenedor para mostrar el SVG.");
+            return;
+        }
 
+      
+
+        // Parsear SVG como XML
+        const parser = new DOMParser();
+        const docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
+        const svgElement = docSVG.documentElement;
+
+        // Insertar SVG en el contenedor
+        contenedor.appendChild(svgElement);
+    }
 }
