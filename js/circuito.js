@@ -228,6 +228,8 @@ class CargadorKML {
             zoom: 14
         });
 
+        var divMapa = document.querySelector('body > div');
+
     }
 
     leerArchivoKML(files) {
