@@ -14,9 +14,9 @@ de las palabras clave del mismo separadas por comas" />
     <link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
     <link rel="stylesheet" type="text/css" href="estilo/layout.css" />
     <!-- Mapbox CSS -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.css" rel="stylesheet"/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <!-- Mapbox JS -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.16.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <script src="js/circuito.js"></script>
     <link rel="icon" href="multimedia/favicon.ico" />
 </head>
@@ -37,21 +37,23 @@ de las palabras clave del mismo separadas por comas" />
     </header>
     <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <strong>Circuito</strong></p>
 
-    <main>
-        <script>let circuito = new Circuito();</script>
-        <script>let cargadorSVG = new CargadorSVG();</script>
-        <script>let cargadorKML = new CargadorKML();</script>
-        <h2>Circuito de MotoGP-Desktop</h2>
-        <p>Seleccionar archivo InfoCircuito.html:</p>
-        <p><input type="file" accept=".html" onchange="circuito.leerArchivoHTML(this.files);"></p>
-        <p>Seleccionar archivo altimetría.svg:</p>
-        <p><input type="file" accept=".svg" onchange="cargadorSVG.leerArchivoSVG(this.files);"></p>
-        <p>Seleccionar archivo circuito.kml:</p>
-        <p><input type="file" accept=".kml" onchange="cargadorKML.leerArchivoKML(this.files);"></p>
-        <section></section>
-        <div id="map"></div>
 
-    </main>
+    <h2>Circuito de MotoGP-Desktop</h2>
+    <p>Seleccionar archivo InfoCircuito.html:</p>
+    <p><input type="file" accept=".html" onchange="circuito.leerArchivoHTML(this.files);"></p>
+    <p>Seleccionar archivo altimetría.svg:</p>
+    <p><input type="file" accept=".svg" onchange="cargadorSVG.leerArchivoSVG(this.files);"></p>
+    <p>Seleccionar archivo circuito.kml:</p>
+    <p><input type="file" accept=".kml" onchange="cargadorKML.leerArchivoKML(this.files);"></p>
+    <section></section>
+    <h3>Mapa dinámico</h3>
+    <div id="map"></div>
+
+    <script>let circuito = new Circuito();</script>
+    <script>let cargadorSVG = new CargadorSVG();</script>
+    <script>let cargadorKML = new CargadorKML();</script>
+
+
 </body>
 
 </html>

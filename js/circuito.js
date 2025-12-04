@@ -11,10 +11,10 @@ class Circuito {
     constructor() {
 
         this.#contenidoArchivo = "";
-        this.comprobarApiFile();
+        this.#comprobarApiFile();
     }
 
-    comprobarApiFile() {
+    #comprobarApiFile() {
         if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
             //El navegador no soporta el API File
             const error = document.createElement("p");
@@ -35,63 +35,57 @@ class Circuito {
             const lector = new FileReader();
 
             lector.onload = function () {
-                // Guardamos el contenido en memoria
                 this.#contenidoArchivo = lector.result;
-                console.log("Archivo HTML cargado en memoria.");
-                this.volcarInformacion(); 
+                this.#volcarInformacion();
             }.bind(this);
 
             lector.readAsText(archivo);
-        } else {
-            console.error("Error: ¡Archivo no válido, debe ser HTML!");
         }
     }
 
-    volcarInformacion() {
-        if (!this.#contenidoArchivo) {
-            console.error("No hay contenido cargado en memoria.");
-            return;
-        }
-    
+    #volcarInformacion() {
+        if (!this.#contenidoArchivo) return;
+
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.#contenidoArchivo, "text/html");
-    
-        const main = document.querySelector("main section");
-    
+
+        // Seleccionamos el primer section dentro de body
+        const main = document.querySelector("body > section");
+
+        // Crear contenedor
         const contenedorHTML = document.createElement("section");
         contenedorHTML.classList.add("contenedor-html");
-    
+
         // Copiar <h1>
         const h1 = doc.getElementsByTagName("h1")[0];
         if (h1) {
-            const h2Titulo = document.createElement("h2");
-            h2Titulo.textContent = h1.textContent;
-            contenedorHTML.appendChild(h2Titulo);
+            const h3Titulo = document.createElement("h3");
+            h3Titulo.textContent = h1.textContent;
+            contenedorHTML.appendChild(h3Titulo);
         }
-    
-        // Recorrer todas las secciones
+
+        // Recorrer secciones y copiar contenido
         const secciones = doc.getElementsByTagName("section");
         for (let i = 0; i < secciones.length; i++) {
             const seccion = secciones[i];
             const seccionCopia = document.createElement("section");
             seccionCopia.classList.add("seccion-copia");
-    
-            // Copiar <h2>
+
+            // Copiar <h2> → <h4>
             const h2 = seccion.getElementsByTagName("h2")[0];
             if (h2) {
-                const h2Nuevo = document.createElement("h2");
-                h2Nuevo.textContent = h2.textContent;
-                seccionCopia.appendChild(h2Nuevo);
+                const h4Nuevo = document.createElement("h4");
+                h4Nuevo.textContent = h2.textContent;
+                seccionCopia.appendChild(h4Nuevo);
             }
-    
-            // Copiar listas <ul> y <ol>
+
+            // Copiar listas <ul>
             const ul = seccion.getElementsByTagName("ul")[0];
             if (ul) {
                 const ulCopia = document.createElement("ul");
                 const items = ul.getElementsByTagName("li");
                 for (let j = 0; j < items.length; j++) {
                     const liNuevo = document.createElement("li");
-    
                     const a = items[j].getElementsByTagName("a")[0];
                     if (a) {
                         const aNuevo = document.createElement("a");
@@ -106,7 +100,8 @@ class Circuito {
                 }
                 seccionCopia.appendChild(ulCopia);
             }
-    
+
+            // Copiar listas <ol>
             const ol = seccion.getElementsByTagName("ol")[0];
             if (ol) {
                 const olCopia = document.createElement("ol");
@@ -118,50 +113,51 @@ class Circuito {
                 }
                 seccionCopia.appendChild(olCopia);
             }
-    
-            // Copiar imágenes <img> con ruta corregida
+
+            // Copiar imágenes
             const imgs = seccion.getElementsByTagName("img");
             for (let j = 0; j < imgs.length; j++) {
                 const imgNuevo = document.createElement("img");
-                const nombreArchivo = imgs[j].src.split("/").pop(); // solo el nombre del archivo
-                imgNuevo.src = "multimedia/" + nombreArchivo;       // ruta relativa desde index.html
+                const nombreArchivo = imgs[j].src.split("/").pop();
+                imgNuevo.src = "multimedia/" + nombreArchivo;
                 imgNuevo.alt = imgs[j].alt;
                 seccionCopia.appendChild(imgNuevo);
             }
-    
-            // Copiar videos <video> con ruta corregida
+
+            // Copiar videos
             const videos = seccion.getElementsByTagName("video");
             for (let j = 0; j < videos.length; j++) {
                 const videoNuevo = document.createElement("video");
                 videoNuevo.controls = true;
-    
+
                 const source = videos[j].getElementsByTagName("source")[0];
                 if (source) {
                     const sourceNuevo = document.createElement("source");
-                    const nombreArchivo = source.src.split("/").pop(); // solo el nombre del archivo
-                    sourceNuevo.src = "multimedia/" + nombreArchivo;   // ruta relativa desde index.html
+                    const nombreArchivo = source.src.split("/").pop();
+                    sourceNuevo.src = "multimedia/" + nombreArchivo;
                     sourceNuevo.type = source.type;
                     videoNuevo.appendChild(sourceNuevo);
                 }
-    
+
                 seccionCopia.appendChild(videoNuevo);
             }
-    
-            // Copiar párrafos <p>
+
+            // Copiar párrafos
             const ps = seccion.getElementsByTagName("p");
             for (let j = 0; j < ps.length; j++) {
                 const pNuevo = document.createElement("p");
                 pNuevo.textContent = ps[j].textContent;
                 seccionCopia.appendChild(pNuevo);
             }
-    
+
             contenedorHTML.appendChild(seccionCopia);
         }
-    
+
         main.appendChild(contenedorHTML);
     }
-    
-}    
+
+
+}
 
 
 class CargadorSVG {
@@ -173,112 +169,149 @@ class CargadorSVG {
 
     leerArchivoSVG(files) {
         const archivo = files[0];
-    
+
         // Solo archivos SVG
         const tipoSVG = /image\/svg\+xml/;
-    
+
         if (archivo.type.match(tipoSVG)) {
             const lector = new FileReader();
-    
+
             lector.onload = function () {
-                // Guardamos el contenido en memoria
                 this.#contenidoArchivoSVG = lector.result;
-                console.log("Archivo SVG cargado en memoria.");
-                this.insertarSVG();
+                this.#insertarSVG();
             }.bind(this);
-    
+
             lector.readAsText(archivo);
-        } else {
-            console.error("Error: ¡Archivo no válido, debe ser SVG!");
         }
     }
-    
 
-    insertarSVG() {
-        const contenedor = document.querySelector("main section");
 
+    #insertarSVG() {
+        var contenedor = document.querySelector("body > section");
+
+        // Si no existe, crear uno
         if (!contenedor) {
-            console.error("No se encontró el contenedor para mostrar el SVG.");
-            return;
+            contenedor = document.createElement("section");
+            document.body.appendChild(contenedor);
         }
 
-      
+        // Parsear SVG como XML con DOMParser
+        var parser = new DOMParser();
+        var docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
+        var svgElement = docSVG.documentElement;
 
-        // Parsear SVG como XML
-        const parser = new DOMParser();
-        const docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
-        const svgElement = docSVG.documentElement;
-
+        //Crear título
+        var tituloSVG = document.createElement("h3");
+        tituloSVG.textContent = "Altimetría del circuito";
+        contenedor.appendChild(tituloSVG);
         // Insertar SVG en el contenedor
         contenedor.appendChild(svgElement);
     }
+
 }
 
-class CargadorKML{
+class CargadorKML {
 
     #contenidoArchivoKML;
     #documentoKML;
 
     constructor() {
-
         this.#contenidoArchivoKML = "";
         this.#documentoKML = "";
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoidW8yODc1NDMiLCJhIjoiY21icjlsZjNiMDZkazJscXVlOWNla28xbCJ9.TeUE3PFpwcAravLU5lnbgA';
+
+        this.map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [51.44953333968715, 25.48928989802003],
+            zoom: 14
+        });
+
     }
 
     leerArchivoKML(files) {
         const archivo = files[0];
-    
-            // Tipo MIME estándar de KML
-            const tipoKML = "application/vnd.google-earth.kml+xml";
-    
-            if (archivo.type === tipoKML || archivo.name.endsWith(".kml")) {
-    
-                const lector = new FileReader();
-    
-                lector.onload = function() {
-    
-                    this.#contenidoArchivoKML = lector.result;
-                    console.log("Archivo KML cargado en memoria.");
-    
-                   
-                    const parser = new DOMParser();
-                    this.#documentoKML = parser.parseFromString(
-                        this.#contenidoArchivoKML,
-                        "application/xml"
-                    );
-    
-                    console.log("KML parseado correctamente:");
-                    console.log(this.#documentoKML);
-    
-                    this.insertarCapaKML();
-                }.bind(this);
-    
-                lector.readAsText(archivo);
-    
-            } else {
-                console.error("Error: ¡Archivo no válido, debe ser KML!");
-            }
-        
-    }
 
-    insertarCapaKML(){
-        const contenedor = document.querySelector("div");
-
-        if (!contenedor) {
-            console.error("No se encontró el contenedor para mostrar el KML.");
+        if (!archivo || !archivo.name.endsWith(".kml")) {
             return;
         }
 
-      
+        const lector = new FileReader();
 
-        // Parsear KML como XML
-        const parser = new DOMParser();
-        const docKML = parser.parseFromString(this.#contenidoArchivoKML, "application/xml");
-        const kmlElement = docKML.documentElement;
+        lector.onload = function () {
 
-        // Insertar KML en el contenedor
-        contenedor.appendChild(kmlElement);
-    
+            this.#contenidoArchivoKML = lector.result;
+
+            const parser = new DOMParser();
+            this.#documentoKML = parser.parseFromString(
+                this.#contenidoArchivoKML,
+                "application/xml"
+            );
+
+            this.#insertarCapaKML();
+
+        }.bind(this);
+
+        lector.readAsText(archivo);
     }
 
+    #insertarCapaKML() {
+
+        const coordinatesText = this.#documentoKML.querySelector("LineString > coordinates");
+
+        if (!coordinatesText) {
+            return;
+        }
+
+        var coordsArray = [];
+        // Separar las coordenadas por espacios
+        var coordStrings = coordinatesText.textContent.trim().split(/\s+/);
+
+        for (var i = 0; i < coordStrings.length; i++) {
+            var parts = coordStrings[i].split(',');
+            var lng = parseFloat(parts[0]);
+            var lat = parseFloat(parts[1]);
+            coordsArray.push([lng, lat]);
+        }
+
+        const geojson = {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": coordsArray
+            }
+        };
+
+        if (!this.map.getSource("circuitoKML")) {
+            this.map.addSource("circuitoKML", {
+                "type": "geojson",
+                "data": geojson
+            });
+        } else {
+            this.map.getSource("circuitoKML").setData(geojson);
+        }
+
+        if (!this.map.getLayer("rutaKML")) {
+            this.map.addLayer({
+                "id": "rutaKML",
+                "type": "line",
+                "source": "circuitoKML",
+                "layout": { "line-join": "round", "line-cap": "round" },
+                "paint": { "line-width": 4, "line-color": "#FF0000" }
+            });
+        }
+
+        // Ajustar vista
+        var bounds = new mapboxgl.LngLatBounds();
+        for (var i = 0; i < coordsArray.length; i++) {
+            bounds.extend(coordsArray[i]);
+        }
+        this.map.fitBounds(bounds, { padding: 50 });
+
+        // Marcador en el inicio
+        new mapboxgl.Marker()
+            .setLngLat(coordsArray[0])
+            .addTo(this.map);
+    }
 }
