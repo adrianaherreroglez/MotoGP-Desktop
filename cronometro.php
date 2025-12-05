@@ -73,7 +73,7 @@ $_SESSION['cronometro'] = serialize($cronometro);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>MotoGP-Desktop - Cronómetro</title>
+    <title>MotoGP-Desktop-Cronómetro</title>
      <meta name="author" content="Adriana Herrero González" />
     <meta name="description" content="Información sobre el cronometro del proyecto MotoGP-Desktop" />
     <meta name="keywords" content="MotoGP, clasificaciones, pilotos, circuitos" />
