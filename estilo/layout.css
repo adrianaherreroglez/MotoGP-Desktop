@@ -85,37 +85,51 @@ body>div {
         height: 100vh; /* Advertencia: redifinición del tamaño del mapa en móviles*/
     }
 
-       table {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    border-collapse: collapse;
+
 }
 
-table tr {
-    display: contents; /* Permite que th y td entren en el grid */
-}
+/* Tabla para pantallas pequeñas */
+@media (max-width: 600px) {
 
-table th, table td {
-    border: 1px solid #000;
-    padding: .5rem;
-}
+    /* Especificidad 001 */
+    caption {
+        display: flex;
+    }
 
-/* Ocultar la fila de encabezados horizontal original (solo th de la fila 1)
-   pero NO los th individualmente cuando se usen en grid */
-table tr:first-child {
-    display: contents;
-}
+    /* Especificidad 001 */
+    th {
+        display: none;
+        /* Oculta la fila de encabezados */
+    }
 
-table tr:first-child th {
-    font-weight: bold;
-}
+    /* Especificidad 001 */
+    td {
+        display: flex;
+        justify-content: space-between;
+    }
 
-/* Opcional: estilo para diferenciar columnas */
-table th {
-    background: #f3f3f3;
-}
+    /* Especificidad 012 */
+    td:nth-child(1)::before {
+        content: "Puntos obtenidos";
+    }
 
+    /* Especificidad 012 */
+    td:nth-child(2)::before {
+        content: "Posición final";
+    }
 
+    /* Especificidad 012 */
+    td:nth-child(3)::before {
+        content: "Poles";
+    }
 
+    /* Especificidad 012 */
+    td:nth-child(4)::before {
+        content: "Victorias";
+    }
+
+    /* Especificidad 012 */
+    td:nth-child(5)::before {
+        content: "Podios";
+    }
 }
