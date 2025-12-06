@@ -83,8 +83,39 @@ body>div {
     body>div {
         width: 100%; /* Advertencia: redifinición del tamaño del mapa en móviles*/
         height: 100vh; /* Advertencia: redifinición del tamaño del mapa en móviles*/
-        box-sizing: border-box;
     }
+
+       table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr {
+    display: contents; /* Permite que th y td entren en el grid */
+}
+
+table th, table td {
+    border: 1px solid #000;
+    padding: .5rem;
+}
+
+/* Ocultar la fila de encabezados horizontal original (solo th de la fila 1)
+   pero NO los th individualmente cuando se usen en grid */
+table tr:first-child {
+    display: contents;
+}
+
+table tr:first-child th {
+    font-weight: bold;
+}
+
+/* Opcional: estilo para diferenciar columnas */
+table th {
+    background: #f3f3f3;
+}
+
 
 
 }
