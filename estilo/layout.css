@@ -83,6 +83,7 @@ body>div {
     body>div {
         width: 100%; /* Advertencia: redifinición del tamaño del mapa en móviles*/
         height: 100vh; /* Advertencia: redifinición del tamaño del mapa en móviles*/
+        box-sizing: border-box;
     }
 
 
