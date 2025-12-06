@@ -221,14 +221,18 @@ class CargadorKML {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoidW8yODc1NDMiLCJhIjoiY21icjlsZjNiMDZkazJscXVlOWNla28xbCJ9.TeUE3PFpwcAravLU5lnbgA';
 
-        this.map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [51.44953333968715, 25.48928989802003],
-            zoom: 14
-        });
+        const divMapa = document.createElement('div');
+    divMapa.style.width = "100%";      // Ajusta el tamaño
+    divMapa.style.height = "500px";    // Ajusta la altura
+    document.body.appendChild(divMapa);
 
-        var divMapa = document.querySelector('body > div');
+    // Inicializar el mapa usando el div creado
+    this.map = new mapboxgl.Map({
+        container: divMapa,  // <-- aquí usamos la referencia, no un id
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [51.44953333968715, 25.48928989802003],
+        zoom: 14
+    });
 
     }
 
