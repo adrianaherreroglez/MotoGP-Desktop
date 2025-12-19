@@ -30,7 +30,7 @@ body>div {
 }
 
 
-@media (min-width: 270px) and (max-width: 799px) {
+@media (min-width: 320px) and (max-width: 799px) {
 
     /* Especificidad 001 */
     header {
