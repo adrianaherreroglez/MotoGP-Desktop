@@ -16,9 +16,10 @@ class Carrusel {
         this.#maximo = 4; // índices 0-4
         this.#fotosJSON = { fotos: [] };
         this.#imagenElemento = null;
+        this.#getFotografias();
     }
 
-    getFotografias() {
+    #getFotografias() {
         const url = "https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
 
         $.ajax({
@@ -31,8 +32,8 @@ class Carrusel {
                 format: "json"
             },
             success: function (datos) {
-                this.procesarJSONFotografias(datos);
-                this.mostrarFotografias();
+                this.#procesarJSONFotografias(datos);
+                this.#mostrarFotografias();
             }.bind(this),
             error: function () {
                 const h2 = document.createElement("h2");
@@ -42,7 +43,7 @@ class Carrusel {
         });
     }
 
-    procesarJSONFotografias(datos) {
+    #procesarJSONFotografias(datos) {
         const fotos = [];
 
         for (let i = 0; i < datos.items.length && fotos.length <= this.#maximo ; i++) {
@@ -54,7 +55,7 @@ class Carrusel {
         this.#actual = 0;
     }
 
-    mostrarFotografias() {
+    #mostrarFotografias() {
         const main = document.querySelector("main");
         if (!main) return;
 
@@ -74,11 +75,11 @@ class Carrusel {
         this.#imagenElemento = imagen;
 
    
-        setInterval(this.cambiarFotografia.bind(this), 3000);
+        setInterval(this.#cambiarFotografia.bind(this), 3000);
 
     }
 
-    cambiarFotografia() {
+    #cambiarFotografia() {
         this.#actual++;
         if (this.#actual > this.#maximo) this.#actual = 0;
 
