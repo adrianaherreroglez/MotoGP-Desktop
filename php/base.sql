@@ -61,3 +61,26 @@ CREATE TABLE IF NOT EXISTS observaciones_facilitador (
     comentario TEXT NOT NULL,
     FOREIGN KEY (id_test) REFERENCES resultados_test(id_test) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+-- TABLA ADICIONAL PARA TIEMPOS
+CREATE TABLE IF NOT EXISTS tiempos_usuarios (
+    id_tiempo INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_usuario_id INT NOT NULL,
+    tiempo_segundos FLOAT NOT NULL,
+    FOREIGN KEY (codigo_usuario_id) REFERENCES usuarios(codigo_usuario_id) ON DELETE CASCADE
+);
+
+
+-- INSERTAR DATOS INICIALES
+INSERT IGNORE INTO profesiones (nombre) VALUES 
+('Estudiante'), ('Informático/a'), ('Docente'), ('Administrativo/a'), ('Médico/a'), ('Abogado/a'), ('Otro');
+
+INSERT IGNORE INTO generos (nombre) VALUES 
+('Masculino'), ('Femenino'), ('No binario'), ('Prefiero no decirlo');
+
+INSERT IGNORE INTO pericias (nivel) VALUES 
+('1'), ('2'), ('3'), ('4'), ('5'), ('6'), ('7'), ('8'), ('9'), ('10') ;
+
+INSERT IGNORE INTO dispositivos (nombre) VALUES 
+('Ordenador'), ('Tablet'), ('Smartphone');
