@@ -15,33 +15,33 @@ class Cronometro {
         this.#tiempo = 0;         // tiempo acumulado en milisegundos
         this.#tiempoTotal = 0;    // tiempo mostrado actualmente
         this.#corriendo = null;
-        this.manageEvents();
+        this.#manageEvents();
     }
 
-    manageEvents() {
+    #manageEvents() {
         const buttons = document.querySelectorAll("button");
         for(let i = 0; i < buttons.length; i++){
-            buttons[i].addEventListener("click", this.manageButton.bind(this));
+            buttons[i].addEventListener("click", this.#manageButton.bind(this));
         }
     }
 
-    manageButton(evento) {
+    #manageButton(evento) {
         const texto = evento.target.textContent;
 
         switch (texto) {
           case "Arrancar":
-            this.arrancar();
+            this.#arrancar();
             break;
           case "Parar":
-            this.parar();
+            this.#parar();
             break;
           case "Reiniciar":
-            this.reiniciar();
+            this.#reiniciar();
             break;
         }
     }
 
-    arrancar() {
+    #arrancar() {
         if (this.#corriendo) return; // evita crear otro intervalo si ya hay uno
         try {
             this.#inicio = Temporal.Now.instant();
@@ -49,11 +49,11 @@ class Cronometro {
             this.#inicio = new Date();
         }
 
-        this.#corriendo = setInterval(this.actualizar.bind(this), 100);
+        this.#corriendo = setInterval(this.#actualizar.bind(this), 100);
     }
 
 
-    actualizar() {
+    #actualizar() {
         let ahora;
         try {
             ahora = Temporal.Now.instant();
@@ -80,7 +80,7 @@ class Cronometro {
         document.querySelector("main p").textContent = `${mm}:${ss}.${d}`;
     }
 
-    parar() {
+    #parar() {
         if (!this.#corriendo) return;
 
         clearInterval(this.#corriendo);
@@ -99,8 +99,8 @@ class Cronometro {
         this.#mostrar();
     }
 
-    reiniciar() {
-        this.parar();
+    #reiniciar() {
+        this.#parar();
         this.#tiempo = 0;
         this.#tiempoTotal = 0;
         this.#mostrar();
