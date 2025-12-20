@@ -89,7 +89,9 @@ body>div {
 
     /* Especificidad 004 */
     section ul li a {
-        display: inline-block;
+        display: block;
+        width: 100%;
+        white-space: normal;
     }
 
 

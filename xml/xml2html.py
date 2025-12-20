@@ -88,7 +88,7 @@ class Html:
         html.append('    <link rel="icon" href="../multimedia/favicon.ico">')
         html.append('</head>')
         html.append('<body>')
-        html.append(f'    <header><h1><a href="InfoCircuito.html" title="Información del circuito">{self.datos.get("nombre","Circuito")}</a></h1></header>')
+        html.append(f'    <h1>{self.datos.get("nombre","Circuito")}</h1>')
         html.append('    <main>')
 
         # Datos básicos
