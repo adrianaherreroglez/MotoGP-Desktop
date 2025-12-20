@@ -96,7 +96,7 @@ if ($xml !== null) {
         </section>
 
         <section>
-            <h3>Top 3 del Mundial</h3>
+            <h3>Top 3</h3>
             <ol>
                 <li><?php echo htmlentities(string: $primero); ?></li>
                 <li><?php echo htmlentities($segundo); ?></li>
