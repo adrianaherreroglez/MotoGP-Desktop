@@ -53,8 +53,8 @@ def generar_altimetria(xml_file, svg_file, ancho=800, alto=400):
 
     tramos = root.findall('.//uni:tramo', NS)
     for tramo in tramos:
-        distancia = float(tramo.find('uni:distancia', NS).text)  # XPath explícito
-        alt = float(tramo.find('.//uni:altitudPunto', NS).text)  # XPath explícito
+        distancia = float(tramo.find('uni:distancia', NS).text)  
+        alt = float(tramo.find('.//uni:altitudPunto', NS).text)  
         distancia_acum += distancia
         distancias.append(distancia_acum)
         altitudes.append(alt)
