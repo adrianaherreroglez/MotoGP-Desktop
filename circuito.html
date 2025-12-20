@@ -38,12 +38,22 @@
 
 
     <h2>Circuito de MotoGP-Desktop</h2>
-    <p>Seleccionar archivo InfoCircuito.html:</p>
-    <p><input type="file" accept=".html" onchange="circuito.leerArchivoHTML(this.files);"></p>
-    <p>Seleccionar archivo altimetría.svg:</p>
-    <p><input type="file" accept=".svg" onchange="cargadorSVG.leerArchivoSVG(this.files);"></p>
-    <p>Seleccionar archivo circuito.kml:</p>
-    <p><input type="file" accept=".kml" onchange="cargadorKML.leerArchivoKML(this.files);"></p>
+    <p>
+        <label for="input-html">Seleccionar archivo InfoCircuito.html:</label>
+        <input type="file" id="input-html" name="archivoHTML" onchange="circuito.leerArchivoHTML(this.files);">
+    </p>
+   
+    <p>
+        <label for="input-svg">Seleccionar archivo altimetría.svg:</label>
+        <input type="file" id="input-svg" name="archivoSVG" onchange="cargadorSVG.leerArchivoSVG(this.files);">
+    </p>
+
+      <p>
+        <label for="input-kml">Seleccionar archivo circuito.kml:</label>
+        <input type="file" id="input-kml" name="archivoKML" onchange="cargadorKML.leerArchivoKML(this.files);">
+    </p>
+
+
     <section></section>
     <section>
         <h3>Mapa dinámico</h3>
