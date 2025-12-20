@@ -1,14 +1,15 @@
-<!DOCTYPE HTML>
-
+<?php
+include 'Cronometro.php';
+?>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <!-- Datos que describen el documento -->
-    <meta charset="UTF-8" />
-    <title>MotoGP-Juegos</title>
+    <meta charset="UTF-8">
+    <title>MotoGP-Cronómetro</title>
     <meta name="author" content="Adriana Herrero González" />
-    <meta name="description" content="información sobre juegos del proyecto MotoGP-Desktop" />
-    <meta name="keywords" content="motogp,motos,juego,memoria,cartas,cronometro" />
+    <meta name="description" content="Información sobre el cronometro php del proyecto MotoGP-Desktop" />
+    <meta name="keywords" content="MotoGP, clasificaciones, pilotos, circuitos, cronometro,arrancar, paarar,mostrar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
     <link rel="stylesheet" type="text/css" href="estilo/layout.css" />
@@ -16,7 +17,6 @@
 </head>
 
 <body>
-    <!-- Datos con el contenidos que aparece en el navegador -->
     <header>
         <h1><a href="index.html" title="Página de inicio">MotoGP Desktop</a></h1>
         <nav>
@@ -25,21 +25,25 @@
             <a href="circuito.html" title="Información del circuito">Circuito</a>
             <a href="meteorología.html" title="Información de la meteorología">Meteorología</a>
             <a href="clasificaciones.php" title="Información de las clasificaciones">Clasificaciones</a>
-            <a href="juegos.php" title="Información de los juegos" class="active">Juegos</a>
+            <a href="juegos.html" title="Información de los juegos" class="active">Juegos</a>
             <a href="ayuda.html" title="Ayuda sobre MotoGP-Desktop">Ayuda</a>
         </nav>
     </header>
-    <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <strong>Juegos</strong></p>
+
+    <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <a href="juegos.html"
+            title="Página de juegos">Juegos</a> >> <strong>Cronómetro</strong></p>
+
 
     <main>
-        <section>
-            <h2>Juegos de MotoGP-Desktop</h2>
-            <ul>
-                <li><a href="memoria.html" title="Juego de memoria con cartas">Juego de memoria con cartas</a></li>
-                <li><a href="cronometro.html" title="Juego del cronómetro">Cronómetro</a></li>
-                <li><a href="cronometroHTML.php" title="Juego del cronómetro">Cronómetro PHP</a></li>
-            </ul>
-        </section>
+        <h2>Prueba de Cronómetro</h2>
+
+        <form method="post">
+            <input type="submit" name="arrancar" value="Arrancar">
+            <input type="submit" name="parar" value="Parar">
+            <input type="submit" name="mostrar" value="Mostrar">
+        </form>
+
+        <p><?php echo $mensaje; ?></p>
     </main>
 </body>
 
