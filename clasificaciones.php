@@ -5,13 +5,18 @@
 class Clasificaciones
 {
     protected $documento;   // Ruta de acceso al documento circuitoEsquema.xml
+    protected $xml;         // Objeto SimpleXMLElement
 
     public function __construct()
     {
         $this->documento = __DIR__ . '/xml/circuitoEsquema.xml';
+        $this->xml = $this->consultar(); // Leemos el XML al instanciar la clase
     }
 
-    public function consultar()
+    /**
+     * Método consultar: lee el XML y devuelve un objeto SimpleXMLElement o null
+     */
+    protected function consultar()
     {
         if (!file_exists($this->documento)) {
             return null;
@@ -30,27 +35,50 @@ class Clasificaciones
             return null;
         }
     }
+
+    /**
+     * Devuelve los datos del ganador
+     */
+    public function getGanador()
+    {
+        if ($this->xml === null) {
+            return ['nombre' => 'Desconocido', 'tiempo' => 'Desconocido'];
+        }
+
+        $nombre = (string) ($this->xml->xpath('//ns:vencedor/ns:nombrePiloto')[0] ?? 'Desconocido');
+        $tiempo = (string) ($this->xml->xpath('//ns:vencedor/ns:tiempo')[0] ?? 'Desconocido');
+
+        return ['nombre' => $nombre, 'tiempo' => $tiempo];
+    }
+
+    /**
+     * Devuelve el top 3 del mundial
+     */
+    public function getTop3()
+    {
+        if ($this->xml === null) {
+            return ['primero' => 'Desconocido', 'segundo' => 'Desconocido', 'tercero' => 'Desconocido'];
+        }
+
+        $primero = (string) ($this->xml->xpath('//ns:clasificados/ns:primero')[0] ?? 'Desconocido');
+        $segundo = (string) ($this->xml->xpath('//ns:clasificados/ns:segundo')[0] ?? 'Desconocido');
+        $tercero = (string) ($this->xml->xpath('//ns:clasificados/ns:tercero')[0] ?? 'Desconocido');
+
+        return ['primero' => $primero, 'segundo' => $segundo, 'tercero' => $tercero];
+    }
 }
 
-// Instanciamos la clase y obtenemos el XML
+// --- Instanciamos la clase y obtenemos los datos ---
 $clasificacion = new Clasificaciones();
-$xml = $clasificacion->consultar();
+$ganador = $clasificacion->getGanador();
+$top3 = $clasificacion->getTop3();
 
-// Inicializamos variables por si el XML no se pudo leer
-$nombreVencedor = "Desconocido";
-$tiempoVencedor = "Desconocido";
-$primero = $segundo = $tercero = "Desconocido";
-
-if ($xml !== null) {
-    // Ganador de la carrera
-    $nombreVencedor = (string) ($xml->xpath('//ns:vencedor/ns:nombrePiloto')[0] ?? 'Desconocido');
-    $tiempoVencedor = (string) ($xml->xpath('//ns:vencedor/ns:tiempo')[0] ?? 'Desconocido');
-
-    // Clasificación del mundial
-    $primero = (string) ($xml->xpath('//ns:clasificados/ns:primero')[0] ?? 'Desconocido');
-    $segundo = (string) ($xml->xpath('//ns:clasificados/ns:segundo')[0] ?? 'Desconocido');
-    $tercero = (string) ($xml->xpath('//ns:clasificados/ns:tercero')[0] ?? 'Desconocido');
-}
+// Variables para mostrar en HTML
+$nombreVencedor = $ganador['nombre'];
+$tiempoVencedor = $ganador['tiempo'];
+$primero = $top3['primero'];
+$segundo = $top3['segundo'];
+$tercero = $top3['tercero'];
 ?>
 
 <!DOCTYPE HTML>
@@ -76,7 +104,7 @@ if ($xml !== null) {
             <a href="piloto.html" title="Información del piloto">Piloto</a>
             <a href="circuito.html" title="Información del circuito">Circuito</a>
             <a href="meteorología.html" title="Información de la meteorología">Meteorología</a>
-            <a href="clasificaciones.html" title="Información de las clasificaciones" class="active">Clasificaciones</a>
+            <a href="clasificaciones.php" title="Información de las clasificaciones" class="active">Clasificaciones</a>
             <a href="juegos.html" title="Información de los juegos">Juegos</a>
             <a href="ayuda.html" title="Ayuda sobre MotoGP-Desktop">Ayuda</a>
         </nav>
