@@ -165,11 +165,11 @@ $_SESSION['cronometro'] = serialize($cronometro);
                     </section>
                 <?php endfor; ?>
 
-                <fieldset>
+                <section>
                     <legend>Espacio para el Observador</legend>
                     <label for="obs">Escriba aquí sus comentarios adicionales sobre el desempeño del usuario:</label>
                     <textarea id="obs" name="obs_facilitador"></textarea>
-                </fieldset>
+                </section>
 
                 <button type="submit" name="terminar_prueba">Terminar Prueba</button>
             </form>
