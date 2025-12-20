@@ -84,6 +84,7 @@ class Html:
         html.append('    <meta name="keywords" content="circuito,referencias,videos,galeria,fotos,vencedor,piloto,tiempo,clasificados">')
         html.append('    <meta name="viewport" content="width=device-width, initial-scale=1.0">')
         html.append('    <link rel="stylesheet" type="text/css" href="../estilo/estilo.css">')
+        html.append('    <link rel="stylesheet" type="text/css" href="../estilo/layout.css">')
         html.append('    <link rel="icon" href="../multimedia/favicon.ico">')
         html.append('</head>')
         html.append('<body>')
