@@ -103,10 +103,8 @@ class Html:
         # Referencias
         html.append('        <section>')
         html.append('            <h2>Referencias</h2>')
-        html.append('            <ul>')
         for ref in self.datos['referencias']:
             html.append(f'                <p><a href="{ref}" target="_blank">{ref}</a></p>')
-        html.append('            </ul>')
         html.append('        </section>')
 
         # Galería de fotos (adaptable con <picture>)
