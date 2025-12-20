@@ -7,44 +7,61 @@ class Configuracion {
     private $conn;
 
     public function __construct() {
+        // Conectar a la BD
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
         if ($this->conn->connect_error) {
             exit("<h2>ERROR de conexión: " . $this->conn->connect_error . "</h2>");
         }
     }
 
-    // 1. Reiniciar todas las tablas (borrar datos)
+    // 1. Reiniciar todas las tablas (borrar datos) con control de existencia
     public function reiniciarTablas() {
         $tablas = ['observaciones_facilitador', 'resultados_test', 'usuarios', 'dispositivos', 'pericias', 'generos', 'profesiones'];
         foreach ($tablas as $tabla) {
-            $sql = "TRUNCATE TABLE $tabla";
-            $this->conn->query($sql);
+            $result = $this->conn->query("SHOW TABLES LIKE '$tabla'");
+            if ($result && $result->num_rows > 0) {
+                $this->conn->query("TRUNCATE TABLE $tabla");
+                echo "<p>Tabla '$tabla' reiniciada.</p>";
+            } else {
+                echo "<p>Tabla '$tabla' no existe, no se puede reiniciar.</p>";
+            }
         }
-        echo "<p>Se han reiniciado todas las tablas.</p>";
     }
 
-    // 2. Eliminar la base de datos
+    // 2. Eliminar la base de datos conectando sin seleccionarla
     public function eliminarBaseDatos() {
+        // Cerrar conexión actual
+        $this->conn->close();
+        // Conectar sin seleccionar base de datos
+        $conn = new mysqli($this->servername, $this->username, $this->password);
+        if ($conn->connect_error) {
+            exit("<h2>ERROR de conexión: " . $conn->connect_error . "</h2>");
+        }
         $sql = "DROP DATABASE IF EXISTS " . $this->database;
-        if ($this->conn->query($sql)) {
+        if ($conn->query($sql)) {
             echo "<p>Base de datos eliminada correctamente.</p>";
         } else {
-            echo "<p>Error al eliminar la base de datos: " . $this->conn->error . "</p>";
+            echo "<p>Error al eliminar la base de datos: " . $conn->error . "</p>";
         }
+        $conn->close();
+        // Reconectar a la BD original (si quieres mantener la instancia)
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
     }
 
-    // 3. Exportar todas las tablas a CSV
+    // 3. Exportar todas las tablas a CSV con control de errores
     public function exportarTodasTablasCSV() {
-        // Lista de tablas de la base de datos
         $tablas = ['profesiones','generos','pericias','dispositivos','usuarios','resultados_test','observaciones_facilitador'];
 
         foreach ($tablas as $tabla) {
-            $sql = "SELECT * FROM $tabla";
-            $resultado = $this->conn->query($sql);
+            $resultado = $this->conn->query("SELECT * FROM $tabla");
 
             if ($resultado && $resultado->num_rows > 0) {
                 $archivo = $tabla . '.csv';
                 $file = fopen($archivo, 'w');
+                if (!$file) {
+                    echo "<p>No se pudo crear el archivo $archivo. Revisa permisos.</p>";
+                    continue;
+                }
 
                 // Cabecera
                 $campos = $resultado->fetch_fields();
@@ -55,7 +72,6 @@ class Configuracion {
                 fputcsv($file, $header);
 
                 // Filas
-                $resultado->data_seek(0);
                 while($fila = $resultado->fetch_assoc()) {
                     fputcsv($file, $fila);
                 }
@@ -69,7 +85,7 @@ class Configuracion {
     }
 
     public function cerrarConexion() {
-        $this->conn->close();
+        if ($this->conn) $this->conn->close();
     }
 }
 
