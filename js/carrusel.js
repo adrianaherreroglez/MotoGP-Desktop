@@ -45,7 +45,7 @@ class Carrusel {
     procesarJSONFotografias(datos) {
         const fotos = [];
 
-        for (let i = 0; i < datos.items.length && fotos.length <= this.#maximo ; i++) {
+        for (let i = 0; i < datos.items.length && fotos.length <= this.#maximo; i++) {
             const url = datos.items[i].media.m.replace("_m.", "_z.");
             if (!fotos.includes(url)) fotos.push(url);
         }
@@ -55,8 +55,13 @@ class Carrusel {
     }
 
     mostrarFotografias() {
-        const main = document.querySelector("main");
-        if (!main) return;
+        let main = document.querySelector("main");
+
+        // Si no existe <main>, lo creamos
+        if (!main) {
+            main = document.createElement("main");
+            document.body.appendChild(main);
+        }
 
         const articulo = document.createElement("article");
 
@@ -73,7 +78,7 @@ class Carrusel {
 
         this.#imagenElemento = imagen;
 
-   
+
         setInterval(this.cambiarFotografia.bind(this), 3000);
 
     }
