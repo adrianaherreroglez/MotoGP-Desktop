@@ -24,7 +24,7 @@ class Memoria {
         this.#crono.arrancar();
     }
 
-    voltearCarta(carta) {
+    #voltearCarta(carta) {
         if (this.#tablero_bloqueado) return; // Si el tablero está bloqueado, no hacer nada
         if (carta.dataset.estado === "volteada") return; // Si la carta ya está volteada, no hacer nada
         if (carta.dataset.estado === "revelada") return; // Si la carta ya está emparejada, no hacer nada
@@ -99,7 +99,7 @@ class Memoria {
     #manageEvents() {
         const cartas = document.querySelectorAll("main article");
         for(let i = 0; i < cartas.length; i++){
-            cartas[i].addEventListener("click", this.voltearCarta.bind(this, cartas[i]));
+            cartas[i].addEventListener("click", this.#voltearCarta.bind(this, cartas[i]));
         }
     }
 
