@@ -12,9 +12,10 @@ class Noticias {
         this.#url = "https://api.thenewsapi.com/v1/news";
         this.#apiKey = "1A9rOEVIUr1d3yOulKU45mxxHzTfnHpCkEoO6TDs";
         this.#busqueda = "MotoGP";
+        this.#buscar();
     }
 
-    async buscar() {
+    async #buscar() {
         const url = `${this.#url}/all?api_token=${this.#apiKey}&search=${encodeURIComponent(this.#busqueda)}&language=es&limit=3`;
 
         try {
