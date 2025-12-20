@@ -87,13 +87,6 @@ body>div {
         height: auto;
     }
 
-    /* Especificidad 004 */
-    section ul li a {
-        display: block;
-        width: 100%;
-        white-space: normal;
-    }
-
 
     /* Especificidad 002 */
     body>div {
