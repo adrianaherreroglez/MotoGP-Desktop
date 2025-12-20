@@ -57,11 +57,11 @@ class Carrusel {
     mostrarFotografias() {
         let main = document.querySelector("main");
 
-        // Si no existe <main>, lo creamos
         if (!main) {
             main = document.createElement("main");
             document.body.appendChild(main);
         }
+
 
         const articulo = document.createElement("article");
 
