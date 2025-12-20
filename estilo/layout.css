@@ -86,50 +86,5 @@ body>div {
     }
 
 
-}
 
-/* Tabla para pantallas pequeñas */
-@media (max-width: 600px) {
-
-    /* Especificidad 001 */
-    caption {
-        display: flex;
-    }
-
-    /* Especificidad 001 */
-    th {
-        display: none;
-        /* Oculta la fila de encabezados */
-    }
-
-    /* Especificidad 001 */
-    td {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* Especificidad 012 */
-    td:nth-child(1)::before {
-        content: "Puntos obtenidos";
-    }
-
-    /* Especificidad 012 */
-    td:nth-child(2)::before {
-        content: "Posición final";
-    }
-
-    /* Especificidad 012 */
-    td:nth-child(3)::before {
-        content: "Poles";
-    }
-
-    /* Especificidad 012 */
-    td:nth-child(4)::before {
-        content: "Victorias";
-    }
-
-    /* Especificidad 012 */
-    td:nth-child(5)::before {
-        content: "Podios";
-    }
 }
