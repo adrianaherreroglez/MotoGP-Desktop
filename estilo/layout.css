@@ -87,18 +87,6 @@ body>div {
         height: auto;
     }
 
-    /* Especificidad 002 */
-    section a {
-        display: inline-block;
-        /* Para que se comporte como bloque dentro del párrafo */
-        word-wrap: break-word;
-        /* Rompe la palabra si es muy larga */
-        overflow-wrap: break-word;
-        /* Compatibilidad con navegadores modernos */
-        max-width: 100%;
-        /* No exceda el ancho del contenedor */
-    }
-
 
     /* Especificidad 002 */
     body>div {
@@ -108,12 +96,7 @@ body>div {
         /* Advertencia: redifinición del tamaño del mapa en móviles*/
     }
 
-    /* Especificidad 011 */
-    input[type="file"] {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4em;
-    }
+ 
 
 
 
