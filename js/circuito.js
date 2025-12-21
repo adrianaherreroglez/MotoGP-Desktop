@@ -234,6 +234,7 @@ class CargadorKML {
         this.map = new mapboxgl.Map({
             container: divMapa,
             style: 'mapbox://styles/mapbox/streets-v11',
+            attributionControl: false,
             center: [51.44953333968715, 25.48928989802003],
             zoom: 14
         });
