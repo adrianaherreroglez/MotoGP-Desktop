@@ -108,6 +108,12 @@ body>div {
         /* Advertencia: redifinición del tamaño del mapa en móviles*/
     }
 
+    /* Especificidad 011 */
+    input[type="file"] {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
 
 
 }
