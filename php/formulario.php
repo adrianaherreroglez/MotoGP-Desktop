@@ -4,6 +4,7 @@ include('../Cronometro.php');
 class FormularioPrueba
 {
     private $db;
+    private $cronometro;
 
     public function __construct()
     {
@@ -11,6 +12,15 @@ class FormularioPrueba
         if ($this->db->connect_error) {
             die("Error de conexión: " . $this->db->connect_error);
         }
+
+        if (!isset($_SESSION['cronometro'])) {
+            $_SESSION['cronometro'] = serialize(new Cronometro());
+        }
+        $this->cronometro = unserialize($_SESSION['cronometro']);
+
+        $this->validarSesionUsuario();
+        $this->procesarPost();
+        $_SESSION['cronometro'] = serialize($this->cronometro);
     }
 
     public function obtenerOpciones($tabla, $condicion = '')
@@ -41,14 +51,12 @@ class FormularioPrueba
 
         $completado = 1;
 
-        // Guardar resultados_test
         $stmt = $this->db->prepare("INSERT INTO resultados_test (codigo_usuario_id, dispositivo_id, tiempo, completado, comentarios, propuestas, valoracion) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iisissi", $userId, $dispositivoId, $tiempoSQL, $completado, $comentariosUsuario, $propuestas, $valoracion);
         $stmt->execute();
         $idTest = $stmt->insert_id;
         $stmt->close();
 
-        // Guardar observaciones del facilitador
         if (!empty($comentariosFacilitador)) {
             $stmtObs = $this->db->prepare("INSERT INTO observaciones_facilitador (id_test, comentario) VALUES (?, ?)");
             $stmtObs->bind_param("is", $idTest, $comentariosFacilitador);
@@ -62,64 +70,65 @@ class FormularioPrueba
         $result = $this->db->query("SELECT * FROM usuarios WHERE codigo_usuario_id = $userId");
         return $result->num_rows > 0;
     }
-}
 
-// Cronómetro
-if (!isset($_SESSION['cronometro'])) {
-    $_SESSION['cronometro'] = serialize(new Cronometro());
-}
-$cronometro = unserialize($_SESSION['cronometro']);
-$gestion = new FormularioPrueba();
-
-// Validar si el usuario de sesión aún existe
-if (isset($_SESSION['usuario_id'])) {
-    if (!$gestion->usuarioExiste($_SESSION['usuario_id'])) {
-        unset($_SESSION['usuario_id']);
-        unset($_SESSION['dispositivo_id']);
-        $_SESSION['paso'] = 1; // Volver al paso inicial
-    }
-}
-
-// Procesar POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['iniciar_prueba'])) {
-        $idUser = $gestion->registrarDatosIniciales(
-            $_POST['profesion'],
-            $_POST['edad'],
-            $_POST['genero'],
-            $_POST['pericia']
-        );
-        $_SESSION['usuario_id'] = $idUser;
-        $_SESSION['dispositivo_id'] = $_POST['dispositivo'];
-        $cronometro->arrancar();
-        $_SESSION['paso'] = 2;
+    private function validarSesionUsuario()
+    {
+        if (isset($_SESSION['usuario_id'])) {
+            if (!$this->usuarioExiste($_SESSION['usuario_id'])) {
+                unset($_SESSION['usuario_id']);
+                unset($_SESSION['dispositivo_id']);
+                $_SESSION['paso'] = 1;
+            }
+        }
     }
 
-    if (isset($_POST['terminar_prueba'])) {
-        $cronometro->parar();
-        $tiempoTotal = $cronometro->getTiempo();
+    private function procesarPost()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $respuestas = $_POST['preguntas'];
-        $comentariosFacilitador = $_POST['obs_facilitador'] ?? '';
-        $comentariosUsuario = $_POST['comentarios_usuario'] ?? '';
-        $propuestas = $_POST['propuestas'] ?? '';
-        $valoracion = (int) $_POST['valoracion'];
+            if (isset($_POST['iniciar_prueba'])) {
+                $idUser = $this->registrarDatosIniciales(
+                    $_POST['profesion'],
+                    $_POST['edad'],
+                    $_POST['genero'],
+                    $_POST['pericia']
+                );
+                $_SESSION['usuario_id'] = $idUser;
+                $_SESSION['dispositivo_id'] = $_POST['dispositivo'];
+                $this->cronometro->arrancar();
+                $_SESSION['paso'] = 2;
+            }
 
-        $gestion->guardarFinales(
-            $_SESSION['usuario_id'],
-            $_SESSION['dispositivo_id'],
-            $tiempoTotal,
-            $comentariosFacilitador,
-            $comentariosUsuario,
-            $propuestas,
-            $valoracion,
-            $respuestas
-        );
-        $_SESSION['paso'] = 3;
+            if (isset($_POST['terminar_prueba'])) {
+                $this->cronometro->parar();
+                $tiempoTotal = $this->cronometro->getTiempo();
+
+                $respuestas = $_POST['preguntas'];
+                $comentariosFacilitador = $_POST['obs_facilitador'] ?? '';
+                $comentariosUsuario = $_POST['comentarios_usuario'] ?? '';
+                $propuestas = $_POST['propuestas'] ?? '';
+                $valoracion = (int) $_POST['valoracion'];
+
+                $this->guardarFinales(
+                    $_SESSION['usuario_id'],
+                    $_SESSION['dispositivo_id'],
+                    $tiempoTotal,
+                    $comentariosFacilitador,
+                    $comentariosUsuario,
+                    $propuestas,
+                    $valoracion,
+                    $respuestas
+                );
+                $_SESSION['paso'] = 3;
+            }
+        }
+    }
+
+    public function getPaso()
+    {
+        return $_SESSION['paso'] ?? 1;
     }
 }
-
-$_SESSION['cronometro'] = serialize($cronometro);
 
 // Preguntas sobre MotoGP-Desktop
 $preguntas = [
@@ -134,6 +143,8 @@ $preguntas = [
     "Hora de inicio de la carrera",
     "¿En qué localidad nació Marc Márquez?"
 ];
+
+$gestion = new FormularioPrueba();
 ?>
 
 <!DOCTYPE html>
@@ -155,7 +166,7 @@ $preguntas = [
     <h1>Prueba de Usabilidad MotoGP</h1>
     <main>
 
-        <?php if (!isset($_SESSION['paso']) || $_SESSION['paso'] == 1): ?>
+        <?php if ($gestion->getPaso() == 1): ?>
             <form method="post">
                 <h2>Datos del Participante</h2>
 
@@ -215,7 +226,7 @@ $preguntas = [
                 <button type="submit" name="iniciar_prueba">Iniciar Prueba</button>
             </form>
 
-        <?php elseif ($_SESSION['paso'] == 2): ?>
+        <?php elseif ($gestion->getPaso() == 2): ?>
             <form method="post">
                 <h2>Cuestionario de Usabilidad</h2>
 
@@ -228,17 +239,13 @@ $preguntas = [
                 <?php endforeach; ?>
 
                 <fieldset>
-
                     <h3>Otras cuestiones</h3>
+
                     <label for="comentarios_usuario">Comentarios del Usuario:</label>
                     <textarea id="comentarios_usuario" name="comentarios_usuario" required></textarea>
 
-
-
                     <label for="propuestas">Propuestas del Usuario:</label>
                     <textarea id="propuestas" name="propuestas" required></textarea>
-
-
 
                     <label for="valoracion">Valoración de la experiencia:</label>
                     <select id="valoracion" name="valoracion" required>
@@ -247,8 +254,6 @@ $preguntas = [
                             <option value="<?= $v ?>"><?= $v ?></option>
                         <?php endfor; ?>
                     </select>
-
-
 
                     <label for="obs_facilitador">Comentarios del Observador:</label>
                     <textarea id="obs_facilitador" name="obs_facilitador"></textarea>
@@ -264,5 +269,4 @@ $preguntas = [
 
     </main>
 </body>
-
 </html>

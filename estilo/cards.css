@@ -28,7 +28,6 @@ main article[data-estado=revelada] {
 
 /* Reglas con los estilos generales para el encabezado y la imagen de la carta */
 /* especificidad: 002 */
-/* especificidad: 002 */
 article h3,
 article img {
     width: 100%;

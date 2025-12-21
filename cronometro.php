@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-/**
- * Clase Cronometro
- */
 class Cronometro
 {
     protected $inicio;
@@ -12,9 +9,7 @@ class Cronometro
 
     public function __construct()
     {
-        $this->tiempo = 0;
-        $this->inicio = null;
-        $this->fin = null;
+        $this->reiniciar();
     }
 
     public function arrancar()
@@ -25,7 +20,7 @@ class Cronometro
 
     public function parar()
     {
-        if (isset($this->inicio)) {
+        if ($this->inicio !== null) {
             $this->fin = microtime(true);
             $this->tiempo = $this->fin - $this->inicio;
         } else {
@@ -33,11 +28,20 @@ class Cronometro
         }
     }
 
+    public function reiniciar()
+    {
+        $this->inicio = null;
+        $this->fin = null;
+        $this->tiempo = 0;
+    }
+
+    // Devuelve el tiempo transcurrido en segundos
     public function getTiempo()
     {
         return $this->tiempo;
     }
 
+    // Devuelve el tiempo formateado en MM:SS.s
     public function mostrar()
     {
         $totalSegundos = $this->tiempo;
@@ -45,30 +49,50 @@ class Cronometro
         $segundos = $totalSegundos - ($minutos * 60);
         return sprintf("%02d:%04.1f", $minutos, $segundos);
     }
+
+    public function accion($accion)
+    {
+        switch ($accion) {
+            case 'arrancar':
+                $this->arrancar();
+                return "Cronómetro arrancado.";
+            case 'parar':
+                $this->parar();
+                return "Cronómetro parado.";
+            case 'mostrar':
+                return "Tiempo transcurrido: " . $this->mostrar();
+            case 'reiniciar':
+                $this->reiniciar();
+                return "Cronómetro reiniciado.";
+            default:
+                return "Acción no válida.";
+        }
+    }
+
+    // Guarda el cronómetro en sesión
+    public function guardarEnSesion($clave = 'cronometro')
+    {
+        $_SESSION[$clave] = serialize($this);
+    }
+
+    // Carga el cronómetro desde sesión
+    public static function cargarDeSesion($clave = 'cronometro')
+    {
+        if (isset($_SESSION[$clave])) {
+            return unserialize($_SESSION[$clave]);
+        }
+        return new self();
+    }
 }
 
-// Inicializamos cronómetro en sesión si no existe
-if (!isset($_SESSION['cronometro'])) {
-    $_SESSION['cronometro'] = serialize(new Cronometro());
-}
-$cronometro = unserialize($_SESSION['cronometro']);
+// Inicialización
 
+$cronometro = Cronometro::cargarDeSesion();
 $mensaje = "";
 
-// Comprobamos si se ha pulsado algún botón
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['arrancar'])) {
-        $cronometro->arrancar();
-        $mensaje = "Cronómetro arrancado.";
-    }
-    if (isset($_POST['parar'])) {
-        $cronometro->parar();
-        $mensaje = "Cronómetro parado.";
-    }
-    if (isset($_POST['mostrar'])) {
-        $mensaje = "Tiempo transcurrido: " . $cronometro->mostrar();
-    }
+    $accion = key($_POST);
+    $mensaje = $cronometro->accion($accion);
+    $cronometro->guardarEnSesion();
 }
 
-// Guardamos el cronómetro actualizado en sesión
-$_SESSION['cronometro'] = serialize($cronometro);

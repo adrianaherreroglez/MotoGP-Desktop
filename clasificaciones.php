@@ -39,17 +39,17 @@ include 'clasificacionesPHP.php';
         <section>
             <h3>Ganador de la carrera</h3>
             <ul>
-                <li>Nombre: <?php echo htmlentities($nombreVencedor); ?></li>
-                <li>Tiempo empleado: <?php echo htmlentities($tiempoVencedor); ?></li>
+                <li>Nombre: <?= htmlentities($clasificacion->ganadorNombre) ?></li>
+                <li>Tiempo empleado: <?= htmlentities($clasificacion->ganadorTiempo) ?></li>
             </ul>
         </section>
 
         <section>
-            <h3>Top 3</h3>
+            <h3>Top 3 del Mundial tras la carrera</h3>
             <ol>
-                <li><?php echo htmlentities(string: $primero); ?></li>
-                <li><?php echo htmlentities($segundo); ?></li>
-                <li><?php echo htmlentities($tercero); ?></li>
+                <li><?= htmlentities($clasificacion->top1) ?></li>
+                <li><?= htmlentities($clasificacion->top2) ?></li>
+                <li><?= htmlentities($clasificacion->top3) ?></li>
             </ol>
         </section>
 

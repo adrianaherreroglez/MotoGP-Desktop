@@ -34,9 +34,7 @@ body>div {
 
     /* Especificidad 001 */
     header {
-        flex-direction: column;
-        /* Advertencia: redefinición ya que la dirección de los elementos 
-                                cambia en el móvil: pasa de row a column*/
+        flex-direction: column; /* Advertencia: redefinición ya que la dirección de los elementos cambia en el móvil: pasa de row a column*/
     }
 
     /* Especificidad 002 */
@@ -47,9 +45,7 @@ body>div {
 
     /* Especificidad 001 */
     nav {
-        flex-direction: column;
-        /* Advertencia: redefinición ya que la dirección de los elementos 
-                                cambia en el móvil: pasa de row a column*/
+        flex-direction: column;/* Advertencia: redefinición ya que la dirección de los elementos cambia en el móvil: pasa de row a column*/
     }
 
     nav a {
@@ -90,10 +86,8 @@ body>div {
 
     /* Especificidad 002 */
     body>div {
-        width: 100%;
-        /* Advertencia: redifinición del tamaño del mapa en móviles*/
-        height: 100vh;
-        /* Advertencia: redifinición del tamaño del mapa en móviles*/
+        width: 100%; /* Advertencia: redifinición del tamaño del mapa en móviles*/
+        height: 100vh;/* Advertencia: redifinición del tamaño del mapa en móviles*/
     }
 
     /* Especificidad 011 */

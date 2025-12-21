@@ -39,7 +39,7 @@ header + p {
 del texto normal y que queden más claro como están divididas las secciones */
 /* Especificidad 001 */
 h1 {
-    font-size:2.75em;
+    font-size:2.5em;
     font-weight: 700;
 }
 
