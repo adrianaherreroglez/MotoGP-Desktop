@@ -318,3 +318,42 @@ class CargadorKML {
             .addTo(this.map);
     }
 }
+
+// Clase que gestiona los eventos de los botones
+"use strict";
+
+class GestorArchivos {
+
+    #circuito;
+    #cargadorSVG;
+    #cargadorKML;
+
+    constructor(circuito, cargadorSVG, cargadorKML) {
+        this.#circuito = circuito;
+        this.#cargadorSVG = cargadorSVG;
+        this.#cargadorKML = cargadorKML;
+        this.#manageEvents();
+    }
+
+    #manageEvents() {
+        const inputHTML = document.querySelector("#input-html");
+        const inputSVG  = document.querySelector("#input-svg");
+        const inputKML  = document.querySelector("#input-kml");
+
+        inputHTML.addEventListener("change", this.#manageHTML.bind(this));
+        inputSVG.addEventListener("change", this.#manageSVG.bind(this));
+        inputKML.addEventListener("change", this.#manageKML.bind(this));
+    }
+
+    #manageHTML(evento) {
+        this.#circuito.leerArchivoHTML(evento.target.files);
+    }
+
+    #manageSVG(evento) {
+        this.#cargadorSVG.leerArchivoSVG(evento.target.files);
+    }
+
+    #manageKML(evento) {
+        this.#cargadorKML.leerArchivoKML(evento.target.files);
+    }
+}

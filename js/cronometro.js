@@ -106,5 +106,3 @@ class Cronometro {
         this.#mostrar();
     }
 }
-
- 

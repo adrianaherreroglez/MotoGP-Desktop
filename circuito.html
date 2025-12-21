@@ -40,17 +40,17 @@
     <h2>Circuito de MotoGP-Desktop</h2>
     <p>
         <label for="input-html">Seleccionar archivo InfoCircuito.html:</label>
-        <input type="file" id="input-html" name="archivoHTML" onchange="circuito.leerArchivoHTML(this.files);">
+        <input type="file" id="input-html" name="archivoHTML">
     </p>
    
     <p>
         <label for="input-svg">Seleccionar archivo altimetría.svg:</label>
-        <input type="file" id="input-svg" name="archivoSVG" onchange="cargadorSVG.leerArchivoSVG(this.files);">
+        <input type="file" id="input-svg" name="archivoSVG">
     </p>
 
       <p>
         <label for="input-kml">Seleccionar archivo circuito.kml:</label>
-        <input type="file" id="input-kml" name="archivoKML" onchange="cargadorKML.leerArchivoKML(this.files);">
+        <input type="file" id="input-kml" name="archivoKML">
     </p>
 
 
@@ -63,6 +63,7 @@
         let circuito = new Circuito();
         let cargadorSVG = new CargadorSVG();
         let cargadorKML = new CargadorKML();
+        let gestor = new GestorArchivos(circuito, cargadorSVG, cargadorKML);
     </script>
 
 
