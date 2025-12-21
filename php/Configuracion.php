@@ -112,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>MotoGP-Configuración</title>
     <meta name="author" content="Adriana Herrero González" />
     <meta name="description" content="Aplicación de utilidad del proyecto MotoGP-Desktop" />
+    <meta name="keywords" content="motogp,motos,reiniciar,eliminar,exportar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../estilo/estilo.css" />
     <link rel="stylesheet" href="../estilo/layout.css" />

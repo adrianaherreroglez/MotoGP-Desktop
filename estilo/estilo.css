@@ -61,6 +61,18 @@ h4 {
   font-weight: 600;
 }
 
+/* Especificidad 012 */
+form button[name="iniciar_prueba"] {
+    margin-top: 2rem; 
+}
+
+/* Especificidad 001 */
+textarea {
+    width: 12.5rem;    
+    height: 7.5rem; 
+    margin-top: 1rem;  
+    margin-right: 1rem; 
+}
 
 /* Estilos de enlaces externos */
 /* Especificidad 011 */

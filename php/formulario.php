@@ -1,6 +1,5 @@
 <?php
-// Ruta: Cronometro.php está en la raíz, subimos un nivel
-include_once('../Cronometro.php');
+include('../Cronometro.php');
 
 class FormularioPrueba
 {
@@ -8,167 +7,251 @@ class FormularioPrueba
 
     public function __construct()
     {
-        // Conexión obligatoria con mysqli y el usuario de la práctica
         $this->db = new mysqli("localhost", "DBUSER2025", "DBPSWD2025", "uo287543_db");
-
         if ($this->db->connect_error) {
             die("Error de conexión: " . $this->db->connect_error);
         }
     }
 
-    // Obtener datos para los SELECT del mini-formulario inicial
-    public function obtenerOpciones($tabla)
+    public function obtenerOpciones($tabla, $condicion = '')
     {
-        return $this->db->query("SELECT * FROM $tabla");
+        $sql = "SELECT * FROM $tabla";
+        if ($condicion != '') {
+            $sql .= " WHERE $condicion";
+        }
+        return $this->db->query($sql);
     }
 
-    // Tarea: Registrar datos del usuario al inicio
     public function registrarDatosIniciales($profesion, $edad, $genero, $pericia)
     {
         $stmt = $this->db->prepare("INSERT INTO usuarios (profesion_id, edad, genero_id, pericia_id) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("iiii", $profesion, $edad, $genero, $pericia);
         $stmt->execute();
-        $id = $this->db->insert_id;
+        $id = $stmt->insert_id;
         $stmt->close();
         return $id;
     }
 
-    // EL MÉTODO QUE FALTABA: Guarda todo al finalizar la prueba
-    public function guardarFinales($userId, $tiempo, $comentarios)
+    public function guardarFinales($userId, $dispositivoId, $tiempoSegundos, $comentariosFacilitador, $comentariosUsuario, $propuestas, $valoracion, $respuestas)
     {
-        // 1. Insertar en resultados_test (Dispositivo 1 = PC por defecto)
+        $horas = floor($tiempoSegundos / 3600);
+        $minutos = floor(($tiempoSegundos % 3600) / 60);
+        $segundos = $tiempoSegundos % 60;
+        $tiempoSQL = sprintf("%02d:%02d:%02d", $horas, $minutos, $segundos);
+
         $completado = 1;
-        $valoracion_dummy = 5; // Valor por defecto para cumplir con la estructura
-        $stmt = $this->db->prepare("INSERT INTO resultados_test (codigo_usuario_id, dispositivo_id, tiempo, completado, valoracion) VALUES (?, 1, ?, ?, ?)");
-        $tiempoInt = (int) $tiempo;
-        $stmt->bind_param("iiii i", $userId, $tiempoInt, $completado, $valoracion_dummy);
+
+        // Guardar resultados_test
+        $stmt = $this->db->prepare("INSERT INTO resultados_test (codigo_usuario_id, dispositivo_id, tiempo, completado, comentarios, propuestas, valoracion) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisissi", $userId, $dispositivoId, $tiempoSQL, $completado, $comentariosUsuario, $propuestas, $valoracion);
         $stmt->execute();
-        $idTest = $this->db->insert_id;
+        $idTest = $stmt->insert_id;
         $stmt->close();
 
-        // 2. Insertar en observaciones_facilitador (Tarea 3 del PDF)
-        $stmtObs = $this->db->prepare("INSERT INTO observaciones_facilitador (id_test, comentario) VALUES (?, ?)");
-        $stmtObs->bind_param("is", $idTest, $comentarios);
-        $stmtObs->execute();
-        $stmtObs->close();
+        // Guardar observaciones del facilitador
+        if (!empty($comentariosFacilitador)) {
+            $stmtObs = $this->db->prepare("INSERT INTO observaciones_facilitador (id_test, comentario) VALUES (?, ?)");
+            $stmtObs->bind_param("is", $idTest, $comentariosFacilitador);
+            $stmtObs->execute();
+            $stmtObs->close();
+        }
+    }
 
-        // 3. Insertar en la tabla intermedia de tiempos solicitada
-        $stmtT = $this->db->prepare("INSERT INTO tiempos_usuarios (codigo_usuario_id, tiempo_segundos) VALUES (?, ?)");
-        $stmtT->bind_param("id", $userId, $tiempo);
-        $stmtT->execute();
-        $stmtT->close();
+    public function usuarioExiste($userId)
+    {
+        $result = $this->db->query("SELECT * FROM usuarios WHERE codigo_usuario_id = $userId");
+        return $result->num_rows > 0;
     }
 }
 
-// Lógica de sesión para el cronómetro
+// Cronómetro
 if (!isset($_SESSION['cronometro'])) {
     $_SESSION['cronometro'] = serialize(new Cronometro());
 }
 $cronometro = unserialize($_SESSION['cronometro']);
 $gestion = new FormularioPrueba();
 
-// Procesar acciones del formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Si el usuario pulsa "Iniciar Prueba" tras rellenar sus datos
-    if (isset($_POST['iniciar_prueba'])) {
-        $idUser = $gestion->registrarDatosIniciales($_POST['profesion'], $_POST['edad'], $_POST['genero'], $_POST['pericia']);
-        $_SESSION['usuario_id'] = $idUser;
-
-        $cronometro->arrancar(); // Arranca el tiempo PHP
-        $_SESSION['paso'] = 2;   // Cambiamos a la vista de preguntas
-    }
-
-    // Si el usuario pulsa "Terminar Prueba" tras las 10 preguntas
-    if (isset($_POST['terminar_prueba'])) {
-        $cronometro->parar(); // Para el tiempo PHP
-        $tiempoTotal = $cronometro->getTiempo();
-
-        $gestion->guardarFinales($_SESSION['usuario_id'], $tiempoTotal, $_POST['obs_facilitador']);
-
-        $_SESSION['paso'] = 3; // Vista final de éxito
-        $_SESSION['tiempo_final_formateado'] = $cronometro->mostrar();
+// Validar si el usuario de sesión aún existe
+if (isset($_SESSION['usuario_id'])) {
+    if (!$gestion->usuarioExiste($_SESSION['usuario_id'])) {
+        unset($_SESSION['usuario_id']);
+        unset($_SESSION['dispositivo_id']);
+        $_SESSION['paso'] = 1; // Volver al paso inicial
     }
 }
-// Guardar estado del cronómetro
+
+// Procesar POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['iniciar_prueba'])) {
+        $idUser = $gestion->registrarDatosIniciales(
+            $_POST['profesion'],
+            $_POST['edad'],
+            $_POST['genero'],
+            $_POST['pericia']
+        );
+        $_SESSION['usuario_id'] = $idUser;
+        $_SESSION['dispositivo_id'] = $_POST['dispositivo'];
+        $cronometro->arrancar();
+        $_SESSION['paso'] = 2;
+    }
+
+    if (isset($_POST['terminar_prueba'])) {
+        $cronometro->parar();
+        $tiempoTotal = $cronometro->getTiempo();
+
+        $respuestas = $_POST['preguntas'];
+        $comentariosFacilitador = $_POST['obs_facilitador'] ?? '';
+        $comentariosUsuario = $_POST['comentarios_usuario'] ?? '';
+        $propuestas = $_POST['propuestas'] ?? '';
+        $valoracion = (int) $_POST['valoracion'];
+
+        $gestion->guardarFinales(
+            $_SESSION['usuario_id'],
+            $_SESSION['dispositivo_id'],
+            $tiempoTotal,
+            $comentariosFacilitador,
+            $comentariosUsuario,
+            $propuestas,
+            $valoracion,
+            $respuestas
+        );
+        $_SESSION['paso'] = 3;
+    }
+}
+
 $_SESSION['cronometro'] = serialize($cronometro);
+
+// Preguntas sobre MotoGP-Desktop
+$preguntas = [
+    "¿Cuántas vueltas tiene el circuito?",
+    "¿Quién ganó el premio de Qatar en 2025?",
+    "¿Qué tiempo hizo el ganador?",
+    "¿Quién quedó tercero en el mundial tras la carrera?",
+    "¿Qué temperatura hizo el día de la carrera?",
+    "¿Cuántos puntos hizo Marc Márquez esta temporada?",
+    "¿Cuál fue el cuarto equipo por el que ha pasado Marc Márquez?",
+    "Anchura media del circuito",
+    "Hora de inicio de la carrera",
+    "¿En qué localidad nació Marc Márquez?"
+];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>MotoGP-Usabilidad</title>
+    <meta charset="UTF-8">
+    <title>Prueba de Usabilidad MotoGP</title>
     <meta name="author" content="Adriana Herrero González" />
-    <meta name="description" content="usabilidad de MotoGP-Desktop" />
-    <meta name="keywords" content="motogp,motos,usabilidad, edad, pericia,cronometro" />
+    <meta name="description" content="Aplicación de utilidad del proyecto MotoGP-Desktop" />
+    <meta name="keywords" content="prueba,usabilidad,formulario,edad,profesion,moto,marc,genero,vueltas" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="../estilo/estilo.css" />
-    <link rel="stylesheet" type="text/css" href="../estilo/layout.css" />
+    <link rel="stylesheet" href="../estilo/estilo.css">
+    <link rel="stylesheet" href="../estilo/layout.css">
     <link rel="icon" href="../multimedia/favicon.ico" />
 </head>
 
 <body>
-    <h1>Prueba de Usabilidad</h1>
-
+    <h1>Prueba de Usabilidad MotoGP</h1>
     <main>
-        <?php if (!isset($_SESSION['paso']) || $_SESSION['paso'] == 1): ?>
-            <form action="formulario.php" method="post">
-                <section>
-                    <h2>Datos Personales del Participante</h2>
-                    <p>Por favor, rellene sus datos antes de comenzar la prueba.</p>
 
-                    <label for="profesion">Profesión:</label>
-                    <select id="profesion" name="profesion">
+        <?php if (!isset($_SESSION['paso']) || $_SESSION['paso'] == 1): ?>
+            <form method="post">
+                <h2>Datos del Participante</h2>
+
+                <section>
+                    <h3>Profesión</h3>
+                    <select name="profesion" required>
+                        <option value="">Seleccione su profesión</option>
                         <?php
                         $res = $gestion->obtenerOpciones('profesiones');
                         while ($r = $res->fetch_assoc())
-                            echo "<option value='" . $r['profesion_id'] . "'>" . $r['nombre'] . "</option>";
+                            echo "<option value='{$r['profesion_id']}'>{$r['nombre']}</option>";
                         ?>
                     </select>
+                </section>
 
-                    <label for="edad">Edad:</label>
-                    <input type="number" id="edad" name="edad" required min="1" max="120">
+                <section>
+                    <h3>Edad</h3>
+                    <input type="number" name="edad" required min="1" max="120">
+                </section>
 
-                    <label for="genero">Género:</label>
-                    <select id="genero" name="genero">
+                <section>
+                    <h3>Género</h3>
+                    <select name="genero" required>
+                        <option value="">Seleccione su género</option>
                         <?php
                         $res = $gestion->obtenerOpciones('generos');
                         while ($r = $res->fetch_assoc())
-                            echo "<option value='" . $r['genero_id'] . "'>" . $r['nombre'] . "</option>";
+                            echo "<option value='{$r['genero_id']}'>{$r['nombre']}</option>";
                         ?>
                     </select>
+                </section>
 
-                    <label for="pericia">Nivel de Pericia:</label>
-                    <select id="pericia" name="pericia">
+                <section>
+                    <h3>Pericia</h3>
+                    <select name="pericia" required>
+                        <option value="">Seleccione nivel de pericia</option>
                         <?php
                         $res = $gestion->obtenerOpciones('pericias');
                         while ($r = $res->fetch_assoc())
-                            echo "<option value='" . $r['pericia_id'] . "'>" . $r['nivel'] . "</option>";
+                            echo "<option value='{$r['pericia_id']}'>{$r['nivel']}</option>";
                         ?>
                     </select>
-
-                    <button type="submit" name="iniciar_prueba">Iniciar Prueba</button>
                 </section>
+
+                <section>
+                    <h3>Dispositivo</h3>
+                    <select name="dispositivo" required>
+                        <option value="">Seleccione su dispositivo</option>
+                        <?php
+                        $res = $gestion->obtenerOpciones('dispositivos');
+                        while ($r = $res->fetch_assoc())
+                            echo "<option value='{$r['dispositivo_id']}'>{$r['nombre']}</option>";
+                        ?>
+                    </select>
+                </section>
+
+                <button type="submit" name="iniciar_prueba">Iniciar Prueba</button>
             </form>
 
         <?php elseif ($_SESSION['paso'] == 2): ?>
-            <form action="formulario.php" method="post">
+            <form method="post">
                 <h2>Cuestionario de Usabilidad</h2>
-                <p>Navegue por la aplicación MotoGP Desktop y responda:</p>
 
-                <?php for ($i = 1; $i <= 10; $i++): ?>
+                <?php foreach ($preguntas as $i => $pregunta): ?>
                     <section>
-                        <label for="p<?php echo $i; ?>">Tarea <?php echo $i; ?>: ¿Cómo calificaría la facilidad para encontrar
-                            los resultados de carrera?</label>
-                        <input type="text" id="p<?php echo $i; ?>" name="preguntas[]" required>
+                        <h3>Pregunta <?= $i + 1 ?></h3>
+                        <label for="p<?= $i ?>"><?= $pregunta ?></label>
+                        <input type="text" id="p<?= $i ?>" name="preguntas[]" required>
                     </section>
-                <?php endfor; ?>
+                <?php endforeach; ?>
 
-                <section>
-                    <legend>Espacio para el Observador</legend>
-                    <label for="obs">Escriba aquí sus comentarios adicionales sobre el desempeño del usuario:</label>
-                    <textarea id="obs" name="obs_facilitador"></textarea>
+                    <section>
+
+                    <h3>Otras cuestiones</h3>
+                    <label for="comentarios_usuario">Comentarios del Usuario:</label>
+                    <textarea id="comentarios_usuario" name="comentarios_usuario" required></textarea>
+                
+
+               
+                    <label for="propuestas">Propuestas del Usuario:</label>
+                    <textarea id="propuestas" name="propuestas" required></textarea>
+                
+
+                
+                    <label for="valoracion">Valoración de la experiencia:</label>
+                    <select id="valoracion" name="valoracion" required>
+                        <option value="">Seleccione valor</option>
+                        <?php for ($v = 1; $v <= 10; $v++): ?>
+                            <option value="<?= $v ?>"><?= $v ?></option>
+                        <?php endfor; ?>
+                    </select>
+                
+
+               
+                    <label for="obs_facilitador">Comentarios del Observador:</label>
+                    <textarea id="obs_facilitador" name="obs_facilitador"></textarea>
                 </section>
 
                 <button type="submit" name="terminar_prueba">Terminar Prueba</button>
@@ -176,14 +259,11 @@ $_SESSION['cronometro'] = serialize($cronometro);
 
         <?php else: ?>
             <section>
-                <h2>Prueba Completada con Éxito</h2>
-                <p>El código de usuario generado ha sido: <strong><?php echo $_SESSION['usuario_id']; ?></strong></p>
-                <p>Tiempo total registrado: <strong><?php echo $_SESSION['tiempo_final_formateado']; ?></strong></p>
-                <p>Los datos han sido almacenados en la base de datos <code>uo287543_db</code>.</p>
-                <a href="formulario.php">Realizar un nuevo test</a>
+                <p>Prueba completada.</p>
+                <a href="formulario.php" onclick="<?php session_destroy(); ?>">Realizar nuevo test</a>
             </section>
-            <?php session_destroy(); ?>
         <?php endif; ?>
+
     </main>
 </body>
 
