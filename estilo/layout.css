@@ -102,6 +102,17 @@ body>div {
         box-sizing: border-box;
     }
 
+    /* Afecta a todos los enlaces dentro de párrafos en secciones con h2 o h4 (Parrafos con referencias largas para q no sobresalga)*/
+    /* Especificidad 004 */
+    section h2~p a,
+    section h4~p a {
+        line-break: anywhere;
+
+    }
+
+
+
+
 
 
 }
