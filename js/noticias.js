@@ -1,8 +1,5 @@
-// versión 1.0 
-// Adriana Herrero González
-// Universidad de Oviedo
-// Cursd 2025-2026   
 "use strict";
+
 class Noticias {
     #url;
     #apiKey;
@@ -20,58 +17,49 @@ class Noticias {
         try {
             const respuesta = await fetch(url);
             const datos = await respuesta.json();
-
             this.#procesarInformacion(datos);
 
         } catch (error) {
+            const seccion = document.createElement("section");
+            document.body.appendChild(seccion);
+
             const mensaje = document.createElement("p");
             mensaje.textContent = "Error al obtener las noticias.";
-            main.appendChild(mensaje);
+            seccion.appendChild(mensaje);
         }
     }
 
     #procesarInformacion(datos) {
-        const main = document.querySelector("main");
+        const seccion = document.createElement("section");
+        document.body.appendChild(seccion);
 
-        // Sección para las noticias
-        const seccionNoticias = document.createElement("section");
-
-        // Encabezado de la sección
         const encabezadoSeccion = document.createElement("h2");
         encabezadoSeccion.textContent = "Noticias relacionadas";
-        seccionNoticias.appendChild(encabezadoSeccion);
+        seccion.appendChild(encabezadoSeccion);
 
         if (datos.data && datos.data.length > 0) {
-            for (let i = 0; i < datos.data.length; i++) {
-                const noticia = datos.data[i];
-
-                // Titular
+            datos.data.forEach(noticia => {
                 const titular = document.createElement("h3");
                 titular.textContent = noticia.title;
-                seccionNoticias.appendChild(titular);
+                seccion.appendChild(titular);
 
-                // Entradilla
                 const entradilla = document.createElement("p");
                 entradilla.textContent = noticia.description || "Sin descripción";
-                seccionNoticias.appendChild(entradilla);
+                seccion.appendChild(entradilla);
 
-                // Enlace
                 const enlace = document.createElement("a");
                 enlace.href = noticia.url;
                 enlace.textContent = "Leer más";
-                seccionNoticias.appendChild(enlace);
+                seccion.appendChild(enlace);
 
-                // Fuente
                 const fuente = document.createElement("p");
-                fuente.textContent = "Fuente: " + (noticia.source|| "Desconocida");
-                seccionNoticias.appendChild(fuente);
-            }
+                fuente.textContent = "Fuente: " + (noticia.source || "Desconocida");
+                seccion.appendChild(fuente);
+            });
         } else {
             const mensaje = document.createElement("p");
             mensaje.textContent = "No se encontraron noticias.";
-            seccionNoticias.appendChild(mensaje);
+            seccion.appendChild(mensaje);
         }
-
-        main.appendChild(seccionNoticias);
     }
 }

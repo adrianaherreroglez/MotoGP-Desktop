@@ -1,8 +1,5 @@
-// versión 1.0 
-// Adriana Herrero González
-// Universidad de Oviedo
-// Cursd 2025-2026  
 "use strict";
+
 class Carrusel {
     #busqueda;
     #actual;
@@ -13,7 +10,7 @@ class Carrusel {
     constructor() {
         this.#busqueda = "Qatar MotoGP";
         this.#actual = 0;
-        this.#maximo = 4; // índices 0-4
+        this.#maximo = 4;
         this.#fotosJSON = { fotos: [] };
         this.#imagenElemento = null;
     }
@@ -55,15 +52,9 @@ class Carrusel {
     }
 
     mostrarFotografias() {
-        let main = document.querySelector("main");
-
-        if (!main) {
-            main = document.createElement("main");
-            document.body.appendChild(main);
-        }
-
-
+        // Crear article dinámicamente
         const articulo = document.createElement("article");
+        document.body.appendChild(articulo);
 
         const encabezado = document.createElement("h2");
         encabezado.textContent = "Imágenes del circuito de Lusail International Circuit";
@@ -74,21 +65,12 @@ class Carrusel {
         imagen.alt = "Fotografía del circuito";
         articulo.appendChild(imagen);
 
-        main.appendChild(articulo);
-
         this.#imagenElemento = imagen;
 
-
-        setInterval(this.cambiarFotografia.bind(this), 3000);
-
-    }
-
-    cambiarFotografia() {
-        this.#actual++;
-        if (this.#actual > this.#maximo) this.#actual = 0;
-
-        if (this.#imagenElemento) {
+        setInterval(() => {
+            this.#actual++;
+            if (this.#actual > this.#maximo || this.#actual >= this.#fotosJSON.fotos.length) this.#actual = 0;
             this.#imagenElemento.src = this.#fotosJSON.fotos[this.#actual];
-        }
+        }, 3000);
     }
 }
