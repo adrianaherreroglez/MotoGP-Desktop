@@ -1,97 +1,91 @@
 <?php
-class Configuracion {
+class Configuracion
+{
     private $servername = "localhost";
     private $username = "DBUSER2025";
     private $password = "DBPSWD2025";
-    private $database = "uo287543_db"; 
+    private $database = "uo287543_db";
     private $conn;
+    public $mensajes = [];
 
-    public function __construct() {
-        // Conectar a la BD
+    public function __construct()
+    {
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
         if ($this->conn->connect_error) {
             exit("<h2>ERROR de conexión: " . $this->conn->connect_error . "</h2>");
         }
     }
 
-    // 1. Reiniciar todas las tablas
-    public function reiniciarTablas() {
+    public function reiniciarTablas()
+    {
         $tablas = ['observaciones_facilitador', 'resultados_test', 'usuarios', 'dispositivos', 'pericias', 'generos', 'profesiones'];
         foreach ($tablas as $tabla) {
             $result = $this->conn->query("SHOW TABLES LIKE '$tabla'");
             if ($result && $result->num_rows > 0) {
                 $this->conn->query("TRUNCATE TABLE $tabla");
-                echo "<p>Tabla '$tabla' reiniciada.</p>";
+                $this->mensajes[] = "Tabla '$tabla' reiniciada.";
             } else {
-                echo "<p>Tabla '$tabla' no existe, no se puede reiniciar.</p>";
+                $this->mensajes[] = "Tabla '$tabla' no existe, no se puede reiniciar.";
             }
         }
     }
 
-    // 2. Eliminar la base de datos
-    public function eliminarBaseDatos() {
-        // Cerrar conexión actual
+    public function eliminarBaseDatos()
+    {
         $this->conn->close();
-        // Conectar sin seleccionar base de datos
         $conn = new mysqli($this->servername, $this->username, $this->password);
         if ($conn->connect_error) {
             exit("<h2>ERROR de conexión: " . $conn->connect_error . "</h2>");
         }
         $sql = "DROP DATABASE IF EXISTS " . $this->database;
         if ($conn->query($sql)) {
-            echo "<p>Base de datos eliminada correctamente.</p>";
+            $this->mensajes[] = "Base de datos eliminada correctamente.";
         } else {
-            echo "<p>Error al eliminar la base de datos: " . $conn->error . "</p>";
+            $this->mensajes[] = "Error al eliminar la base de datos: " . $conn->error;
         }
         $conn->close();
-        // Reconectar a la BD original
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
     }
 
-    // 3. Exportar todas las tablas a CSV
-    public function exportarTodasTablasCSV() {
-        $tablas = ['profesiones','generos','pericias','dispositivos','usuarios','resultados_test','observaciones_facilitador'];
-
+    public function exportarTodasTablasCSV()
+    {
+        $tablas = ['profesiones', 'generos', 'pericias', 'dispositivos', 'usuarios', 'resultados_test', 'observaciones_facilitador'];
         foreach ($tablas as $tabla) {
             $resultado = $this->conn->query("SELECT * FROM $tabla");
-
             if ($resultado && $resultado->num_rows > 0) {
                 $archivo = $tabla . '.csv';
                 $file = fopen($archivo, 'w');
                 if (!$file) {
-                    echo "<p>No se pudo crear el archivo $archivo. Revisa permisos.</p>";
+                    $this->mensajes[] = "No se pudo crear el archivo $archivo. Revisa permisos.";
                     continue;
                 }
-
-                // Cabecera
                 $campos = $resultado->fetch_fields();
                 $header = [];
-                foreach($campos as $campo) {
+                foreach ($campos as $campo) {
                     $header[] = $campo->name;
                 }
                 fputcsv($file, $header);
-
-                // Filas
-                while($fila = $resultado->fetch_assoc()) {
+                while ($fila = $resultado->fetch_assoc()) {
                     fputcsv($file, $fila);
                 }
-
                 fclose($file);
-                echo "<p>Tabla '$tabla' exportada a $archivo</p>";
+                $this->mensajes[] = "Tabla '$tabla' exportada a $archivo.";
             } else {
-                echo "<p>Tabla '$tabla' está vacía. No se generó CSV.</p>";
+                $this->mensajes[] = "Tabla '$tabla' está vacía. No se generó CSV.";
             }
         }
     }
 
-    public function cerrarConexion() {
-        if ($this->conn) $this->conn->close();
+    public function cerrarConexion()
+    {
+        if ($this->conn)
+            $this->conn->close();
     }
 }
 
-
 $config = new Configuracion();
 
+// Procesar POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['reiniciar'])) {
         $config->reiniciarTablas();
@@ -107,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>MotoGP-Configuración</title>
@@ -118,9 +113,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../estilo/layout.css" />
     <link rel="icon" href="../multimedia/favicon.ico" />
 </head>
+</head>
+
 <body>
     <h1>Configuración Base de Datos</h1>
     <main>
+        <!-- Mostrar mensajes -->
+        <?php if (!empty($config->mensajes)): ?>
+            <?php foreach ($config->mensajes as $msg): ?>
+                <p><?= htmlspecialchars($msg) ?></p>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
         <form method="post">
             <button type="submit" name="reiniciar">Reiniciar todas las tablas</button>
             <button type="submit" name="eliminar">Eliminar base de datos</button>
@@ -128,6 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </main>
 </body>
+
 </html>
 
 <?php

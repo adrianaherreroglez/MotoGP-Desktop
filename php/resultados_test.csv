@@ -1,0 +1,8 @@
+id_test,codigo_usuario_id,dispositivo_id,tiempo,completado,comentarios,propuestas,valoracion
+1,2,3,00:01:45,1,"todo bien",ninguna,10
+2,3,1,00:01:57,1,"Todo bien","Todo bien",9
+3,4,2,00:04:43,1,"Tengo problemas de vista y no veo bien la letra","Aumentar el tamaño de letra",5
+4,5,3,00:03:35,1,"No se entiende del todo bien lo que pone en el apartado de ayuda","Hacer más explicativo el apartado de ayuda",7
+5,6,1,00:02:45,1,"Bien, me gusta su interfaz","Implementar un buscador sería de gran ayuda para buscar palabras clave",8
+6,7,2,00:01:42,1,"Se entiende bien pero no termina de verse bien en que sección de la web estamos","Marcar mejor en qué opción del menú nos encontramos para que el usuario no se pierda",8
+7,8,3,00:01:42,1,"Todo bien ",Ninguna,10
