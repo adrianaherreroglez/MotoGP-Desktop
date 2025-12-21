@@ -213,6 +213,7 @@ class CargadorSVG {
 class CargadorKML {
 
     #contenidoArchivoKML;
+    
     #documentoKML;
 
     constructor() {
