@@ -146,7 +146,21 @@ class Circuito {
             const ps = seccion.getElementsByTagName("p");
             for (let j = 0; j < ps.length; j++) {
                 const pNuevo = document.createElement("p");
-                pNuevo.textContent = ps[j].textContent;
+
+        
+                const enlaceOriginal = ps[j].getElementsByTagName("a")[0];
+
+                if (enlaceOriginal) {
+                    const aNuevo = document.createElement("a");
+                    aNuevo.href = enlaceOriginal.href;
+                    aNuevo.target = "_blank";
+                    aNuevo.textContent = enlaceOriginal.textContent;
+                    pNuevo.appendChild(aNuevo);
+                } else {
+                    // Si no hay enlace, se copia el texto normal
+                    pNuevo.textContent = ps[j].textContent;
+                }
+
                 seccionCopia.appendChild(pNuevo);
             }
 
@@ -222,17 +236,17 @@ class CargadorKML {
         mapboxgl.accessToken = 'pk.eyJ1IjoidW8yODc1NDMiLCJhIjoiY21icjlsZjNiMDZkazJscXVlOWNla28xbCJ9.TeUE3PFpwcAravLU5lnbgA';
 
         const divMapa = document.createElement('div');
-    divMapa.style.width = "100%";      // Ajusta el tamaño
-    divMapa.style.height = "500px";    // Ajusta la altura
-    document.body.appendChild(divMapa);
+        divMapa.style.width = "100%";      // Ajusta el tamaño
+        divMapa.style.height = "500px";    // Ajusta la altura
+        document.body.appendChild(divMapa);
 
-    // Inicializar el mapa usando el div creado
-    this.map = new mapboxgl.Map({
-        container: divMapa,  // <-- aquí usamos la referencia, no un id
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [51.44953333968715, 25.48928989802003],
-        zoom: 14
-    });
+        // Inicializar el mapa usando el div creado
+        this.map = new mapboxgl.Map({
+            container: divMapa,  // <-- aquí usamos la referencia, no un id
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [51.44953333968715, 25.48928989802003],
+            zoom: 14
+        });
 
     }
 
