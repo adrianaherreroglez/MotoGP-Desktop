@@ -29,6 +29,11 @@ body>div {
     height: 60vh;
 }
 
+/* Especificidad 002*/
+section img, section video {
+    display: flex;
+}
+
 
 @media (min-width: 320px) and (max-width: 799px) {
 
@@ -104,9 +109,9 @@ body>div {
 
     }
 
-
-
-
-
+    /* Especificidad 001*/
+    svg {
+        width: 100%;
+    }
 
 }
