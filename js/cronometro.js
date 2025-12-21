@@ -30,7 +30,7 @@ class Cronometro {
 
         switch (texto) {
           case "Arrancar":
-            this.#arrancar();
+            this.arrancar();
             break;
           case "Parar":
             this.#parar();
@@ -41,7 +41,7 @@ class Cronometro {
         }
     }
 
-    #arrancar() {
+    arrancar() {
         if (this.#corriendo) return; // evita crear otro intervalo si ya hay uno
         try {
             this.#inicio = Temporal.Now.instant();
