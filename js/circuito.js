@@ -160,7 +160,7 @@ class Circuito {
 
 }
 
-"use strict"
+"use strict";
 class CargadorSVG {
     #contenidoArchivoSVG;
 
@@ -187,26 +187,27 @@ class CargadorSVG {
     }
 
     #insertarSVG() {
-        // Crear contenedor <section> al final del body
-        var contenedor = document.createElement("section");
+        const parser = new DOMParser();
+        const docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
+        const svgElement = docSVG.documentElement;
 
-        // Crear título
-        var tituloSVG = document.createElement("h3");
+        // Cambiar versión a 1.1 antes de insertarlo en el DOM
+        if (svgElement.getAttribute("version") === "2.0") {
+            svgElement.setAttribute("version", "1.1");
+        }
+
+        const contenedor = document.createElement("section");
+
+        const tituloSVG = document.createElement("h3");
         tituloSVG.textContent = "Altimetría del circuito";
         contenedor.appendChild(tituloSVG);
 
-        // Parsear SVG como XML
-        var parser = new DOMParser();
-        var docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
-        var svgElement = docSVG.documentElement;
-
-        // Insertar SVG en el contenedor
         contenedor.appendChild(svgElement);
 
-        // Insertar contenedor al final del body
         document.body.appendChild(contenedor);
     }
 }
+
 
 "use strict"
 class CargadorKML {
@@ -220,18 +221,25 @@ class CargadorKML {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoidW8yODc1NDMiLCJhIjoiY21icjlsZjNiMDZkazJscXVlOWNla28xbCJ9.TeUE3PFpwcAravLU5lnbgA';
 
+        // Crear h3  en el body
+        const h3Mapa = document.createElement('h3');
+        h3Mapa.textContent = "Mapa dinámico";
+        document.body.appendChild(h3Mapa);
+
+        // Crear div del mapa 
         const divMapa = document.createElement('div');
         document.body.appendChild(divMapa);
 
-        // Inicializar el mapa usando el div creado
+        // Inicializar Mapbox usando el div creado
         this.map = new mapboxgl.Map({
-            container: divMapa,  // <-- aquí usamos la referencia, no un id
+            container: divMapa,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [51.44953333968715, 25.48928989802003],
             zoom: 14
         });
-
     }
+
+
 
     leerArchivoKML(files) {
         const archivo = files[0];
@@ -337,8 +345,8 @@ class GestorArchivos {
 
     #manageEvents() {
         const inputHTML = document.querySelector("#input-html");
-        const inputSVG  = document.querySelector("#input-svg");
-        const inputKML  = document.querySelector("#input-kml");
+        const inputSVG = document.querySelector("#input-svg");
+        const inputKML = document.querySelector("#input-kml");
 
         inputHTML.addEventListener("change", this.#manageHTML.bind(this));
         inputSVG.addEventListener("change", this.#manageSVG.bind(this));
