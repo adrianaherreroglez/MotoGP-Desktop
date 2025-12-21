@@ -159,7 +159,7 @@ $preguntas = [
             <form method="post">
                 <h2>Datos del Participante</h2>
 
-                <section>
+                <fieldset>
                     <h3>Profesión</h3>
                     <select name="profesion" required>
                         <option value="">Seleccione su profesión</option>
@@ -169,14 +169,14 @@ $preguntas = [
                             echo "<option value='{$r['profesion_id']}'>{$r['nombre']}</option>";
                         ?>
                     </select>
-                </section>
+                </fieldset>
 
-                <section>
+                <fieldset>
                     <h3>Edad</h3>
                     <input type="number" name="edad" required min="1" max="120">
-                </section>
+                </fieldset>
 
-                <section>
+                <fieldset>
                     <h3>Género</h3>
                     <select name="genero" required>
                         <option value="">Seleccione su género</option>
@@ -186,9 +186,9 @@ $preguntas = [
                             echo "<option value='{$r['genero_id']}'>{$r['nombre']}</option>";
                         ?>
                     </select>
-                </section>
+                </fieldset>
 
-                <section>
+                <fieldset>
                     <h3>Pericia</h3>
                     <select name="pericia" required>
                         <option value="">Seleccione nivel de pericia</option>
@@ -198,9 +198,9 @@ $preguntas = [
                             echo "<option value='{$r['pericia_id']}'>{$r['nivel']}</option>";
                         ?>
                     </select>
-                </section>
+                </fieldset>
 
-                <section>
+                <fieldset>
                     <h3>Dispositivo</h3>
                     <select name="dispositivo" required>
                         <option value="">Seleccione su dispositivo</option>
@@ -210,7 +210,7 @@ $preguntas = [
                             echo "<option value='{$r['dispositivo_id']}'>{$r['nombre']}</option>";
                         ?>
                     </select>
-                </section>
+                </fieldset>
 
                 <button type="submit" name="iniciar_prueba">Iniciar Prueba</button>
             </form>
@@ -220,26 +220,26 @@ $preguntas = [
                 <h2>Cuestionario de Usabilidad</h2>
 
                 <?php foreach ($preguntas as $i => $pregunta): ?>
-                    <section>
+                    <fieldset>
                         <h3>Pregunta <?= $i + 1 ?></h3>
                         <label for="p<?= $i ?>"><?= $pregunta ?></label>
                         <input type="text" id="p<?= $i ?>" name="preguntas[]" required>
-                    </section>
+                    </fieldset>
                 <?php endforeach; ?>
 
-                    <section>
+                <fieldset>
 
                     <h3>Otras cuestiones</h3>
                     <label for="comentarios_usuario">Comentarios del Usuario:</label>
                     <textarea id="comentarios_usuario" name="comentarios_usuario" required></textarea>
-                
 
-               
+
+
                     <label for="propuestas">Propuestas del Usuario:</label>
                     <textarea id="propuestas" name="propuestas" required></textarea>
-                
 
-                
+
+
                     <label for="valoracion">Valoración de la experiencia:</label>
                     <select id="valoracion" name="valoracion" required>
                         <option value="">Seleccione valor</option>
@@ -247,21 +247,19 @@ $preguntas = [
                             <option value="<?= $v ?>"><?= $v ?></option>
                         <?php endfor; ?>
                     </select>
-                
 
-               
+
+
                     <label for="obs_facilitador">Comentarios del Observador:</label>
                     <textarea id="obs_facilitador" name="obs_facilitador"></textarea>
-                </section>
+                </fieldset>
 
                 <button type="submit" name="terminar_prueba">Terminar Prueba</button>
             </form>
 
         <?php else: ?>
-            <section>
-                <p>Prueba completada.</p>
-                <a href="formulario.php" onclick="<?php session_destroy(); ?>">Realizar nuevo test</a>
-            </section>
+            <p>Prueba completada.</p>
+            <a href="formulario.php" onclick="<?php session_destroy(); ?>">Realizar nuevo test</a>
         <?php endif; ?>
 
     </main>
