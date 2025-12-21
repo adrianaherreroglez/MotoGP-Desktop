@@ -110,7 +110,9 @@ body>div {
 
     /* Especificidad 011 */
     input[type="file"] {
-        font-size:0.7em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
     }
 
 
