@@ -1,25 +1,23 @@
 <?php
-include 'clasificacionesPHP.php';
-?>
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+include __DIR__ . '/clasificacionesPHP.php';
+
+$clasificacion = new Clasificaciones();
+?>
 <!DOCTYPE HTML>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8" />
     <title>MotoGP-Clasificaciones</title>
-    <meta name="author" content="Adriana Herrero González" />
-    <meta name="description" content="Información sobre las clasificaciones del proyecto MotoGP-Desktop" />
-    <meta name="keywords" content="MotoGP, clasificaciones, pilotos, circuitos" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
     <link rel="stylesheet" type="text/css" href="estilo/layout.css" />
-    <link rel="icon" href="multimedia/favicon.ico" />
 </head>
-
 <body>
-    <header>
-        <h1><a href="index.html" title="Página de inicio">MotoGP Desktop</a></h1>
+<header>
+    <h1><a href="index.html" title="Página de inicio">MotoGP Desktop</a></h1>
         <nav>
             <a href="index.html" title="Página de inicio">Inicio</a>
             <a href="piloto.html" title="Información del piloto">Piloto</a>
@@ -29,31 +27,27 @@ include 'clasificacionesPHP.php';
             <a href="juegos.html" title="Información de los juegos">Juegos</a>
             <a href="ayuda.html" title="Ayuda sobre MotoGP-Desktop">Ayuda</a>
         </nav>
-    </header>
+</header>
 
-    <p>Estás en <a href="index.html" title="Página de inicio">Inicio</a> >> <strong>Clasificaciones</strong></p>
+<main>
+<h2>Clasificación tras la carrera</h2>
 
-    <main>
-        <h2>Clasificación tras la carrera</h2>
+<section>
+<h3>Ganador de la carrera</h3>
+<ul>
+    <li>Nombre: <?= htmlentities($clasificacion->ganadorNombre) ?></li>
+    <li>Tiempo empleado: <?= htmlentities($clasificacion->ganadorTiempo) ?></li>
+</ul>
+</section>
 
-        <section>
-            <h3>Ganador de la carrera</h3>
-            <ul>
-                <li>Nombre: <?= htmlentities($clasificacion->ganadorNombre) ?></li>
-                <li>Tiempo empleado: <?= htmlentities($clasificacion->ganadorTiempo) ?></li>
-            </ul>
-        </section>
-
-        <section>
-            <h3>Top 3 del Mundial tras la carrera</h3>
-            <ol>
-                <li><?= htmlentities($clasificacion->top1) ?></li>
-                <li><?= htmlentities($clasificacion->top2) ?></li>
-                <li><?= htmlentities($clasificacion->top3) ?></li>
-            </ol>
-        </section>
-
-    </main>
+<section>
+<h3>Top 3 del Mundial tras la carrera</h3>
+<ol>
+    <li><?= htmlentities($clasificacion->top1) ?></li>
+    <li><?= htmlentities($clasificacion->top2) ?></li>
+    <li><?= htmlentities($clasificacion->top3) ?></li>
+</ol>
+</section>
+</main>
 </body>
-
 </html>

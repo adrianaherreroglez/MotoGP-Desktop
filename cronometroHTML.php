@@ -1,5 +1,19 @@
 <?php
-include 'Cronometro.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();                
+include __DIR__ . '/cronometro.php';
+
+$cronometro = Cronometro::cargarDeSesion();
+$mensaje = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $accion = key($_POST);
+    $mensaje = $cronometro->accion($accion);
+    $cronometro->guardarEnSesion();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

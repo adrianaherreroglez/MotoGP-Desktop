@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class Cronometro
 {
     protected $inicio;
@@ -85,14 +83,4 @@ class Cronometro
     }
 }
 
-// Inicialización
-
-$cronometro = Cronometro::cargarDeSesion();
-$mensaje = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $accion = key($_POST);
-    $mensaje = $cronometro->accion($accion);
-    $cronometro->guardarEnSesion();
-}
 

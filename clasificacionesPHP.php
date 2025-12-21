@@ -1,13 +1,7 @@
 <?php
-/**
- * Clase Clasificaciones
- */
 class Clasificaciones
 {
     protected $documento;   // Ruta del XML
-    protected $xml;         // Objeto SimpleXMLElement
-
-    // Datos extraídos
     public $ganadorNombre;
     public $ganadorTiempo;
     public $top1;
@@ -17,69 +11,55 @@ class Clasificaciones
     public function __construct()
     {
         $this->documento = __DIR__ . '/xml/circuitoEsquema.xml';
-        $this->xml = $this->consultar();
-
-        // Inicializar variables con datos del XML
-        $this->inicializarDatos();
+        $this->consultar();
     }
 
     protected function consultar()
     {
         if (!file_exists($this->documento)) {
-            return null;
+            $this->setDesconocido();
+            return;
         }
 
-        $datos = file_get_contents($this->documento);
-        if ($datos === false) {
-            return null;
+        $contenido = @file_get_contents($this->documento);
+        if ($contenido === false) {
+            $this->setDesconocido();
+            return;
         }
 
-        try {
-            $xml = new SimpleXMLElement($datos);
-            $xml->registerXPathNamespace('ns', 'http://www.uniovi.es');
-            return $xml;
-        } catch (Exception $e) {
-            return null;
+        // Buscar ganador
+        if (preg_match('/<nombrePiloto>(.*?)<\/nombrePiloto>/', $contenido, $m)) {
+            $this->ganadorNombre = $m[1];
+        } else {
+            $this->ganadorNombre = 'Desconocido';
         }
+
+        if (preg_match('/<tiempo>(.*?)<\/tiempo>/', $contenido, $m)) {
+            $this->ganadorTiempo = $m[1];
+        } else {
+            $this->ganadorTiempo = 'Desconocido';
+        }
+
+        // Buscar Top 3
+        $this->top1 = $this->buscarTag('primero', $contenido);
+        $this->top2 = $this->buscarTag('segundo', $contenido);
+        $this->top3 = $this->buscarTag('tercero', $contenido);
     }
 
-    protected function inicializarDatos()
+    protected function buscarTag($tag, $contenido)
     {
-        // Ganador
-        $ganador = $this->getGanador();
-        $this->ganadorNombre = $ganador['nombre'];
-        $this->ganadorTiempo = $ganador['tiempo'];
-
-        // Top 3
-        $top3 = $this->getTop3();
-        $this->top1 = $top3['primero'];
-        $this->top2 = $top3['segundo'];
-        $this->top3 = $top3['tercero'];
+        if (preg_match('/<' . $tag . '>(.*?)<\/' . $tag . '>/', $contenido, $m)) {
+            return $m[1];
+        }
+        return 'Desconocido';
     }
 
-    public function getGanador()
+    protected function setDesconocido()
     {
-        if ($this->xml === null) {
-            return ['nombre' => 'Desconocido', 'tiempo' => 'Desconocido'];
-        }
-
-        $nombre = (string) ($this->xml->xpath('//ns:vencedor/ns:nombrePiloto')[0] ?? 'Desconocido');
-        $tiempo = (string) ($this->xml->xpath('//ns:vencedor/ns:tiempo')[0] ?? 'Desconocido');
-
-        return ['nombre' => $nombre, 'tiempo' => $tiempo];
-    }
-
-    public function getTop3()
-    {
-        if ($this->xml === null) {
-            return ['primero' => 'Desconocido', 'segundo' => 'Desconocido', 'tercero' => 'Desconocido'];
-        }
-
-        $primero = (string) ($this->xml->xpath('//ns:clasificados/ns:primero')[0] ?? 'Desconocido');
-        $segundo = (string) ($this->xml->xpath('//ns:clasificados/ns:segundo')[0] ?? 'Desconocido');
-        $tercero = (string) ($this->xml->xpath('//ns:clasificados/ns:tercero')[0] ?? 'Desconocido');
-
-        return ['primero' => $primero, 'segundo' => $segundo, 'tercero' => $tercero];
+        $this->ganadorNombre = 'Desconocido';
+        $this->ganadorTiempo = 'Desconocido';
+        $this->top1 = 'Desconocido';
+        $this->top2 = 'Desconocido';
+        $this->top3 = 'Desconocido';
     }
 }
-$clasificacion = new Clasificaciones();
