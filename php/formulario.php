@@ -172,8 +172,9 @@ $gestion = new FormularioPrueba();
 
                 <fieldset>
                     <h3>Profesión</h3>
-                    <select name="profesion" required>
-                        <option value="">Seleccione su profesión</option>
+                    <label for="profesion">Seleccione su profesión:</label>
+                    <select id="profesion" name="profesion" required>
+                        <option value="">Profesión</option>
                         <?php
                         $res = $gestion->obtenerOpciones('profesiones');
                         while ($r = $res->fetch_assoc())
@@ -184,13 +185,15 @@ $gestion = new FormularioPrueba();
 
                 <fieldset>
                     <h3>Edad</h3>
-                    <input type="number" name="edad" required min="1" max="120">
+                    <label for="edad">Ingrese su edad:</label>
+                    <input type="number" id="edad" name="edad" required min="1" max="120">
                 </fieldset>
 
                 <fieldset>
                     <h3>Género</h3>
-                    <select name="genero" required>
-                        <option value="">Seleccione su género</option>
+                    <label for="genero">Seleccione su género:</label>
+                    <select id="genero" name="genero" required>
+                        <option value="">Género</option>
                         <?php
                         $res = $gestion->obtenerOpciones('generos');
                         while ($r = $res->fetch_assoc())
@@ -201,8 +204,9 @@ $gestion = new FormularioPrueba();
 
                 <fieldset>
                     <h3>Pericia</h3>
-                    <select name="pericia" required>
-                        <option value="">Seleccione nivel de pericia</option>
+                    <label for="pericia">Seleccione nivel de pericia:</label>
+                    <select id="pericia" name="pericia" required>
+                        <option value="">Pericia</option>
                         <?php
                         $res = $gestion->obtenerOpciones('pericias');
                         while ($r = $res->fetch_assoc())
@@ -213,8 +217,9 @@ $gestion = new FormularioPrueba();
 
                 <fieldset>
                     <h3>Dispositivo</h3>
-                    <select name="dispositivo" required>
-                        <option value="">Seleccione su dispositivo</option>
+                    <label for="dispositivo">Seleccione su dispositivo:</label>
+                    <select id="dispositivo" name="dispositivo" required>
+                        <option value="">Dispositivo</option>
                         <?php
                         $res = $gestion->obtenerOpciones('dispositivos');
                         while ($r = $res->fetch_assoc())
@@ -222,6 +227,7 @@ $gestion = new FormularioPrueba();
                         ?>
                     </select>
                 </fieldset>
+
 
                 <button type="submit" name="iniciar_prueba">Iniciar Prueba</button>
             </form>
@@ -269,4 +275,5 @@ $gestion = new FormularioPrueba();
 
     </main>
 </body>
+
 </html>
