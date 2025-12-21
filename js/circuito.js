@@ -49,69 +49,70 @@ class Circuito {
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.#contenidoArchivo, "text/html");
 
-        // Seleccionamos el primer section dentro de body
-        const main = document.querySelector("body > section");
-
-        // Crear contenedor
-        const contenedorHTML = document.createElement("section");
-        contenedorHTML.classList.add("contenedor-html");
-
-        // Copiar <h1>
-        const h1 = doc.getElementsByTagName("h1")[0];
+        // Copiar h1 como h3
+        const h1 = doc.querySelector("h1");
         if (h1) {
-            const h3Titulo = document.createElement("h3");
-            h3Titulo.textContent = h1.textContent;
-            contenedorHTML.appendChild(h3Titulo);
+            const h3 = document.createElement("h3");
+            h3.textContent = h1.textContent;
+            document.body.appendChild(h3);
         }
 
-        // Recorrer secciones y copiar contenido
-        const secciones = doc.getElementsByTagName("section");
+        // Recorrer secciones
+        const secciones = doc.querySelectorAll("main > section");
         for (let i = 0; i < secciones.length; i++) {
             const seccion = secciones[i];
             const seccionCopia = document.createElement("section");
-            seccionCopia.classList.add("seccion-copia");
 
-            // Copiar <h2> → <h4>
-            const h2 = seccion.getElementsByTagName("h2")[0];
+            // Copiar h2 como h4
+            const h2 = seccion.querySelector("h2");
             if (h2) {
-                const h4Nuevo = document.createElement("h4");
-                h4Nuevo.textContent = h2.textContent;
-                seccionCopia.appendChild(h4Nuevo);
+                const h4 = document.createElement("h4");
+                h4.textContent = h2.textContent;
+                seccionCopia.appendChild(h4);
             }
 
             // Copiar listas <ul>
-            const ul = seccion.getElementsByTagName("ul")[0];
-            if (ul) {
+            const uls = seccion.getElementsByTagName("ul");
+            for (let j = 0; j < uls.length; j++) {
+                const ul = uls[j];
                 const ulCopia = document.createElement("ul");
                 const items = ul.getElementsByTagName("li");
-                for (let j = 0; j < items.length; j++) {
+                for (let k = 0; k < items.length; k++) {
                     const liNuevo = document.createElement("li");
-                    const a = items[j].getElementsByTagName("a")[0];
-                    if (a) {
-                        const aNuevo = document.createElement("a");
-                        aNuevo.href = a.href;
-                        aNuevo.target = "_blank";
-                        aNuevo.textContent = a.textContent;
-                        liNuevo.appendChild(aNuevo);
-                    } else {
-                        liNuevo.textContent = items[j].textContent;
-                    }
+                    liNuevo.textContent = items[k].textContent;
                     ulCopia.appendChild(liNuevo);
                 }
                 seccionCopia.appendChild(ulCopia);
             }
 
             // Copiar listas <ol>
-            const ol = seccion.getElementsByTagName("ol")[0];
-            if (ol) {
+            const ols = seccion.getElementsByTagName("ol");
+            for (let j = 0; j < ols.length; j++) {
+                const ol = ols[j];
                 const olCopia = document.createElement("ol");
                 const items = ol.getElementsByTagName("li");
-                for (let j = 0; j < items.length; j++) {
+                for (let k = 0; k < items.length; k++) {
                     const liNuevo = document.createElement("li");
-                    liNuevo.textContent = items[j].textContent;
+                    liNuevo.textContent = items[k].textContent;
                     olCopia.appendChild(liNuevo);
                 }
                 seccionCopia.appendChild(olCopia);
+            }
+
+            // Copiar referencias (<p><a>)
+            const paras = seccion.getElementsByTagName("p");
+            for (let j = 0; j < paras.length; j++) {
+                const p = paras[j];
+                const a = p.querySelector("a");
+                if (a) {
+                    const pNuevo = document.createElement("p");
+                    const aNuevo = document.createElement("a");
+                    aNuevo.href = a.href;
+                    aNuevo.target = "_blank";
+                    aNuevo.textContent = a.textContent;
+                    pNuevo.appendChild(aNuevo);
+                    seccionCopia.appendChild(pNuevo);
+                }
             }
 
             // Copiar imágenes
@@ -142,38 +143,24 @@ class Circuito {
                 seccionCopia.appendChild(videoNuevo);
             }
 
-            // Copiar párrafos
-            const ps = seccion.getElementsByTagName("p");
-            for (let j = 0; j < ps.length; j++) {
-                const pNuevo = document.createElement("p");
-
-        
-                const enlaceOriginal = ps[j].getElementsByTagName("a")[0];
-
-                if (enlaceOriginal) {
-                    const aNuevo = document.createElement("a");
-                    aNuevo.href = enlaceOriginal.href;
-                    aNuevo.target = "_blank";
-                    aNuevo.textContent = enlaceOriginal.textContent;
-                    pNuevo.appendChild(aNuevo);
-                } else {
-                    // Si no hay enlace, se copia el texto normal
+            // Copiar vencedor (Piloto y Tiempo)
+            if (h2 && h2.textContent.toLowerCase().includes("vencedor")) {
+                const ps = seccion.getElementsByTagName("p");
+                for (let j = 0; j < ps.length; j++) {
+                    const pNuevo = document.createElement("p");
                     pNuevo.textContent = ps[j].textContent;
+                    seccionCopia.appendChild(pNuevo);
                 }
-
-                seccionCopia.appendChild(pNuevo);
             }
 
-            contenedorHTML.appendChild(seccionCopia);
+            document.body.appendChild(seccionCopia);
         }
-
-        main.appendChild(contenedorHTML);
     }
 
 
 }
 
-
+"use strict"
 class CargadorSVG {
     #contenidoArchivoSVG;
 
@@ -199,31 +186,29 @@ class CargadorSVG {
         }
     }
 
-
     #insertarSVG() {
-        var contenedor = document.querySelector("body > section");
+        // Crear contenedor <section> al final del body
+        var contenedor = document.createElement("section");
 
-        // Si no existe, crear uno
-        if (!contenedor) {
-            contenedor = document.createElement("section");
-            document.body.appendChild(contenedor);
-        }
+        // Crear título
+        var tituloSVG = document.createElement("h3");
+        tituloSVG.textContent = "Altimetría del circuito";
+        contenedor.appendChild(tituloSVG);
 
-        // Parsear SVG como XML con DOMParser
+        // Parsear SVG como XML
         var parser = new DOMParser();
         var docSVG = parser.parseFromString(this.#contenidoArchivoSVG, "image/svg+xml");
         var svgElement = docSVG.documentElement;
 
-        //Crear título
-        var tituloSVG = document.createElement("h3");
-        tituloSVG.textContent = "Altimetría del circuito";
-        contenedor.appendChild(tituloSVG);
         // Insertar SVG en el contenedor
         contenedor.appendChild(svgElement);
-    }
 
+        // Insertar contenedor al final del body
+        document.body.appendChild(contenedor);
+    }
 }
 
+"use strict"
 class CargadorKML {
 
     #contenidoArchivoKML;
