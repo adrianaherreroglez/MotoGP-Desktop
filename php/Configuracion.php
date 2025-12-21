@@ -14,7 +14,7 @@ class Configuracion {
         }
     }
 
-    // 1. Reiniciar todas las tablas (borrar datos) con control de existencia
+    // 1. Reiniciar todas las tablas
     public function reiniciarTablas() {
         $tablas = ['observaciones_facilitador', 'resultados_test', 'usuarios', 'dispositivos', 'pericias', 'generos', 'profesiones'];
         foreach ($tablas as $tabla) {
@@ -28,7 +28,7 @@ class Configuracion {
         }
     }
 
-    // 2. Eliminar la base de datos conectando sin seleccionarla
+    // 2. Eliminar la base de datos
     public function eliminarBaseDatos() {
         // Cerrar conexión actual
         $this->conn->close();
@@ -44,11 +44,11 @@ class Configuracion {
             echo "<p>Error al eliminar la base de datos: " . $conn->error . "</p>";
         }
         $conn->close();
-        // Reconectar a la BD original (si quieres mantener la instancia)
+        // Reconectar a la BD original
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
     }
 
-    // 3. Exportar todas las tablas a CSV con control de errores
+    // 3. Exportar todas las tablas a CSV
     public function exportarTodasTablasCSV() {
         $tablas = ['profesiones','generos','pericias','dispositivos','usuarios','resultados_test','observaciones_facilitador'];
 
@@ -89,7 +89,7 @@ class Configuracion {
     }
 }
 
-// --- INTERFAZ HTML ---
+
 $config = new Configuracion();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
