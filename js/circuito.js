@@ -168,7 +168,7 @@ class CargadorSVG {
         this.#contenidoArchivoSVG = "";
     }
 
-    #leerArchivoSVG(files) {
+    leerArchivoSVG(files) {
         const archivo = files[0];
 
         // Solo archivos SVG
