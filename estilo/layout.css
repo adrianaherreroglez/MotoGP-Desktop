@@ -96,7 +96,11 @@ body>div {
         /* Advertencia: redifinición del tamaño del mapa en móviles*/
     }
 
- 
+    /* Especificidad 011 */
+    input[type="file"] {
+        font-size: 0.75em;
+    }
+
 
 
 
