@@ -113,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../estilo/layout.css" />
     <link rel="icon" href="../multimedia/favicon.ico" />
 </head>
-</head>
 
 <body>
     <h1>Configuración Base de Datos</h1>

@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include __DIR__ . '/clasificacionesPHP.php';
 
 $clasificacion = new Clasificaciones();
@@ -12,8 +8,13 @@ $clasificacion = new Clasificaciones();
 <head>
     <meta charset="UTF-8" />
     <title>MotoGP-Clasificaciones</title>
+    <meta name="author" content="Adriana Herrero González" />
+    <meta name="description" content="información sobre clasificaciones del proyecto MotoGP-Desktop" />
+    <meta name="keywords" content="motogp,motos,mundial,clasificaciones,top,vencedor" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="estilo/estilo.css" />
     <link rel="stylesheet" type="text/css" href="estilo/layout.css" />
+    <link rel="icon" href="../multimedia/favicon.ico" />
 </head>
 <body>
 <header>
