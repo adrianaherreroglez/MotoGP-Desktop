@@ -100,7 +100,7 @@ class Cronometro {
     }
 
     #reiniciar() {
-        this.#parar();
+        this.parar();
         this.#tiempo = 0;
         this.#tiempoTotal = 0;
         this.#mostrar();
