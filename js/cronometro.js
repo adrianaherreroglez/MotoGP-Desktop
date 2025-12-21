@@ -33,7 +33,7 @@ class Cronometro {
             this.arrancar();
             break;
           case "Parar":
-            this.#parar();
+            this.parar();
             break;
           case "Reiniciar":
             this.#reiniciar();
@@ -80,7 +80,7 @@ class Cronometro {
         document.querySelector("main p").textContent = `${mm}:${ss}.${d}`;
     }
 
-    #parar() {
+    parar() {
         if (!this.#corriendo) return;
 
         clearInterval(this.#corriendo);
