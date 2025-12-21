@@ -98,9 +98,9 @@ body>div {
 
     /* Especificidad 011 */
     input[type="file"] {
-        font-size: 0.75em;
+        max-width: 100%;
+        box-sizing: border-box;
     }
-
 
 
 
