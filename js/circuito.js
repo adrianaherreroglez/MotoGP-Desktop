@@ -236,8 +236,7 @@ class CargadorKML {
         mapboxgl.accessToken = 'pk.eyJ1IjoidW8yODc1NDMiLCJhIjoiY21icjlsZjNiMDZkazJscXVlOWNla28xbCJ9.TeUE3PFpwcAravLU5lnbgA';
 
         const divMapa = document.createElement('div');
-        divMapa.style.width = "100%";      // Ajusta el tamaño
-        divMapa.style.height = "500px";    // Ajusta la altura
+
         document.body.appendChild(divMapa);
 
         // Inicializar el mapa usando el div creado

@@ -110,8 +110,7 @@ body>div {
 
     /* Especificidad 011 */
     input[type="file"] {
-        max-width: 100%;
-        box-sizing: border-box;
+        font-size:0.7em;
     }
 
 
