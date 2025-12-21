@@ -30,10 +30,10 @@ class Cronometro {
 
         switch (texto) {
           case "Arrancar":
-            this.#arrancar();
+            this.arrancar();
             break;
           case "Parar":
-            this.#parar();
+            this.parar();
             break;
           case "Reiniciar":
             this.#reiniciar();
@@ -41,7 +41,7 @@ class Cronometro {
         }
     }
 
-    #arrancar() {
+    arrancar() {
         if (this.#corriendo) return; // evita crear otro intervalo si ya hay uno
         try {
             this.#inicio = Temporal.Now.instant();
@@ -80,7 +80,7 @@ class Cronometro {
         document.querySelector("main p").textContent = `${mm}:${ss}.${d}`;
     }
 
-    #parar() {
+    parar() {
         if (!this.#corriendo) return;
 
         clearInterval(this.#corriendo);
@@ -100,7 +100,7 @@ class Cronometro {
     }
 
     #reiniciar() {
-        this.#parar();
+        this.parar();
         this.#tiempo = 0;
         this.#tiempoTotal = 0;
         this.#mostrar();
