@@ -1,5 +1,6 @@
 <?php
-include('../Cronometro.php');
+session_start();
+include('../cronometro.php');
 
 class FormularioPrueba
 {
@@ -44,9 +45,10 @@ class FormularioPrueba
 
     public function guardarFinales($userId, $dispositivoId, $tiempoSegundos, $comentariosFacilitador, $comentariosUsuario, $propuestas, $valoracion, $respuestas)
     {
-        $horas = floor($tiempoSegundos / 3600);
-        $minutos = floor(($tiempoSegundos % 3600) / 60);
-        $segundos = $tiempoSegundos % 60;
+        $horas = (int) floor($tiempoSegundos / 3600);
+        $minutos = (int) floor(($tiempoSegundos % 3600) / 60);
+        $segundos = (int) ($tiempoSegundos % 60);
+
         $tiempoSQL = sprintf("%02d:%02d:%02d", $horas, $minutos, $segundos);
 
         $completado = 1;
